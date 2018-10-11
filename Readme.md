@@ -14,5 +14,5 @@
 
 ## RelFunctions
 
-+ 添加字符串转数字函数，函数名为IMI_StrToDouble
-+ 添加数字转字符串函数，函数名为IMI_DoubleToStr
++ 在关系里面添加字符串转数字函数，函数名为IMI_StrToDouble
++ 在关系里面添加数字转字符串函数，函数名为IMI_DoubleToStr
