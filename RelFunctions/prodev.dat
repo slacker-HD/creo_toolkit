@@ -1,0 +1,7 @@
+name RelFunctions
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\RelFunctions\x64\Debug\RelFunctions.dll
+text_dir  D:\mydoc\RelFunctions\Rel.txt
+revision   18.0
+end

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RelFunctions", "RelFunctions\RelFunctions.vcxproj", "{0FB1A1A5-6013-4CEF-97E1-11D67243702D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Debug|Win32.Build.0 = Debug|Win32
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Debug|x64.ActiveCfg = Debug|x64
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Debug|x64.Build.0 = Debug|x64
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Release|Win32.ActiveCfg = Release|Win32
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Release|Win32.Build.0 = Release|Win32
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Release|x64.ActiveCfg = Release|x64
+		{0FB1A1A5-6013-4CEF-97E1-11D67243702D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
