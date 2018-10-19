@@ -1,0 +1,7 @@
+name LuaTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\LuaTest\x64\Debug\LuaTest.dll
+text_dir  D:\mydoc\creo_toolkit\LuaTest\msg.txt
+revision   18.0
+end
