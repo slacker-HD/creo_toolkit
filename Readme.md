@@ -20,3 +20,8 @@
 ## LuaTest
 
 + 嵌入Lua并调用Lua函数返回结果
+
+## SqliteTest
+
++ 嵌入Sqlite数据库
++ 打开一个数据库并返回select结果

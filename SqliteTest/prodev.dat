@@ -1,0 +1,7 @@
+name SqliteTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\SqliteTest\x64\Debug\SqliteTest.dll
+text_dir  D:\mydoc\creo_toolkit\SqliteTest\msg.txt
+revision   18.0
+end
