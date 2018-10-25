@@ -1,0 +1,7 @@
+name OneKeyalign
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\OneKeyalign\x64\Debug\OneKeyalign.dll
+text_dir  D:\mydoc\creo_toolkit\OneKeyalign\text
+revision   18.0
+end
