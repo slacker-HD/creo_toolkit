@@ -25,8 +25,8 @@ BOOL COneKeyalignApp::InitInstance()
 
 typedef enum _alignmode
 {
-	Vertical =0,
-	Horizon =1,
+	Vertical = 0,
+	Horizon = 1,
 } ALIGNMENT;
 
 int CurrentMdlType()
@@ -34,7 +34,7 @@ int CurrentMdlType()
 	ProMdl mdl;
 	ProMdlType mdltype;
 	ProError status;
-	status = ProMdlCurrentGet (&mdl);
+	status = ProMdlCurrentGet(&mdl);
 	if (status != PRO_TK_NO_ERROR)
 		return -1;
 	status = ProMdlTypeGet(mdl, &mdltype);
@@ -44,9 +44,9 @@ int CurrentMdlType()
 		return mdltype;
 }
 
-static uiCmdAccessState AccessDefault (uiCmdAccessMode access_mode)
+static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
-	if( CurrentMdlType() == PRO_DRAWING)
+	if (CurrentMdlType() == PRO_DRAWING)
 		return ACCESS_AVAILABLE;
 	else
 		return ACCESS_INVISIBLE;
@@ -69,51 +69,51 @@ void Align(ALIGNMENT alignment)
 	ProVector Mousepos;
 	ProMouseButton Mousebutton;
 	ProDtlsyminstdata SymData;
-	ProDtlattach SymAttachOld,SymAttachNew;
+	ProDtlattach SymAttachOld, SymAttachNew;
 	ProDtlattachType SymType;
 	ProView SymView;
-    ProVector location;
+	ProVector location;
 	ProSelection attach_point;
 
-	status = ProMdlCurrentGet (&mdl);
+	status = ProMdlCurrentGet(&mdl);
 	status = ProSelbufferSelectionsGet(&SelBuffer);
-	if(status == PRO_TK_NO_ERROR)
+	if (status == PRO_TK_NO_ERROR)
 	{
-		status = ProArraySizeGet (SelBuffer, &size);
+		status = ProArraySizeGet(SelBuffer, &size);
 		if (status == PRO_TK_NO_ERROR && size > 0)
 		{
 			status = ProMessageDisplay(MSGFILE, "MyPosition");
-			status = ProMousePickGet(PRO_LEFT_BUTTON , &Mousebutton, Mousepos) ;
+			status = ProMousePickGet(PRO_LEFT_BUTTON, &Mousebutton, Mousepos);
 
 			for (int i = 0; i < size; i++)
 			{
-				status = ProSelectionModelitemGet (SelBuffer[i], &Modelitem);
+				status = ProSelectionModelitemGet(SelBuffer[i], &Modelitem);
 				if (status == PRO_TK_NO_ERROR)
 				{
-					if(Modelitem.type == PRO_DIMENSION  || Modelitem.type ==  PRO_REF_DIMENSION)
+					if (Modelitem.type == PRO_DIMENSION || Modelitem.type == PRO_REF_DIMENSION)
 					{
-						status = ProDrawingDimensionPosGet((ProDrawing)mdl,&Modelitem,Dimlocation);
-						if(alignment == Vertical)
+						status = ProDrawingDimensionPosGet((ProDrawing)mdl, &Modelitem, Dimlocation);
+						if (alignment == Vertical)
 							Dimlocation[1] = Mousepos[1];
 						else
 							Dimlocation[0] = Mousepos[0];
-						status = ProDrawingDimensionMove((ProDrawing)mdl,&Modelitem, Dimlocation);
+						status = ProDrawingDimensionMove((ProDrawing)mdl, &Modelitem, Dimlocation);
 					}
-					else if(Modelitem.type ==  PRO_SYMBOL_INSTANCE)
+					else if (Modelitem.type == PRO_SYMBOL_INSTANCE)
 					{
-						status = ProDtlsyminstDataGet(&Modelitem, PRODISPMODE_SYMBOLIC, &SymData); 
-						status = ProDtlsyminstdataAttachmentGet(SymData,&SymAttachOld);
+						status = ProDtlsyminstDataGet(&Modelitem, PRODISPMODE_SYMBOLIC, &SymData);
+						status = ProDtlsyminstdataAttachmentGet(SymData, &SymAttachOld);
 						status = ProDtlattachGet(SymAttachOld, &SymType, &SymView, location, &attach_point);
 						status = ProDtlattachGet(SymAttachOld, &SymType, &SymView, location, &attach_point);
 						if (status == PRO_TK_NO_ERROR)
 						{
-							if(alignment == Vertical)
+							if (alignment == Vertical)
 								location[1] = Mousepos[1];
 							else
 								location[0] = Mousepos[0];
-							status = ProDtlattachAlloc(SymType,SymView,location,attach_point,&SymAttachNew);
+							status = ProDtlattachAlloc(SymType, SymView, location, attach_point, &SymAttachNew);
 							status = ProDtlsyminstdataAttachmentSet(SymData, SymAttachNew);
-							status = ProDtlsyminstModify(&(ProDtlsyminst)Modelitem,SymData);
+							status = ProDtlsyminstModify(&(ProDtlsyminst)Modelitem, SymData);
 							status = ProDtlattachFree(SymAttachNew);
 						}
 					}
@@ -165,19 +165,19 @@ extern "C" int user_initialize()
 	AfxEnableControlContainer();
 
 	ProError status;
-	uiCmdCmdId VerticalAlignId, HorizonAlignId,AboutId;
+	uiCmdCmdId VerticalAlignId, HorizonAlignId, AboutId;
 
-	status = ProMenubarMenuAdd ("OneKey","OneKey","About",PRO_B_TRUE,MSGFILE);
-	status = ProMenubarmenuMenuAdd("OneKey","OneKey","OneKey",NULL,PRO_B_TRUE,MSGFILE);
+	status = ProMenubarMenuAdd("OneKey", "OneKey", "About", PRO_B_TRUE, MSGFILE);
+	status = ProMenubarmenuMenuAdd("OneKey", "OneKey", "OneKey", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("VerticalAlign_Act",(uiCmdCmdActFn)VerticalAlign,uiProeImmediate,AccessDefault,PRO_B_TRUE,PRO_B_TRUE,&VerticalAlignId);
-	status = ProMenubarmenuPushbuttonAdd("OneKey","VerticalAlign","VerticalAlign","VerticalAligntips",NULL,PRO_B_TRUE,VerticalAlignId,MSGFILE);
+	status = ProCmdActionAdd("VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &VerticalAlignId);
+	status = ProMenubarmenuPushbuttonAdd("OneKey", "VerticalAlign", "VerticalAlign", "VerticalAligntips", NULL, PRO_B_TRUE, VerticalAlignId, MSGFILE);
 
-	status = ProCmdActionAdd("HorizonAlign_Act",(uiCmdCmdActFn)HorizonAlign,uiProeImmediate,AccessDefault,PRO_B_TRUE,PRO_B_TRUE,&HorizonAlignId);
-	status = ProMenubarmenuPushbuttonAdd("OneKey","HorizonAlign","HorizonAlign","HorizonAligntips",NULL,PRO_B_TRUE,HorizonAlignId,MSGFILE);
+	status = ProCmdActionAdd("HorizonAlign_Act", (uiCmdCmdActFn)HorizonAlign, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &HorizonAlignId);
+	status = ProMenubarmenuPushbuttonAdd("OneKey", "HorizonAlign", "HorizonAlign", "HorizonAligntips", NULL, PRO_B_TRUE, HorizonAlignId, MSGFILE);
 
-	status = ProCmdActionAdd("About_Act",(uiCmdCmdActFn)about,uiProeImmediate,AccessDefault,PRO_B_TRUE,PRO_B_TRUE,&AboutId);
-	status = ProMenubarmenuPushbuttonAdd("OneKey","About","About","Abouttips",NULL,PRO_B_TRUE,AboutId,MSGFILE);
+	status = ProCmdActionAdd("About_Act", (uiCmdCmdActFn)about, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &AboutId);
+	status = ProMenubarmenuPushbuttonAdd("OneKey", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }
