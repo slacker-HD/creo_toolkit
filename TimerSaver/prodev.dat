@@ -1,0 +1,7 @@
+name TimerSaver
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\TimerSaver\x64\Debug\TimerSaver.dll
+text_dir  D:\mydoc\creo_toolkit\TimerSaver\text
+revision   18.0
+end
