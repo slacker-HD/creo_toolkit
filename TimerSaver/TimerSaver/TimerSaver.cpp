@@ -179,13 +179,13 @@ void ShowConfig()
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId TImerSaveID, AboutId;
+	uiCmdCmdId TimerSaveID, AboutId;
 
 	status = ProMenubarMenuAdd("Time", "Time", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("Time", "Time", "Time", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("TImerSave_Act", (uiCmdCmdActFn)ShowConfig, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &TImerSaveID);
-	status = ProMenubarmenuPushbuttonAdd("Time", "TImerSave", "TImerSave", "TImerSavetips", NULL, PRO_B_TRUE, TImerSaveID, MSGFILE);
+	status = ProCmdActionAdd("TImerSave_Act", (uiCmdCmdActFn)ShowConfig, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &TimerSaveID);
+	status = ProMenubarmenuPushbuttonAdd("Time", "TImerSave", "TImerSave", "TImerSavetips", NULL, PRO_B_TRUE, TimerSaveID, MSGFILE);
 
 	status = ProCmdActionAdd("About_Act", (uiCmdCmdActFn)about, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &AboutId);
 	status = ProMenubarmenuPushbuttonAdd("Time", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);
