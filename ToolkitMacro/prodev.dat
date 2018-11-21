@@ -1,0 +1,7 @@
+name ToolkitMacro
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ToolkitMacro\x64\Debug\ToolkitMacro.dll
+text_dir  D:\mydoc\creo_toolkit\ToolkitMacro\text
+revision   18.0
+end
