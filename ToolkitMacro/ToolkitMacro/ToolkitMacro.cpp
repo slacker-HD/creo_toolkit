@@ -84,10 +84,10 @@ int CurrentMdlType()
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
-    if (CurrentMdlType() == PRO_PART)
-		return ACCESS_AVAILABLE;
-	else
-		return ACCESS_INVISIBLE;
+    //if (CurrentMdlType() == PRO_PART)
+	return ACCESS_AVAILABLE;
+	//else
+	//	return ACCESS_INVISIBLE;
 }
 
 ProError ShowDialog(wchar_t *Message)
@@ -101,14 +101,19 @@ ProError ShowDialog(wchar_t *Message)
     return PRO_TK_NO_ERROR;
 }
 
+void FunAfterMacro()
+{
+    AFX_MANAGE_STATE(AfxGetStaticModuleState());
+    AfxMessageBox(_T("运行完宏后跑mfc的代码！"));
+    AfxMessageBox(_T("再来一次！"));
+    AfxMessageBox(_T("再来第二次！"));
+}
 void about()
 {
     AFX_MANAGE_STATE(AfxGetStaticModuleState());
     if (hint == Fun)
     {
-        AfxMessageBox(_T("运行完宏后跑mfc的代码！"));
-        AfxMessageBox(_T("再来一次！"));
-        AfxMessageBox(_T("再来第二次！"));
+       FunAfterMacro();
     }
     else
     {
@@ -120,7 +125,7 @@ void about()
 void runMacro()
 {
     ProError status;
-    CString Macro = _T("vvv ~ Select `main_dlg_cur` `PHTLeft.AssyTree` 1 `node0`;~ Activate `main_dlg_cur` `page_Render_control_btn` 1;~ Select `main_dlg_cur` `Render:ProCmdViewGallery`;~ Close `main_dlg_cur` `Render:ProCmdViewGallery`;~ Command `ProCmdViewAppearanceEditor` ;~ Activate `pgl_appearance_manager` `ColorButton` 1;~ Arm `pgl_color_editor` `SRed`;~ Update `pgl_color_editor` `SRed` 74;~ Update `pgl_color_editor` `SRed` 90;~ Update `pgl_color_editor` `SRed` 100;~ Disarm `pgl_color_editor` `SRed` 100;~ Arm `pgl_color_editor` `SGreen`;~ Update `pgl_color_editor` `SGreen` 71;~ Update `pgl_color_editor` `SGreen` 90;~ Update `pgl_color_editor` `SGreen` 100;~ Disarm `pgl_color_editor` `SGreen` 100;~ Arm `pgl_color_editor` `SBlue`;~ Update `pgl_color_editor` `SBlue` 78;~ Update `pgl_color_editor` `SBlue` 89;~ Update `pgl_color_editor` `SBlue` 100;~ Disarm `pgl_color_editor` `SBlue` 100;~ Activate `pgl_color_editor` `StdOk`;~ FocusOut `pgl_appearance_manager` `AppearanceName`;~ Activate `pgl_appearance_manager` `stdOk`;~ Command `ProCmdRegenPart` ;~ Command `ProCmdWinActivate`;");
+    CString Macro = _T("~ Close `main_dlg_cur` `appl_casc`;~ Command `ProCmdModelErase` ; ~ Activate `0_std_confirm` `OK`;");
     Macro += _T("~ Command `About_Act`;");
     wchar_t *macro = Macro.AllocSysString();
     hint = Fun;
@@ -130,8 +135,26 @@ void runMacro()
     //2.Erasing the current model
     //3.Completing dialog commands ending with an "OK" button press. It will cancel some dialogs after showing them.
     //4.Executing macros during a trail file replay.
-    //status = ProMacroExecute();//这个函数肯定有限制，上面的宏有对话框操作、重生、刷新窗口，是不能立即执行的。
+    //status = ProMacroExecute();//这个函数肯定有限制，上面的宏有是不能立即执行的。
     SysFreeString(macro);
+}
+
+//错误的示例
+void RunmacroW()
+{
+    ProError status;
+    CString Macro = _T("~ Close `main_dlg_cur` `appl_casc`;~ Command `ProCmdModelErase` ; ~ Activate `0_std_confirm` `OK`;");
+    wchar_t *macro = Macro.AllocSysString();
+    hint = Fun;
+    status = ProMacroLoad(macro);
+    //Note that this function is not supported for the following situations and tasks
+    //1.Activating windows or setting the current model
+    //2.Erasing the current model
+    //3.Completing dialog commands ending with an "OK" button press. It will cancel some dialogs after showing them.
+    //4.Executing macros during a trail file replay.
+    status = ProMacroExecute();//这个函数肯定有限制，上面的宏是不能立即执行的。
+    SysFreeString(macro);
+	FunAfterMacro();
 }
 
 extern "C" int user_initialize()
@@ -140,13 +163,17 @@ extern "C" int user_initialize()
     AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
     ProError status;
-    uiCmdCmdId RunmacroId, AboutId;
+    uiCmdCmdId RunmacroId, RunmacroWId, AboutId;
 
     status = ProMenubarMenuAdd("Toolkitmacro", "Toolkitmacro", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("Toolkitmacro", "Toolkitmacro", "OneKey", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("Runmacro_Act", (uiCmdCmdActFn)runMacro, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &RunmacroId);
     status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "Runmacro", "Runmacro", "Runmacrotips", NULL, PRO_B_TRUE, RunmacroId, MSGFILE);
+
+	status = ProCmdActionAdd("RunmacroW_Act", (uiCmdCmdActFn)RunmacroW, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &RunmacroWId);
+    status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "RunmacroW", "RunmacroW", "RunmacroWtips", NULL, PRO_B_TRUE, RunmacroWId, MSGFILE);
+
 
     status = ProCmdActionAdd("About_Act", (uiCmdCmdActFn)about, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &AboutId);
     status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);

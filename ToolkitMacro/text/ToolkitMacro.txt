@@ -4,14 +4,25 @@
 #
 
 Runmacro
-让mfc代码在宏后运行
-让mfc代码在宏后运行
+让mfc代码在宏后运行(拭除打开模型再弹框)
+让mfc代码在宏后运行(拭除打开模型再弹框)
 #
 
 Runmacrotips
 让mfc代码在宏后运行
 让mfc代码在宏后运行
 #
+
+RunmacroW
+错误的示范(拭除打开模型再弹框)
+错误的示范(拭除打开模型再弹框)
+#
+
+RunmacroWtips
+错误的示范
+错误的示范
+#
+
 
 About
 关于
