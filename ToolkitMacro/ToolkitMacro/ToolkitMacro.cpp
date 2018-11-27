@@ -84,10 +84,15 @@ int CurrentMdlType()
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
-    //if (CurrentMdlType() == PRO_PART)
 	return ACCESS_AVAILABLE;
-	//else
-	//	return ACCESS_INVISIBLE;
+}
+
+static uiCmdAccessState AccessPart(uiCmdAccessMode access_mode)
+{
+    if (CurrentMdlType() == PRO_PART)
+		return ACCESS_AVAILABLE;
+	else
+		return ACCESS_INVISIBLE;
 }
 
 ProError ShowDialog(wchar_t *Message)
@@ -159,7 +164,6 @@ void RunmacroW()
 
 extern "C" int user_initialize()
 {
-    //MFC≥ı ºªØ
     AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
     ProError status;
@@ -168,12 +172,11 @@ extern "C" int user_initialize()
     status = ProMenubarMenuAdd("Toolkitmacro", "Toolkitmacro", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("Toolkitmacro", "Toolkitmacro", "OneKey", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("Runmacro_Act", (uiCmdCmdActFn)runMacro, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &RunmacroId);
+    status = ProCmdActionAdd("Runmacro_Act", (uiCmdCmdActFn)runMacro, uiProeImmediate, AccessPart, PRO_B_TRUE, PRO_B_TRUE, &RunmacroId);
     status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "Runmacro", "Runmacro", "Runmacrotips", NULL, PRO_B_TRUE, RunmacroId, MSGFILE);
 
-	status = ProCmdActionAdd("RunmacroW_Act", (uiCmdCmdActFn)RunmacroW, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &RunmacroWId);
+	status = ProCmdActionAdd("RunmacroW_Act", (uiCmdCmdActFn)RunmacroW, uiProeImmediate, AccessPart, PRO_B_TRUE, PRO_B_TRUE, &RunmacroWId);
     status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "RunmacroW", "RunmacroW", "RunmacroWtips", NULL, PRO_B_TRUE, RunmacroWId, MSGFILE);
-
 
     status = ProCmdActionAdd("About_Act", (uiCmdCmdActFn)about, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &AboutId);
     status = ProMenubarmenuPushbuttonAdd("Toolkitmacro", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);
