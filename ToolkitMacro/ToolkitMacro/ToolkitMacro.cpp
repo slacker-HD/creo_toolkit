@@ -112,6 +112,7 @@ void FunAfterMacro()
     AfxMessageBox(_T("运行完宏后跑mfc的代码！"));
     AfxMessageBox(_T("再来一次！"));
     AfxMessageBox(_T("再来第二次！"));
+	hint = About;
 }
 void about()
 {
