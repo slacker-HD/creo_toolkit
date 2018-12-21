@@ -1,0 +1,7 @@
+name Dashboard
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\Dashboard\x64\Debug\Dashboard.dll
+text_dir  D:\mydoc\creo_toolkit\Dashboard\text
+revision   18.0
+end

@@ -37,3 +37,11 @@
 ## ToolkitMacro
 
 + 宏的高级操作，运行完包含对话框操作、重生、刷新窗口的宏还可以再运行自定义代码
+
+## Dashboard
+
++ Dashboard界面操作实例
+
+## ImiProTKDLl
+
++ 调用自定义dll的例子

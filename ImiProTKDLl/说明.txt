@@ -1,0 +1,1 @@
+解决方案有三个项目，ImiProTKDLl是给调用的dll项目，TestExe为测试exe项目，ProTKDll是用于测试的protoolkit项目。

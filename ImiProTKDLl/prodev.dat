@@ -1,0 +1,7 @@
+name ProTKDll
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ImiProTKDLl\x64\Debug\ProTKDll.dll
+text_dir  D:\mydoc\creo_toolkit\ImiProTKDLl\text
+revision   18.0
+end

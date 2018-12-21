@@ -61,8 +61,8 @@ BOOL CToolkitMacroApp::InitInstance()
 
 typedef enum _hint
 {
-    Fun = 0,
-    About = 1,
+    Fun = 0, //实现函数功能
+    About = 1, //实现菜单点击功能
 } HINT;
 HINT hint;
 
