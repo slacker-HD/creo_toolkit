@@ -84,7 +84,7 @@ void Test()
 		AfxMessageBox(_T("DLL中函数寻找失败"));
 		return;
 	}
-	//指针，内存泄漏
+	//指针，内存泄漏,做例子不回收了
 	ImiDialogTest *imiDialogTest = pShowDlg();
 }
 extern "C" int user_initialize()

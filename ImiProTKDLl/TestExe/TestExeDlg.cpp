@@ -173,7 +173,7 @@ void CTestExeDlg::OnBnClickedButton1()
 		AfxMessageBox("DLL中函数寻找失败");
 		return;
 	}
-	//指针，内存泄漏
+	//指针，内存泄漏了,做例子不回收了
    ImiDialogTest* imiDialogTest = pShowDlg();
    imiDialogTest->text = _T("Test");
 }
