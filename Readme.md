@@ -45,3 +45,7 @@
 ## ImiProTKDLl
 
 + 调用自定义dll的例子
+
+## Protktooltips
+
++ 非模式对话框显示TOOLTIPS

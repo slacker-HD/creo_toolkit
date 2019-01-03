@@ -1,0 +1,7 @@
+name Protktooltips
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\Protktooltips\x64\Debug\Protktooltips.dll
+text_dir  D:\mydoc\creo_toolkit\Protktooltips\text
+revision   18.0
+end
