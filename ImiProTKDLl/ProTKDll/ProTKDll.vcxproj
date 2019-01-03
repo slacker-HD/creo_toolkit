@@ -108,6 +108,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;PRO_USE_VAR_ARGS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\PTC\Creo 2.0\Common Files\M060\prodevelop\includes;c:\PTC\Creo 2.0\Common Files\M060\protoolkit\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,7 +116,7 @@
       <ModuleDefinitionFile>.\ProTKDll.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>C:\PTC\Creo 2.0\Common Files\M060\prodevelop\x86e_win64\obj;C:\PTC\Creo 2.0\Common Files\M060\protoolkit\x86e_win64\obj;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>protk_dllmd.lib;psapi.lib;mpr.lib;Netapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreSpecificDefaultLibraries>msvcrt;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>

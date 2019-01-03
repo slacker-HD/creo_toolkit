@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CImiProTKDLlApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CImiProTKDLlApp 构造
 
 CImiProTKDLlApp::CImiProTKDLlApp()
@@ -47,11 +46,9 @@ CImiProTKDLlApp::CImiProTKDLlApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CImiProTKDLlApp 对象
 
 CImiProTKDLlApp theApp;
-
 
 // CImiProTKDLlApp 初始化
 
@@ -62,7 +59,7 @@ BOOL CImiProTKDLlApp::InitInstance()
 	return TRUE;
 }
 
-extern "C" __declspec(dllexport) ImiDialogTest* ShowDialog()
+extern "C" __declspec(dllexport) ImiDialogTest *ShowDialog()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ImiDialogTest *Dialog = new ImiDialogTest;

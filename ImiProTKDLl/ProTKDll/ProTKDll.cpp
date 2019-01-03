@@ -10,7 +10,6 @@ IDD_IMIDIALOGTEST = 16000，见ImiProTKDLl工程的res文件,这个工程没有定义，故重定义
 #define IDD_IMIDIALOGTEST 16000
 #include "..\ImiProTKDLl\ImiDialogTest.h"
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -45,7 +44,6 @@ IDD_IMIDIALOGTEST = 16000，见ImiProTKDLl工程的res文件,这个工程没有定义，故重定义
 BEGIN_MESSAGE_MAP(CProTKDllApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CProTKDllApp 构造
 
 CProTKDllApp::CProTKDllApp()
@@ -54,11 +52,9 @@ CProTKDllApp::CProTKDllApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CProTKDllApp 对象
 
 CProTKDllApp theApp;
-
 
 // CProTKDllApp 初始化
 
@@ -68,36 +64,33 @@ BOOL CProTKDllApp::InitInstance()
 
 	return TRUE;
 }
-static uiCmdAccessState AccessDefault (uiCmdAccessMode access_mode)
+static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
 	return (ACCESS_AVAILABLE);
 }
 void Test()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-	//路径的问题，无法像exe那样使用相对路径，注意修改！
-	 
- ProPath exec_path;
+	ProPath exec_path;
+	ProToolkitApplExecPathGet(exec_path);
 
-	 ProToolkitApplExecPathGet(exec_path);
-	 AfxMessageBox(CString(exec_path));
-	HINSTANCE  m_hDll = LoadLibrary(_T("D:\\mydoc\\creo_toolkit\\ImiProTKDLl\\x64\\Debug\\ImiProTKDLl.dll"));
+	HINSTANCE m_hDll = LoadLibrary(CString(exec_path).Left((CString(exec_path)).GetLength() - 12) + _T("ImiProTKDLl.dll"));
 	if (NULL == m_hDll)
 		AfxMessageBox(_T("加载 ImiProTKDLl.dll 失败"));
-    typedef ImiDialogTest* (*hpDllFun)();
-    hpDllFun pShowDlg = (hpDllFun)GetProcAddress(m_hDll,"ShowDialog");
-	if (NULL==pShowDlg)
+	typedef ImiDialogTest *(*hpDllFun)();
+	hpDllFun pShowDlg = (hpDllFun)GetProcAddress(m_hDll, "ShowDialog");
+	if (NULL == pShowDlg)
 	{
 		AfxMessageBox(_T("DLL中函数寻找失败"));
 		return;
 	}
 	//指针，内存泄漏
-   ImiDialogTest* imiDialogTest = pShowDlg();
+	ImiDialogTest *imiDialogTest = pShowDlg();
 }
 extern "C" int user_initialize()
 {
-    AFX_MANAGE_STATE(AfxGetStaticModuleState());
-    AfxInitRichEdit2();
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	AfxInitRichEdit2();
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
@@ -106,13 +99,13 @@ extern "C" int user_initialize()
 
 	ProError status;
 	uiCmdCmdId Test_cmd_id1;
-	status = ProMenubarMenuAdd("Test","Test","File",PRO_B_TRUE,L"Test.txt");
+	status = ProMenubarMenuAdd("Test", "Test", "File", PRO_B_TRUE, L"Test.txt");
 
-	status = ProCmdActionAdd("Test_Act1",(uiCmdCmdActFn)Test,uiProeImmediate,AccessDefault,PRO_B_TRUE,PRO_B_TRUE,&Test_cmd_id1);
-    status = ProMenubarmenuPushbuttonAdd("Test","Cmd1","Cmd1","Tips1",NULL,PRO_B_TRUE,Test_cmd_id1,L"Test.txt");
-    return PRO_TK_NO_ERROR;
+	status = ProCmdActionAdd("Test_Act1", (uiCmdCmdActFn)Test, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &Test_cmd_id1);
+	status = ProMenubarmenuPushbuttonAdd("Test", "Cmd1", "Cmd1", "Tips1", NULL, PRO_B_TRUE, Test_cmd_id1, L"Test.txt");
+	return PRO_TK_NO_ERROR;
 }
 extern "C" void user_terminate()
 {
-    AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 }

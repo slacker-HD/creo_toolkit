@@ -10,13 +10,11 @@
 #define new DEBUG_NEW
 #endif
 
-
 // CTestExeApp
 
 BEGIN_MESSAGE_MAP(CTestExeApp, CWinApp)
-	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
+ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
-
 
 // CTestExeApp 构造
 
@@ -29,11 +27,9 @@ CTestExeApp::CTestExeApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CTestExeApp 对象
 
 CTestExeApp theApp;
-
 
 // CTestExeApp 初始化
 
@@ -50,7 +46,6 @@ BOOL CTestExeApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinApp::InitInstance();
-
 
 	AfxEnableControlContainer();
 
@@ -91,4 +86,3 @@ BOOL CTestExeApp::InitInstance()
 	//  而不是启动应用程序的消息泵。
 	return FALSE;
 }
-
