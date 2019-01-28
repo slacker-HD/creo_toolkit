@@ -159,11 +159,10 @@ void CleanOptions()
 
 static ProError DashboardNotification(ProUIDashboard dashboard, ProUIDashboardEventType event_type, ProAppData appdata)
 {
-	ProError status;
 	switch (event_type)
 	{
 	case PRO_UI_DASHBOARD_CREATE:
-		status = ProUIDashboardBitmapSet(dashboard, "dash_done");
+		//status = ProUIDashboardBitmapSet(dashboard, "dash_done");
 		AfxMessageBox(_T("DashboardNotification_PRO_UI_DASHBOARD_PAGE_CREATE"));
 		break;
 	case PRO_UI_DASHBOARD_HIDE:
