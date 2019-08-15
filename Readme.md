@@ -49,3 +49,8 @@
 ## Protktooltips
 
 + 非模式对话框显示TOOLTIPS
+
+## unicodechineseinput
+
++ 非模式对话框中Edit Control和Combo Box输入中文
++ 使用.NET主题
