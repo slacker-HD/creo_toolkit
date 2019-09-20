@@ -1,0 +1,14 @@
+﻿originview
+原生对话框使用预览控件
+原生对话框使用预览控件
+#
+
+originviewdlg
+预览对话框
+预览对话框
+#
+
+originviewdlgtips
+预览对话框
+预览对话框
+#

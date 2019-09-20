@@ -1,0 +1,7 @@
+name originview
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\originview\x64\Debug\originview.dll
+text_dir  D:\mydoc\creo_toolkit\originview\text
+revision   18.0
+end
