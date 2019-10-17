@@ -90,53 +90,27 @@ ProError AsmCompFilter(ProFeature *feature, ProAppData app_data)
 	return PRO_TK_CONTINUE;
 }
 
-ProError FeatureAsmVisitAcFn(ProFeature *p_object, ProError status, CArray<ProFeature, ProFeature> *app_data)
+ProError AsmVisitAcFn(ProFeature *p_object, ProError status, CArray<ProFeature, ProFeature> *app_data)
 {
 	ProBoolean isVisible;
-	int *r_failed_feat_ids;
-	int num = 0;
-	ProBoolean p_is_incomplete;
 	ProFeatStatus p_status;
 	ProMdl mdl;
 	ProModelitem modelitem;
 
-	status = ProArrayAlloc(0, sizeof(int), 1, (ProArray *)&r_failed_feat_ids);
-	status = ProSolidFailedFeatsList((ProSolid)(p_object->owner), &r_failed_feat_ids);
-	status = ProArraySizeGet((ProArray)r_failed_feat_ids, &num);
-	for (int i = 0; i < num; i++)
-	{
-		if (p_object->id == r_failed_feat_ids[i])
-		{
-			ProArrayFree((ProArray *)&r_failed_feat_ids);
-			return PRO_TK_NO_ERROR;
-		}
-	}
-	ProArrayFree((ProArray *)&r_failed_feat_ids);
-
-	status = ProFeatureIsIncomplete(p_object, &p_is_incomplete);
-	if (p_is_incomplete != PRO_B_FALSE)
-		return PRO_TK_NO_ERROR;
-
 	status = ProFeatureStatusGet(p_object, &p_status);
-	if (p_status == PRO_FEAT_SUPPRESSED)
-		return PRO_TK_NO_ERROR;
-	if (p_status != PRO_FEAT_ACTIVE)
-		return PRO_TK_NO_ERROR;
-
 	status = ProFeatureVisibilityGet(p_object, &isVisible);
-	if (isVisible == PRO_B_TRUE)
+	if (isVisible == PRO_B_TRUE && p_status != PRO_FEAT_SUPPRESSED)
 	{
 		status = ProAsmcompMdlGet((ProAsmcomp *)(p_object), (ProMdl *)&mdl);
 		status = ProMdlToModelitem(mdl, &modelitem);
 		if (modelitem.type == PRO_ASSEMBLY)
 		{
-			status = ProSolidFeatVisit((ProSolid)mdl, (ProFeatureVisitAction)FeatureAsmVisitAcFn, AsmCompFilter, app_data);
+			status = ProSolidFeatVisit((ProSolid)mdl, (ProFeatureVisitAction)AsmVisitAcFn, AsmCompFilter, app_data);
 		}
 		else
 		{
 			RepaintPart(modelitem);
 		}
-		app_data->Add(*p_object);
 	}
 	return PRO_TK_NO_ERROR;
 }
@@ -144,7 +118,7 @@ ProError FeatureAsmVisitAcFn(ProFeature *p_object, ProError status, CArray<ProFe
 void ColorPaint()
 {
 	ProError status;
-	CString Macro = _T("~ Select `main_dlg_cur` `View:ProCmdViewGallery`;~ Select `main_dlg_cur` `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`;~ Close `main_dlg_cur` `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`;~ Activate `main_dlg_cur` `clearAllAppearance`;~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;");
+	CString Macro = _T("aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;");
 	Macro += _T("~ Command `About_Act`;");
 	wchar_t *macro = Macro.AllocSysString();
 	hint = Fun;
@@ -159,7 +133,7 @@ void _ColorPaint()
 	CArray<ProFeature, ProFeature> feat_list;
 	status = ProMdlCurrentGet(&mdl);
 	srand((unsigned int)time(0));
-	status = ProSolidFeatVisit((ProSolid)mdl, (ProFeatureVisitAction)FeatureAsmVisitAcFn, AsmCompFilter, (CArray<ProFeature, ProFeature> *)&feat_list);
+	status = ProSolidFeatVisit((ProSolid)mdl, (ProFeatureVisitAction)AsmVisitAcFn, AsmCompFilter, (CArray<ProFeature, ProFeature> *)&feat_list);
 	status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }
 
