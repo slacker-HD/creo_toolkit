@@ -1,0 +1,7 @@
+name ColorPaint
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ColorPaint\x64\Debug\ColorPaint.dll
+text_dir  D:\mydoc\creo_toolkit\ColorPaint\text
+revision   18.0
+end

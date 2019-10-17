@@ -58,3 +58,7 @@
 ## originview
 
 + 原生对话框嵌入MFC控件及交互
+
+## ColorPaint
+
++ 一键对装配体所有零件随机着色
