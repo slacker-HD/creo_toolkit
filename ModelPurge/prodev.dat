@@ -1,0 +1,7 @@
+name ModelPurge
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ModelPurge\x64\Debug\ModelPurge.dll
+text_dir  D:\mydoc\creo_toolkit\ModelPurge\text
+revision   18.0
+end
