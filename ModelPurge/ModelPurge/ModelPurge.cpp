@@ -24,6 +24,17 @@ BOOL CModelPurgeApp::InitInstance()
 	return TRUE;
 }
 
+ProError ShowDialog(wchar_t *Message)
+{
+	ProUIMessageButton *buttons;
+	ProUIMessageButton user_choice;
+	ProArrayAlloc(1, sizeof(ProUIMessageButton), 1, (ProArray *)&buttons);
+	buttons[0] = PRO_UI_MESSAGE_OK;
+	ProUIMessageDialogDisplay(PROUIMESSAGE_INFO, L"提示", Message, buttons, PRO_UI_MESSAGE_OK, &user_choice);
+	ProArrayFree((ProArray *)&buttons);
+	return PRO_TK_NO_ERROR;
+}
+
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
 	return ACCESS_AVAILABLE;
@@ -127,11 +138,10 @@ void ProMdlPurgeFileType(wchar_t *Type)
 
 void ProMdlPurgeAll()
 {
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProMdlPurgeFileType(L"*.drw");
 	ProMdlPurgeFileType(L"*.prt");
 	ProMdlPurgeFileType(L"*.asm");
-	AfxMessageBox(_T("当前工作目录已清理。"));
+	ShowDialog(L"当前工作目录已清理。");
 }
 
 extern "C" int user_initialize()
