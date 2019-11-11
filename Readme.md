@@ -66,3 +66,9 @@
 ## ModelPurge
 
 + 一键清除工作目录下PRT、ASM以及DRW旧版本，文件移到回收站而不是直接删除
+
+## CreoAccess
+
++ 二次开发连接Access数据库示例
++ 需要在[https://www.microsoft.com/zh-cn/download/confirmation.aspx?id=13255](https://www.microsoft.com/zh-cn/download/confirmation.aspx?id=13255)下载对应的数据库引擎。
+

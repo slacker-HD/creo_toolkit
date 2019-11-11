@@ -1,0 +1,7 @@
+name CreoAccess
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\CreoAccess\x64\Debug\CreoAccess.dll
+text_dir  D:\mydoc\creo_toolkit\CreoAccess\text
+revision   18.0
+end
