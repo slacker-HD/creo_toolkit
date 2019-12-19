@@ -1,0 +1,7 @@
+name ToolkitCsharp
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ToolkitCsharp\x64\Debug\ToolkitCsharp.dll
+text_dir  D:\mydoc\creo_toolkit\ToolkitCsharp\text
+revision   18.0
+end
