@@ -39,8 +39,6 @@
 
 
 #include "MetaHost.h"
-#include <mscoree.h>  
-
 
 #define MSGFILE L"ToolkitCsharp.txt"
 
