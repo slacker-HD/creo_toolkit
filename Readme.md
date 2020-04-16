@@ -75,3 +75,11 @@
 ## ToolkitCsharp
 
 + 二次开发调用C#类库实例，c#窗体可以和Toolkit交互，本例是调用保存模型功能。
+
+## CreoMenuExample
+
++ 添加普通菜单项
++ 添加CheckBox菜单项
++ 添加RadioBox菜单项
++ 添加右键菜单项
++ 所有菜单项同时可添加到Ribbon中
