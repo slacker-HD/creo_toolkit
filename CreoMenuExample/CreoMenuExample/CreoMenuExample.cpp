@@ -215,7 +215,7 @@ extern "C" int user_initialize()
 	//带radio的菜单+ribbon按钮
 	status = ProMenubarmenuMenuAdd("CreoMenuExample", "RadioButtonMenu", "RadioButtonMenu", NULL, PRO_B_TRUE, MSGFILE);
 	status = ProCmdOptionAdd("RadioButtonMenu_Act", (uiCmdCmdActFn)RadioButtonActFn, PRO_B_FALSE, (uiCmdCmdValFn)RadioButtonValFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &RadioMenuID);
-	status = ProMenubarmenuRadiogrpAdd("RadioButtonMenu", "RadioButtonGroup",2, radio_group_items, radio_group_labels, radio_group_help,NULL, PRO_B_FALSE,RadioMenuID,MSGFILE);
+	status = ProMenubarmenuRadiogrpAdd("RadioButtonMenu", "RadioButtonGroup", 4, radio_group_items, radio_group_labels, radio_group_help,NULL, PRO_B_FALSE,RadioMenuID,MSGFILE);
 	status = ProCmdRadiogrpDesignate(RadioMenuID, 4, radio_group_items, radio_group_labels, radio_group_help,radio_group_icons,"RadioButtonGroupDescription",MSGFILE);
 
 	//带checkbox的菜单+ribbon按钮；添加图标方法未知
