@@ -185,11 +185,14 @@ ProError ProPopupMenuNotification(ProMenuName name)
 	ProError status;
 	uiCmdCmdId MainMenuID;
 	ProPopupMenuId PopupMenuID;
+	ProLine label;
+	ProLine help;
 
 	status = ProPopupmenuIdGet(name, &PopupMenuID);
 	status = ProCmdCmdIdFind("MainMenu_Act", &MainMenuID);
-
-	status = ProPopupmenuButtonAdd(PopupMenuID, PRO_VALUE_UNUSED, "HFUTGDM.MainMenu_Act", L"MainMenuItem", L"MainMenuItemtips",MainMenuID,AccessPopupmenu,NULL);
+	status = ProMessageToBuffer(label, MSGFILE,"MainMenuItem");
+	status = ProMessageToBuffer(help, MSGFILE,"MainMenuItemtips");
+	status = ProPopupmenuButtonAdd(PopupMenuID, PRO_VALUE_UNUSED, "HFUTGDM.MainMenu_Act",label, help,MainMenuID,AccessPopupmenu,NULL);
 
 	return PRO_TK_NO_ERROR;
 }
