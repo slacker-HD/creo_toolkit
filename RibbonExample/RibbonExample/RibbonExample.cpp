@@ -118,10 +118,8 @@ void RightAct()
 	CString macro;
 	status = ShowDialog(L"同样的功能禁止了Ribbon界面的切换");
 	macro = "~ Command `ProCmdDwgRegenModel` ; ~Command `ProCmdWinActivate`;";
-	if(_lastRibbonTab != "")
-	{
-		macro += _T("~ Activate `main_dlg_cur` `" + _lastRibbonTab + "_control_btn` 1;");
-	}
+	
+	macro += _T("~ Activate `main_dlg_cur` `" + _lastRibbonTab + "_control_btn` 1;");
 	wchar_t *p = macro.AllocSysString();
 	status = ProMacroLoad(p);
 	SysFreeString(p);
