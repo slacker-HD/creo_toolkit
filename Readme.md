@@ -86,7 +86,7 @@
 
 ## RibbonExample
 
-+ 程序加载自定义Ribbon界面
-+ 监听Ribbon界面切换事件
-+ 利用宏取消Ribbon界面切换
++ 程序加载自定义Ribbon栏
++ 监听Ribbon栏切换事件
++ 利用宏取消Ribbon栏切换
 + 自定义ribbon界面文件在text/ribbon文件夹下
