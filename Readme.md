@@ -82,4 +82,11 @@
 + 添加CheckBox菜单项
 + 添加RadioBox菜单项
 + 添加右键菜单项
-+ 所有菜单项同时可添加到Ribbon中
++ 所有菜单项同时可添加到Ribbon中，自定义ribbon界面文件在text/ribbon文件夹下
+
+## RibbonExample
+
++ 程序加载自定义Ribbon界面
++ 监听Ribbon界面切换事件
++ 利用宏取消Ribbon界面切换
++ 自定义ribbon界面文件在text/ribbon文件夹下
