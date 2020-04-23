@@ -49,3 +49,4 @@
 #include <ProNotify.h>
 #include <ProPopupmenu.h>
 #include <ProMessage.h>
+#include <ProRibbon.h>

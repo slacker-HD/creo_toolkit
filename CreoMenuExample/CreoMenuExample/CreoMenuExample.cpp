@@ -229,6 +229,9 @@ extern "C" int user_initialize()
 	//注册右键菜单监听事件，功能与普通菜单一样
 	status = ProNotificationSet(PRO_POPUPMENU_CREATE_POST,  (ProFunction)ProPopupMenuNotification);
 
+	//加载自定义ribbon栏
+	status = ProRibbonDefinitionfileLoad(L"CreoMenuExample.rbn");
+
 	return PRO_TK_NO_ERROR;
 }
 
