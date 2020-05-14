@@ -90,3 +90,7 @@
 + 监听Ribbon栏切换事件
 + 利用宏取消Ribbon栏切换
 + 自定义ribbon界面文件在text/ribbon文件夹下
+
+## AuxiliaryLine
+
++ 绘制圆中心线
