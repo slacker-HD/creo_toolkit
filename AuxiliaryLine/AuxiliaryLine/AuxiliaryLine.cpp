@@ -46,20 +46,18 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
-void DrawLine(ProDrawing Drawing, ProView View, ProPoint3d Start, ProPoint3d End, ProColortype Color)
+void DrawLine(ProDrawing Drawing, ProView View, ProPoint3d Start, ProPoint3d End, ProColortype Color, ProName Font)
 {
 	ProError status;
 	ProDtlentitydata edata;
 	ProCurvedata *curve;
 	ProDtlentity entity;
 	ProColor entity_color;
-	int Cur_sheet;
 
 	status = ProDtlentitydataAlloc(Drawing, &edata);
 	status = ProCurvedataAlloc(&curve);
 	status = ProLinedataInit(Start, End, curve);
 	status = ProDtlentitydataCurveSet(edata, curve);
-	status = ProDrawingCurrentSheetGet(Drawing, &Cur_sheet);
 	status = ProDtlentitydataViewSet(edata, View);
 
 	entity_color.value.type = PRO_COLOR_LETTER;
@@ -67,7 +65,7 @@ void DrawLine(ProDrawing Drawing, ProView View, ProPoint3d Start, ProPoint3d End
 
 	status = ProDtlentitydataColorSet(edata, &entity_color);
 	status = ProDtlentitydataWidthSet(edata, 0);
-	status = ProDtlentitydataFontSet(edata, L"CTRLFONT");
+	status = ProDtlentitydataFontSet(edata, Font);
 
 	status = ProDtlentityCreate(Drawing, NULL, edata, &entity);
 	status = ProDtlentitydataViewSet(edata, View);
@@ -91,7 +89,7 @@ void InsertCrossLine()
 	ProVector vector1, vector2;
 	double p_start_angle, p_end_angle, p_radius;
 
-	ProPoint3d centerinCsys, centerinView;
+	ProPoint3d centerinCsys, centerinDrawing;
 	ProMatrix transform;
 
 	ProMouseButton expected_button = (ProMouseButton)(PRO_LEFT_BUTTON | PRO_MIDDLE_BUTTON);
@@ -122,7 +120,7 @@ void InsertCrossLine()
 
 		status = ProViewMatrixGet(NULL, view, transform);
 		status = ProDrawingViewTransformGet(drawing, view, PRO_B_TRUE, transform);
-		status = ProPntTrfEval(centerinCsys, transform, centerinView);
+		status = ProPntTrfEval(centerinCsys, transform, centerinDrawing);
 
 		Gray.method = PRO_COLOR_METHOD_RGB;
 		Gray.value.map.red = 0.5;
@@ -145,34 +143,36 @@ void InsertCrossLine()
 
 			if (button_pressed == PRO_MIDDLE_BUTTON)
 			{
+				status = ProGeomitemdataFree(&geomitem_data);
+				status = ProWindowRepaint(PRO_VALUE_UNUSED);
 				return;
 			}
 
 			positionto[0][0] = positionmouse[0];
-			positionto[0][1] = centerinView[1];
+			positionto[0][1] = centerinDrawing[1];
 			positionto[0][2] = positionmouse[2];
 
-			positionto[1][0] = centerinView[0] - (positionmouse[0] - centerinView[0]);
-			positionto[1][1] = centerinView[1];
+			positionto[1][0] = centerinDrawing[0] - (positionmouse[0] - centerinDrawing[0]);
+			positionto[1][1] = centerinDrawing[1];
 			positionto[1][2] = positionmouse[2];
 
 			ProGraphicsPenPosition(positionto[0]);
 			ProGraphicsLineDraw(positionto[1]);
 
-			positionto[2][0] = centerinView[0];
+			positionto[2][0] = centerinDrawing[0];
 			positionto[2][1] = positionmouse[1];
 			positionto[2][2] = positionmouse[2];
 
-			positionto[3][0] = centerinView[0];
-			positionto[3][1] = centerinView[1] - (positionmouse[1] - centerinView[1]);
+			positionto[3][0] = centerinDrawing[0];
+			positionto[3][1] = centerinDrawing[1] - (positionmouse[1] - centerinDrawing[1]);
 			positionto[3][2] = positionmouse[2];
 
 			ProGraphicsPenPosition(positionto[2]);
 			ProGraphicsLineDraw(positionto[3]);
 		}
 		status = ProGraphicsColorModify(&OrigColor, &Gray);
-		DrawLine(drawing, view, positionto[0], positionto[1], PRO_COLOR_LETTER);
-		DrawLine(drawing, view, positionto[2], positionto[3], PRO_COLOR_LETTER);
+		DrawLine(drawing, view, positionto[0], positionto[1], PRO_COLOR_LETTER, L"CTRLFONT");
+		DrawLine(drawing, view, positionto[2], positionto[3], PRO_COLOR_LETTER, L"CTRLFONT");
 	}
 
 	status = ProGeomitemdataFree(&geomitem_data);
