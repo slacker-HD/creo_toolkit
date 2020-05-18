@@ -58,17 +58,16 @@ void DrawLine(ProDrawing Drawing, ProView View, ProPoint3d Start, ProPoint3d End
 	status = ProCurvedataAlloc(&curve);
 	status = ProLinedataInit(Start, End, curve);
 	status = ProDtlentitydataCurveSet(edata, curve);
+
 	status = ProDtlentitydataViewSet(edata, View);
 
 	entity_color.value.type = PRO_COLOR_LETTER;
 	entity_color.method = PRO_COLOR_METHOD_TYPE;
-
 	status = ProDtlentitydataColorSet(edata, &entity_color);
 	status = ProDtlentitydataWidthSet(edata, 0);
 	status = ProDtlentitydataFontSet(edata, Font);
 
 	status = ProDtlentityCreate(Drawing, NULL, edata, &entity);
-	status = ProDtlentitydataViewSet(edata, View);
 
 	status = ProDtlentitydataFree(edata);
 }
