@@ -117,8 +117,6 @@ void InsertCrossLine()
 	if (status == PRO_TK_NO_ERROR)
 	{
 		status = ProSelectionViewGet(SelBuffer[0], &view);
-
-		status = ProViewMatrixGet(NULL, view, transform);
 		status = ProDrawingViewTransformGet(drawing, view, PRO_B_TRUE, transform);
 		status = ProPntTrfEval(centerinCsys, transform, centerinDrawing);
 
