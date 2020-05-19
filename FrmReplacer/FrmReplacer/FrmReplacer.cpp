@@ -46,36 +46,6 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
-void SetSheet(ProMdl Drawing, ProMdl Format, BOOL Deltable, int SheetNum)
-{
-	ProError status;
-	ProDwgtable *tables = NULL;
-	ProBoolean isfromformat;
-	int num;
-
-	status = ProDrawingCurrentSheetSet((ProDrawing)Drawing, SheetNum); //设置为当前sheet，防止表格读取错误
-	if (Deltable)
-	{
-		status = ProDrawingTablesCollect((ProDrawing)Drawing, &tables);
-		if (status == PRO_TK_NO_ERROR)
-		{
-			status = ProArraySizeGet((ProArray)tables, &num);
-			for (int i = 0; i < num; i++)
-			{
-				status = ProDwgtableIsFromFormat(&tables[i], &isfromformat); //直接同时判断表格是否属于当前sheet了
-				if (isfromformat == PRO_B_TRUE)
-					status = ProDwgtableDelete(&tables[i], 1);
-			}
-			status = ProArrayFree((ProArray *)&tables);
-		}
-	}
-
-	status = ProDrawingFormatAdd((ProDrawing)Drawing, SheetNum, NULL, Format, 0);
-	status = ProWindowRepaint(PRO_VALUE_UNUSED);
-	status = ProMdlSave(Drawing);
-	status = ProMdlErase(Drawing);
-}
-
 void SetSheet(CString Frm, BOOL Deltable)
 {
 	ProError status;
