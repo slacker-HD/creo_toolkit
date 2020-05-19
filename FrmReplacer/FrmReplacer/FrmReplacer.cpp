@@ -46,34 +46,44 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
+void DeleteTable(ProDrawing Drawing)
+{
+	ProError status;
+	ProDwgtable *tables = NULL;
+	ProBoolean from_format;
+	int num;
+	status = ProDrawingTablesCollect(Drawing, &tables);
+	if (status == PRO_TK_NO_ERROR)
+	{
+		status = ProArraySizeGet((ProArray)tables, &num);
+		for (int i = 0; i < num; i++)
+		{
+			status = ProDwgtableIsFromFormat(&tables[i], &from_format);
+			if (from_format == PRO_B_TRUE)
+				status = ProDwgtableDelete(&tables[i], 1);
+		}
+		status = ProArrayFree((ProArray *)&tables);
+	}
+}
+
 void SetSheet(CString Frm, BOOL Deltable)
 {
 	ProError status;
 	ProMdl mdl;
 	ProMdl format;
 	ProDwgtable *tables = NULL;
-	int num, Cur_Sheet;
-	ProBoolean from_format;
+	int Cur_Sheet;
 	status = ProMdlCurrentGet(&mdl);
 	if (status != PRO_TK_NO_ERROR)
 		return;
+
 	status = ProDrawingCurrentSheetGet((ProDrawing)mdl, &Cur_Sheet);
 
 	if (Deltable)
 	{
-		status = ProDrawingTablesCollect((ProDrawing)mdl, &tables);
-		if (status == PRO_TK_NO_ERROR)
-		{
-			status = ProArraySizeGet((ProArray)tables, &num);
-			for (int i = 0; i < num; i++)
-			{
-				status = ProDwgtableIsFromFormat(&tables[i], &from_format);
-				if (from_format == PRO_B_TRUE)
-					status = ProDwgtableDelete(&tables[i], 1);
-			}
-			status = ProArrayFree((ProArray *)&tables);
-		}
+		DeleteTable((ProDrawing)mdl);
 	}
+
 	wchar_t *p = Frm.AllocSysString();
 	status = ProMdlRetrieve(p, PRO_MDL_DWGFORM, &format);
 	SysFreeString(p);
