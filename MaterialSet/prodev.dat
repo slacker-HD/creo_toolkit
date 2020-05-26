@@ -1,0 +1,7 @@
+name MaterialSet
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\MaterialSet\x64\Debug\MaterialSet.dll
+text_dir  D:\mydoc\creo_toolkit\MaterialSet\text
+revision   18.0
+end

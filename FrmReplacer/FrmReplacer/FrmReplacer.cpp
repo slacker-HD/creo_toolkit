@@ -97,11 +97,9 @@ void SetSheet(CString Frm, BOOL Deltable)
 
 CString ChooseFrmBox()
 {
-	BOOL isOpen = TRUE;
-	CString filter = "图框文件 (*.frm.*)|*.frm.*||"; //文件过虑的类型
-	CFileDialog openFileDlg(isOpen, "", "", OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
-	INT_PTR result = openFileDlg.DoModal();
-	if (result == IDOK)
+	CString filter = "图框文件 (*.frm.*)|*.frm.*||";
+	CFileDialog openFileDlg(TRUE, "", "", OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
+	if (openFileDlg.DoModal() == IDOK)
 	{
 		return openFileDlg.GetPathName();
 	}
