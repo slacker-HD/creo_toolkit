@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CMaterialSetApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CMaterialSetApp 构造
 
 CMaterialSetApp::CMaterialSetApp()
@@ -47,11 +46,9 @@ CMaterialSetApp::CMaterialSetApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CMaterialSetApp 对象
 
 CMaterialSetApp theApp;
-
 
 // CMaterialSetApp 初始化
 
@@ -93,7 +90,7 @@ void ChangeMaterial()
 	ProMdl mdl;
 	ProMaterial material;
 
-	CString filter = "材料文件 (*.mtl)|*.mtl||"; 
+	CString filter = "材料文件 (*.mtl)|*.mtl||";
 	CFileDialog openFileDlg(TRUE, "", "", OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
 	if (openFileDlg.DoModal() == IDOK)
 	{
@@ -105,8 +102,8 @@ void ChangeMaterial()
 		SysFreeString(p);
 
 		p = openFileDlg.GetFileTitle().AllocSysString();
-		status = ProMaterialfileRead(ProMdlToSolid(mdl),p);
-		status = ProWstringCopy(p,material.matl_name,PRO_VALUE_UNUSED);
+		status = ProMaterialfileRead(ProMdlToSolid(mdl), p);
+		status = ProWstringCopy(p, material.matl_name, PRO_VALUE_UNUSED);
 		material.part = ProMdlToSolid(mdl);
 		SysFreeString(p);
 
