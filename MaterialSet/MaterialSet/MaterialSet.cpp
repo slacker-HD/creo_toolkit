@@ -82,7 +82,7 @@ static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
-void ChangeMaterial()
+void SetMaterial()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProPath currentPath;
@@ -114,6 +114,44 @@ void ChangeMaterial()
 	}
 }
 
+void GetMaterial()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	ProMdl mdl;
+	ProMaterial material;
+	ProName *p_name;
+	status = ProArrayAlloc(0, sizeof(ProName), 1, (ProArray *)&p_name);
+	int count;
+	status = ProMdlCurrentGet(&mdl);
+	status = ProMaterialCurrentGet(ProMdlToSolid(mdl), &material);
+	if (status == PRO_TK_NO_ERROR)
+	{
+		CString Name = CString(material.matl_name);
+		AfxMessageBox("当前使用的材料为：" + Name);
+	}
+	else
+	{
+		AfxMessageBox("当前未设置材料");
+	}
+	status = ProPartMaterialsGet(ProMdlToSolid(mdl), &p_name);
+	if (status != PRO_TK_NO_ERROR)
+	{
+		AfxMessageBox("当前未包含任何材料");
+	}
+	else
+	{
+		status = ProArraySizeGet((ProArray)p_name, &count);
+		CString Names = "";
+		for (int i = 0; i < count; i++)
+		{
+			Names += CString(p_name[i]) + ",";
+		}
+		AfxMessageBox("当前包含以下材料：" + Names);
+	}
+	status = ProArrayFree((ProArray *)&p_name);
+}
+
 extern "C" int user_initialize()
 {
 	ProError status;
@@ -122,8 +160,11 @@ extern "C" int user_initialize()
 	status = ProMenubarMenuAdd("MaterialSet", "MaterialSet", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("MaterialSet", "MaterialSet", "MaterialSet", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("MaterialSet1_Act", (uiCmdCmdActFn)ChangeMaterial, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &MaterialSetID);
+	status = ProCmdActionAdd("MaterialSet1_Act", (uiCmdCmdActFn)SetMaterial, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &MaterialSetID);
 	status = ProMenubarmenuPushbuttonAdd("MaterialSet", "MaterialSetmenu", "MaterialSetmenu", "MaterialSetmenutips", NULL, PRO_B_TRUE, MaterialSetID, MSGFILE);
+
+	status = ProCmdActionAdd("MaterialSet2_Act", (uiCmdCmdActFn)GetMaterial, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &MaterialSetID);
+	status = ProMenubarmenuPushbuttonAdd("MaterialSet", "MaterialGetmenu", "MaterialGetmenu", "MaterialGetmenutips", NULL, PRO_B_TRUE, MaterialSetID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

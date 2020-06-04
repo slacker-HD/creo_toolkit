@@ -12,3 +12,14 @@ MaterialSetmenutips
 设定材料
 设定材料
 #
+
+
+MaterialGetmenu
+获取材料信息
+设定材料信息
+#
+
+MaterialGetmenutips
+设定材料信息
+设定材料信息
+#
