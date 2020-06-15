@@ -106,4 +106,5 @@
 
 ## QRCodeGen
 
-+ 生产并添加二维码
++ 生成并添加二维码
++ 二维码生成库调用自[https://github.com/elicec/MFCQRcode](https://github.com/elicec/MFCQRcode)。

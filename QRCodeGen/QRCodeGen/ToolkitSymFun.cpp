@@ -150,7 +150,7 @@ void QRcodeSymdefCreate(ProDrawing drawing, CString name, CString message, ProVe
 {
 	ProError status;
 	ProDtlsymdefdata sdata;
-	ProVector origin, e1, e2;
+	ProVector origin= {0, 0, 0}, e1, e2;
 	ProDtlsymdefattach attach;
 	ProDtlsymdef symdef;
 	wchar_t *symdefname;
@@ -164,7 +164,6 @@ void QRcodeSymdefCreate(ProDrawing drawing, CString name, CString message, ProVe
 	status = ProDtlsymdefdataPathSet(sdata, symdefname);
 	SysFreeString(symdefname);
 	status = ProDtlsymdefdataHeighttypeSet(sdata, PRODTLSYMDEFHGHTTYPE_FIXED);
-	memset(origin, '\0', sizeof(ProVector));
 	status = ProDtlsymdefattachAlloc(PROSYMDEFATTACHTYPE_FREE, 0, 0.0, origin, &attach);
 	status = ProDtlsymdefdataAttachAdd(sdata, attach);
 	status = ProDtlsymdefattachFree(attach);
