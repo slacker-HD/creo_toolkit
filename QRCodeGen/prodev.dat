@@ -1,0 +1,7 @@
+name QRCodeGen
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\QRCodeGen\x64\Debug\QRCodeGen.dll
+text_dir  D:\mydoc\creo_toolkit\QRCodeGen\text
+revision   18.0
+end
