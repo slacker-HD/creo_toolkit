@@ -20,6 +20,7 @@ BOOL CQRCodeGenApp::InitInstance()
 	CWinApp::InitInstance();
 	return TRUE;
 }
+#pragma endregion
 
 static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 {
@@ -28,7 +29,6 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 	else
 		return ACCESS_INVISIBLE;
 }
-#pragma endregion
 
 extern "C" int user_initialize()
 {
