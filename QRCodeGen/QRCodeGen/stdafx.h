@@ -39,6 +39,7 @@
 #include "qrencode.h"
 
 #define MSGFILE L"QRCodeGen.txt"
+#define QRCODESYMNAME "IMI_QRCODE"
 
 #include <ProUICmd.h>
 #include <ProUtil.h>

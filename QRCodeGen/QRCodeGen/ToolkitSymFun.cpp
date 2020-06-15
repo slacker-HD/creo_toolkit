@@ -2,13 +2,13 @@
 #include "qrencode.h"
 #include "CommonToolkitFun.h"
 
-CString DtlsymdefNameGet (ProDtlsymdef *p_sym_def)
+CString DtlsymdefNameGet(ProDtlsymdef *p_sym_def)
 {
 	ProDtlsymdefdata data;
 	ProError status;
 	ProName name;
-    if (p_sym_def == NULL || p_sym_def->type != PRO_SYMBOL_DEFINITION)
-       return ""; 
+	if (p_sym_def == NULL || p_sym_def->type != PRO_SYMBOL_DEFINITION)
+		return "";
 
 	status = ProDtlsymdefDataGet(p_sym_def, &data);
 	status = ProDtlsymdefdataNameGet(data, name);
@@ -25,28 +25,28 @@ void DeletePreQrCodeDef()
 	if (CurrentMdlType() != PRO_DRAWING)
 		return;
 	status = ProMdlCurrentGet((ProMdl *)&drawing);
-    status = ProDrawingDtlsymdefsCollect (drawing, &p_symdefs);
-	status = ProArraySizeGet ((ProArray)p_symdefs, &size);
-    for (int i = 0; i < size; i++)
-    {
-        if(DtlsymdefNameGet(&p_symdefs[i]) == "IMI_QRCODE")
+	status = ProDrawingDtlsymdefsCollect(drawing, &p_symdefs);
+	status = ProArraySizeGet((ProArray)p_symdefs, &size);
+	for (int i = 0; i < size; i++)
+	{
+		if (DtlsymdefNameGet(&p_symdefs[i]) == QRCODESYMNAME)
 		{
 			status = ProDtlsymdefDelete(&p_symdefs[i]);
 		}
-    }
-    status = ProArrayFree ((ProArray*)&p_symdefs);
+	}
+	status = ProArrayFree((ProArray *)&p_symdefs);
 }
 
-CString DtlsyminstNameGet (ProDtlsyminst *p_sym_def)
+CString DtlsyminstNameGet(ProDtlsyminst *p_sym_def)
 {
 
 	ProError status;
 	ProDtlsyminstdata instdata;
 	ProDtlsymdef symdef;
-    if (p_sym_def == NULL || p_sym_def->type != PRO_SYMBOL_DEFINITION)
-       return ""; 
-	status = ProDtlsyminstDataGet(p_sym_def,  PRODISPMODE_SYMBOLIC,&instdata);
-	status = ProDtlsyminstdataDefGet(instdata,&symdef);
+	if (p_sym_def == NULL || p_sym_def->type != PRO_SYMBOL_DEFINITION)
+		return "";
+	status = ProDtlsyminstDataGet(p_sym_def, PRODISPMODE_SYMBOLIC, &instdata);
+	status = ProDtlsyminstdataDefGet(instdata, &symdef);
 	return DtlsymdefNameGet(&symdef);
 }
 
@@ -60,16 +60,16 @@ void DeletePreQrCodeInst()
 	if (CurrentMdlType() != PRO_DRAWING)
 		return;
 	status = ProMdlCurrentGet((ProMdl *)&drawing);
-    status = ProDrawingDtlsyminstsCollect(drawing, PRO_VALUE_UNUSED, &p_syminsts);
-	status = ProArraySizeGet ((ProArray)p_syminsts, &size);
-    for (int i = 0; i < size; i++)
-    {
-        if(DtlsyminstNameGet(&p_syminsts[i]) == "IMI_QRCODE")
+	status = ProDrawingDtlsyminstsCollect(drawing, PRO_VALUE_UNUSED, &p_syminsts);
+	status = ProArraySizeGet((ProArray)p_syminsts, &size);
+	for (int i = 0; i < size; i++)
+	{
+		if (DtlsyminstNameGet(&p_syminsts[i]) == QRCODESYMNAME)
 		{
 			status = ProDtlsyminstDelete(&p_syminsts[i]);
 		}
-    }
-    status = ProArrayFree ((ProArray*)&p_syminsts);
+	}
+	status = ProArrayFree((ProArray *)&p_syminsts);
 }
 
 void SymInstCreateFree(ProDrawing drawing, ProDtlsymdef *definition, ProVector position)
@@ -137,48 +137,40 @@ void QRCodeDotPrint(ProDtlsymdef *symdef, ProVector start, ProVector end, ProCol
 	ProCurvedataAlloc(&curve);
 	ProLinedataInit(start, end, curve);
 	ProDtlentitydataCurveSet(edata, curve);
-	double width = 1;
-	/*--------------------------------------------------------------------*\ 
-	Set the color to the specified Pro/ENGINEER predefined color 
-	\*--------------------------------------------------------------------*/
 	entity_color.method = PRO_COLOR_METHOD_TYPE;
 	entity_color.value.type = color;
 	status = ProDtlentitydataColorSet(edata, &entity_color);
 	status = ProDtlentitydataWidthSet(edata, 1.0);
-	status = ProDtlentitydataWidthGet(edata, &width);
-
 	status = ProDtlentityCreate(symdef->owner, symdef, edata, &entity);
 
 	ProDtlentitydataFree(edata);
 }
 
-void QRcodeSymdefCreate(ProDrawing drawing, ProPath name, CString message, ProVector position)
+void QRcodeSymdefCreate(ProDrawing drawing, CString name, CString message, ProVector position)
 {
 	ProError status;
 	ProDtlsymdefdata sdata;
 	ProVector origin, e1, e2;
 	ProDtlsymdefattach attach;
 	ProDtlsymdef symdef;
+	wchar_t *symdefname;
 
 	int unWidth, x, y;
 	unsigned char *pSourceData;
 	QRcode *pQRC;
 
 	status = ProDtlsymdefdataAlloc(drawing, &sdata);
-	status = ProDtlsymdefdataPathSet(sdata, name);
-
+	symdefname = name.AllocSysString();
+	status = ProDtlsymdefdataPathSet(sdata, symdefname);
+	SysFreeString(symdefname);
 	status = ProDtlsymdefdataHeighttypeSet(sdata, PRODTLSYMDEFHGHTTYPE_FIXED);
-
 	memset(origin, '\0', sizeof(ProVector));
 	status = ProDtlsymdefattachAlloc(PROSYMDEFATTACHTYPE_FREE, 0, 0.0, origin, &attach);
-
 	status = ProDtlsymdefdataAttachAdd(sdata, attach);
 	status = ProDtlsymdefattachFree(attach);
-
 	status = ProDtlsymdefCreate(drawing, sdata, &symdef);
 	if (status != PRO_TK_NO_ERROR)
 		return;
-
 	status = ProDtlsymdefdataFree(sdata);
 
 	if (pQRC = QRcode_encodeString(message, 0, QR_ECLEVEL_L, QR_MODE_8, 1))
@@ -212,12 +204,6 @@ void QRcodeSymdefCreate(ProDrawing drawing, ProPath name, CString message, ProVe
 		}
 		QRcode_free(pQRC);
 	}
-	else
-	{
-		printf("NULL returned");
-		exit(-1);
-	}
-
 	SymInstCreateFree(drawing, &symdef, position);
 }
 
@@ -228,7 +214,7 @@ void QRCodeToSymbol(CString message, ProVector position)
 	if (CurrentMdlType() != PRO_DRAWING)
 		return;
 	status = ProMdlCurrentGet((ProMdl *)&drawing);
-	QRcodeSymdefCreate(drawing, L"IMI_QRCODE", message, position);
+	QRcodeSymdefCreate(drawing, QRCODESYMNAME, message, position);
 	status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ; ~Command `ProCmdWinActivate`;");
 }
 
@@ -239,4 +225,3 @@ void PlaceQrCode()
 	ProVector pos = {10, 10, 0};
 	QRCodeToSymbol(_T("这是测试的二维码"), pos);
 }
-
