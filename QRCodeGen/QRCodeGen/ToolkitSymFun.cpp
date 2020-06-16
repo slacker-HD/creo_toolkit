@@ -36,7 +36,7 @@ void DeletePreQrCodeDef()
 	status = ProArrayFree((ProArray *)&p_symdefs);
 }
 
-CString DtlsyminstNameGet(ProDtlsyminst *p_sym_def)
+CString DtlsyminstName(ProDtlsyminst *p_sym_def)
 {
 	ProError status;
 	ProDtlsyminstdata instdata;
@@ -62,7 +62,7 @@ void DeletePreQrCodeInst()
 	status = ProArraySizeGet((ProArray)p_syminsts, &size);
 	for (int i = 0; i < size; i++)
 	{
-		if (DtlsyminstNameGet(&p_syminsts[i]) == QRCODESYMNAME)
+		if (DtlsyminstName(&p_syminsts[i]) == QRCODESYMNAME)
 		{
 			status = ProDtlsyminstDelete(&p_syminsts[i]);
 		}
