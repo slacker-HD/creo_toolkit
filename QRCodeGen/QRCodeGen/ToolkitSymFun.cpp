@@ -36,40 +36,6 @@ void DeletePreQrCodeDef()
 	status = ProArrayFree((ProArray *)&p_symdefs);
 }
 
-CString DtlsyminstName(ProDtlsyminst *p_sym_def)
-{
-	ProError status;
-	ProDtlsyminstdata instdata;
-	ProDtlsymdef symdef;
-	if (p_sym_def == NULL || p_sym_def->type != PRO_SYMBOL_DEFINITION)
-		return "";
-	status = ProDtlsyminstDataGet(p_sym_def, PRODISPMODE_SYMBOLIC, &instdata);
-	status = ProDtlsyminstdataDefGet(instdata, &symdef);
-	return DtlsymdefName(&symdef);
-}
-
-void DeletePreQrCodeInst()
-{
-	ProError status;
-	ProDrawing drawing;
-	ProDtlsyminst *p_syminsts;
-	int size;
-	CString SymName;
-	if (CurrentMdlType() != PRO_DRAWING)
-		return;
-	status = ProMdlCurrentGet((ProMdl *)&drawing);
-	status = ProDrawingDtlsyminstsCollect(drawing, PRO_VALUE_UNUSED, &p_syminsts);
-	status = ProArraySizeGet((ProArray)p_syminsts, &size);
-	for (int i = 0; i < size; i++)
-	{
-		if (DtlsyminstName(&p_syminsts[i]) == QRCODESYMNAME)
-		{
-			status = ProDtlsyminstDelete(&p_syminsts[i]);
-		}
-	}
-	status = ProArrayFree((ProArray *)&p_syminsts);
-}
-
 void SymInstCreateFree(ProDrawing drawing, ProDtlsymdef *definition, ProVector position)
 {
 	ProError status;
@@ -175,7 +141,7 @@ void PlaceQRCodeSymbol(CString message, ProVector position)
 void PlaceQrCode()
 {
 	ProVector pos = {10, 10, 0};
-	DeletePreQrCodeInst();
+	//删除symdef自动会把inst也删除
 	DeletePreQrCodeDef();
 	PlaceQRCodeSymbol(_T("这是测试的二维码"), pos);
 }
