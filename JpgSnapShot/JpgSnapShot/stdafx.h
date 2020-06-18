@@ -36,19 +36,12 @@
 #include <afxcmn.h>                     // MFC 对 Windows 公共控件的支持
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include "qrencode.h"
-
-#define MSGFILE L"QRCodeGen.txt"
-#define QRCODESYMNAME "IMI_QRCODE"
+#define MSGFILE L"JpgSnapShot.txt"
 
 #include <ProUICmd.h>
 #include <ProMenu.h>
 #include <ProToolkitDll.h>
 #include <ProMenubar.h>
 #include <ProUtil.h>
-#include <ProDtlentity.h>
-#include <ProDtlsymdef.h>
-#include <ProSolid.h>
-#include <ProDrawing.h>
-#include <ProDtlsyminst.h>
-#include <ProDtlentity.h>
+#include <ProWindows.h>
+#include <ProView.h>

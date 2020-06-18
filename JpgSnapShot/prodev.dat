@@ -1,0 +1,7 @@
+name JpgSnapShot
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\JpgSnapShot\x64\Debug\JpgSnapShot.dll
+text_dir  D:\mydoc\creo_toolkit\JpgSnapShot\text
+revision   18.0
+end

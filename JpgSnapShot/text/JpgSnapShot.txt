@@ -1,0 +1,14 @@
+﻿JpgSnapShot
+导出jpg
+导出jpg
+#
+
+JpgSnapShotmenu
+默认视图导出jpg
+默认视图导出jpg
+#
+
+JpgSnapShotmenutips
+默认视图导出jpg
+默认视图导出jpg
+#

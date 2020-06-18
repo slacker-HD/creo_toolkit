@@ -108,3 +108,7 @@
 
 + 生成并添加二维码
 + 二维码生成库调用自[https://github.com/elicec/MFCQRcode](https://github.com/elicec/MFCQRcode)。
+
+## JpgSnapShot
+
++ 零件或装配体视图转到默认后截图
