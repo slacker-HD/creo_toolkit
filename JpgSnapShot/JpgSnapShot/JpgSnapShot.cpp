@@ -99,7 +99,7 @@ void Snapshot()
 		SysFreeString(p);
 		status = ProWindowCurrentGet(&wid);
 		status = ProViewReset(NULL, NULL);
-		status = ProViewRefit (NULL, NULL);
+		status = ProViewRefit(NULL, NULL);
 		status = ProMacroLoad(L"~ Command `ProCmdEnvDtmDisp` 1; ~ Command `ProCmdEnvAxisDisp` 1; ~ Command `ProCmdViewSpinCntr` 1; ~ Command `ProCmdEnvPntsDisp`  1;~ Command `ProCmdEnvCsysDisp`  1;"); //显示线框和坐标系，很奇怪必须这么设定下，否则下面的效果每次执行是toggle的效果而不是设定
 		status = ProMacroLoad(L"~ Command `ProCmdEnvDtmDisp` 0; ~ Command `ProCmdEnvAxisDisp` 0; ~ Command `ProCmdViewSpinCntr` 0; ~ Command `ProCmdEnvPntsDisp`  0;~ Command `ProCmdEnvCsysDisp`  0;"); //不显示线框和坐标系，后面的刷新等其实也可以用宏来做的
 		status = ProMacroExecute();
