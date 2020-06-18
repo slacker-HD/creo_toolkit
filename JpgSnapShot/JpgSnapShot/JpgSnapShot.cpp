@@ -89,7 +89,7 @@ void Snapshot()
 	int wid;
 	ProPath currentPath;
 	CString filter = "图片文件 (*.jpg)|*.jpg";
-
+	double width, height;
 	CFileDialog saveFileDlg(FALSE, "", "", OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
 	if (saveFileDlg.DoModal() == IDOK)
 	{
@@ -99,13 +99,15 @@ void Snapshot()
 		SysFreeString(p);
 		status = ProWindowCurrentGet(&wid);
 		status = ProViewReset(NULL, NULL);
-		status = ProMacroLoad(L"~ Command `ProCmdEnvDtmDisp` 0; ~ Command `ProCmdEnvAxisDisp` 0; ~ Command `ProCmdViewSpinCntr` 0; ~ Command `ProCmdEnvPntsDisp`  0;~ Command `ProCmdEnvCsysDisp`  0;");//不显示线框和坐标系，后面的刷新等其实也可以用宏来做的
+		status = ProViewRefit (NULL, NULL);
+		status = ProMacroLoad(L"~ Command `ProCmdEnvDtmDisp` 1; ~ Command `ProCmdEnvAxisDisp` 1; ~ Command `ProCmdViewSpinCntr` 1; ~ Command `ProCmdEnvPntsDisp`  1;~ Command `ProCmdEnvCsysDisp`  1;"); //显示线框和坐标系，很奇怪必须这么设定下，否则下面的效果每次执行是toggle的效果而不是设定
+		status = ProMacroLoad(L"~ Command `ProCmdEnvDtmDisp` 0; ~ Command `ProCmdEnvAxisDisp` 0; ~ Command `ProCmdViewSpinCntr` 0; ~ Command `ProCmdEnvPntsDisp`  0;~ Command `ProCmdEnvCsysDisp`  0;"); //不显示线框和坐标系，后面的刷新等其实也可以用宏来做的
 		status = ProMacroExecute();
 		status = ProWindowClear(wid);
 		status = ProWindowRefresh(PRO_VALUE_UNUSED);
-
+		status = ProGraphicWindowSizeGet(wid, &width, &height);
 		p = saveFileDlg.GetFileName().AllocSysString();
-		status = ProRasterFileWrite(wid, PRORASTERDEPTH_24, 10, 10, PRORASTERDPI_100, PRORASTERTYPE_JPEG, p);//修改参数以适应需要的图片的dpi以及尺寸
+		status = ProRasterFileWrite(wid, PRORASTERDEPTH_24, width*10, height*10, PRORASTERDPI_600, PRORASTERTYPE_JPEG, p); //修改参数以适应需要的图片的dpi以及尺寸
 		SysFreeString(p);
 		status = ProDirectoryChange(currentPath);
 	}
