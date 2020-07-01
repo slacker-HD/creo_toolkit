@@ -1,0 +1,19 @@
+﻿MdlRename
+同时重命名prt和同名drw
+同时重命名prt和同名drw
+#
+
+MdlRenamemenu
+同时重命名prt和同名drw
+同时重命名prt和同名drw
+#
+
+MdlRenamemenutips
+同时重命名prt和同名drw
+同时重命名prt和同名drw
+#
+
+Enter Prompt
+输入新名称
+输入新名称
+#
