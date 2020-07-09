@@ -1,0 +1,7 @@
+name RotateView
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\RotateView\x64\Debug\RotateView.dll
+text_dir  D:\mydoc\creo_toolkit\RotateView\text
+revision   18.0
+end
