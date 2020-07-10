@@ -91,6 +91,22 @@ void _setView(ProRotate rotation_axis, double angle)
 	status = ProWindowRefresh(PRO_VALUE_UNUSED);
 }
 
+void _setViewtoFrontByMatrix()
+{
+	ProMatrix matrix;
+	ProError status;
+    int i,j;
+    for(i=0;i<4;i++)
+	{
+	    for(j=0;j<4;j++)
+            matrix[i][j] = 0;
+	}
+    matrix[3][3]=1;
+    matrix[0][0]=matrix[1][1]=matrix[2][2]=1;
+	status =  ProViewMatrixSet(NULL,NULL,matrix);
+	status = ProWindowClear(PRO_VALUE_UNUSED);
+	status = ProWindowRefresh(PRO_VALUE_UNUSED);
+}
 void RotateX()
 {
 	_setView(PRO_X_ROTATION, 90);
@@ -101,15 +117,15 @@ void RotateY()
 	_setView(PRO_Y_ROTATION, 90);
 }
 
-void RotateZ()
+void RotateFront()
 {
-	_setView(PRO_Z_ROTATION, 90);
+	_setViewtoFrontByMatrix();
 }
 
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId RotateViewXID, RotateViewYID, RotateViewZID;
+	uiCmdCmdId RotateViewXID, RotateViewYID, RotateViewFrontID;
 
 	status = ProMenubarMenuAdd("RotateView", "RotateView", "About", PRO_B_TRUE, MSGFILE);
 
@@ -119,8 +135,8 @@ extern "C" int user_initialize()
 	status = ProCmdActionAdd("RotateViewY_Act", (uiCmdCmdActFn)RotateY, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &RotateViewYID);
 	status = ProMenubarmenuPushbuttonAdd("RotateView", "RotateViewY", "RotateViewYmenu", "RotateViewYmenutips", NULL, PRO_B_TRUE, RotateViewYID, MSGFILE);
 
-	status = ProCmdActionAdd("RotateViewZ_Act", (uiCmdCmdActFn)RotateZ, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &RotateViewZID);
-	status = ProMenubarmenuPushbuttonAdd("RotateView", "RotateViewZ", "RotateViewZmenu", "RotateViewZmenutips", NULL, PRO_B_TRUE, RotateViewZID, MSGFILE);
+	status = ProCmdActionAdd("RotateViewFront_Act", (uiCmdCmdActFn)RotateFront, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &RotateViewFrontID);
+	status = ProMenubarmenuPushbuttonAdd("RotateView", "RotateViewFront", "RotateViewFrontmenu", "RotateViewFrontmenutips", NULL, PRO_B_TRUE, RotateViewFrontID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

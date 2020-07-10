@@ -23,12 +23,12 @@ Y轴旋转90度
 Y轴旋转90度
 #
 
-RotateViewZmenu
-Z轴旋转90度
-Z轴旋转90度
+RotateViewFrontmenu
+FRONT视图
+FRONT视图
 #
 
-RotateViewZmenutips
-Z轴旋转90度
-Z轴旋转90度
+RotateViewFrontmenutips
+FRONT视图
+FRONT视图
 #
