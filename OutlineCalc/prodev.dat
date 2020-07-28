@@ -1,0 +1,7 @@
+name OutlineCalc
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\OutlineCalc\x64\Debug\OutlineCalc.dll
+text_dir  D:\mydoc\creo_toolkit\OutlineCalc\text
+revision   18.0
+end
