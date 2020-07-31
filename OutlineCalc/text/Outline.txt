@@ -13,6 +13,16 @@ OutlineCalcmenutips
 计算外形轮廓
 #
 
+DefaultOutlineCalcmenu
+计算默认坐标系下外形轮廓
+计算默认坐标系下外形轮廓
+#
+
+DefaultOutlineCalcmenutips
+计算默认坐标系下外形轮廓
+计算默认坐标系下外形轮廓
+#
+
 entermsg
 请选取坐标系
 请选取坐标系

@@ -82,6 +82,7 @@ static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
+#pragma region Creo自带例子里面的函数，未修改直接使用
 static double identity_matrix[4][4] = {{1.0, 0.0, 0.0, 0.0},
 									   {0.0, 1.0, 0.0, 0.0},
 									   {0.0, 0.0, 1.0, 0.0},
@@ -92,9 +93,7 @@ static double identity_matrix[4][4] = {{1.0, 0.0, 0.0, 0.0},
     PURPOSE  :	Copy one matrix to another, or initialize a matrix to
 		be the unitary matrix
 \*====================================================================*/
-void ProUtilMatrixCopy(
-	double input[4][4],
-	double output[4][4])
+void ProUtilMatrixCopy(double input[4][4], double output[4][4])
 {
 	int i, j;
 
@@ -116,16 +115,14 @@ void ProUtilMatrixCopy(
     FUNCTION :	ProUtilMatrixInvert()
     PURPOSE  :	Find the inverse of a transformation matrix
 \*====================================================================*/
-int ProUtilMatrixInvert(
-	double m[4][4],
-	double output[4][4])
+int ProUtilMatrixInvert(double m[4][4], double output[4][4])
 {
 	double vec[3], scale_sq, inv_sq_scale;
 	int i, j;
 
 	/*--------------------------------------------------------------------*\
     If the matrix is null, return the identity matrix
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	if (m == NULL)
 	{
 		ProUtilMatrixCopy(NULL, output);
@@ -134,7 +131,7 @@ int ProUtilMatrixInvert(
 
 	/*--------------------------------------------------------------------*\
     Obtain the matrix scale
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	vec[0] = m[0][0];
 	vec[1] = m[0][1];
 	vec[2] = m[0][2];
@@ -142,18 +139,18 @@ int ProUtilMatrixInvert(
 
 	/*--------------------------------------------------------------------*\
     Check whether there is an inverse, and if not, return 0
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	if (scale_sq < (.000000001 * .000000001))
 		return (0);
 
 	/*--------------------------------------------------------------------*\
     Need the inverse scale squared 
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	inv_sq_scale = 1.0 / scale_sq;
 
 	/*--------------------------------------------------------------------*\
     The orientation vectors
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	for (j = 0; j < 3; j++)
 	{
 		for (i = 0; i < 3; i++)
@@ -163,7 +160,7 @@ int ProUtilMatrixInvert(
 
 	/*--------------------------------------------------------------------*\
     The shift vectors
-\*--------------------------------------------------------------------*/
+	\*--------------------------------------------------------------------*/
 	for (i = 0; i < 3; i++)
 	{
 		output[3][i] = 0.0;
@@ -214,6 +211,7 @@ ProError ProUtilVectorsToTransf(
 		transform[n][3] = (n == 3) ? 1.0 : 0.0;
 	return (PRO_TK_NO_ERROR);
 }
+#pragma endregion
 
 void OutlineCalc()
 {
@@ -249,16 +247,33 @@ void OutlineCalc()
 	AfxMessageBox(Msg);
 }
 
+void DefaultOuline()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	ProMdl solid;
+	Pro3dPnt outline[2];
+    status = ProMdlCurrentGet(&solid);
+    status = ProSolidOutlineGet((ProSolid)solid, outline);
+	CString Msg;
+	Msg.Format("默认值为:\n长:%f\n宽：%f\n高:%f", abs(outline[1][0] - outline[0][0]), abs(outline[1][1] - outline[0][1]), abs(outline[1][2] - outline[0][2]));
+	AfxMessageBox(Msg);
+}
+
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId OutlineCalcID;
+	uiCmdCmdId OutlineCalcID1,OutlineCalcID2;
 
 	status = ProMenubarMenuAdd("OutlineCalc", "OutlineCalc", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("OutlineCalc", "OutlineCalc", "OutlineCalc", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("OutlineCalc_Act", (uiCmdCmdActFn)OutlineCalc, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &OutlineCalcID);
-	status = ProMenubarmenuPushbuttonAdd("OutlineCalc", "OutlineCalcmenu", "OutlineCalcmenu", "OutlineCalcmenutips", NULL, PRO_B_TRUE, OutlineCalcID, MSGFILE);
+	status = ProCmdActionAdd("OutlineCalc_Act1", (uiCmdCmdActFn)OutlineCalc, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &OutlineCalcID1);
+	status = ProMenubarmenuPushbuttonAdd("OutlineCalc", "OutlineCalcmenu", "OutlineCalcmenu", "OutlineCalcmenutips", NULL, PRO_B_TRUE, OutlineCalcID1, MSGFILE);
+
+	status = ProCmdActionAdd("OutlineCalc_Act2", (uiCmdCmdActFn)DefaultOuline, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &OutlineCalcID2);
+	status = ProMenubarmenuPushbuttonAdd("OutlineCalc", "DefaultOutlineCalcmenu", "DefaultOutlineCalcmenu", "DefaultOutlineCalcmenutips", NULL, PRO_B_TRUE, OutlineCalcID2, MSGFILE);
+
 
 	return PRO_TK_NO_ERROR;
 }
