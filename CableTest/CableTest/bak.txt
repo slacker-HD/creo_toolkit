@@ -1,0 +1,55 @@
+//#pragma region 遍历第一层组件
+//
+//ProError ComponentFilterAction(ProFeature *pFeature, ProAppData app_data)
+//{
+//	ProError status;
+//	ProBoolean iVisible;
+//	ProFeattype featType;
+//	status = ProFeatureVisibilityGet(pFeature, &iVisible);
+//	status = ProFeatureTypeGet(pFeature, &featType);
+//	if (iVisible == PRO_B_TRUE && featType == PRO_FEAT_COMPONENT)
+//		return PRO_TK_NO_ERROR;
+//	else
+//		return PRO_TK_CONTINUE;
+//}
+//
+//ProError ComponentVisitAction(ProFeature *p_object, ProError status, ProAppData app_data)
+//{
+//	ProMdl mdl;
+//	ProName mdlname;
+//	status = ProAsmcompMdlGet(p_object, &mdl);
+//	status = ProMdlNameGet(mdl, mdlname);
+//	if (ProUtilWstrcmp(((UserComponentAppData *)app_data)->mdl_name, mdlname) == 0)
+//	{
+//		((UserComponentAppData *)app_data)->mdl = mdl;
+//		ProUtilWstrcpy(((UserComponentAppData *)app_data)->mdl_name, mdlname);
+//	}
+//	return status;
+//}
+//
+//ProError FindCsysinPart(ProName mdl_name, ProName csys_name, UserComponentAppData *app_data)
+//{
+//	ProError status;
+//	ProMdl asm_mdl;
+//
+//	asm_mdl = CurrentMdl();
+//	UserComponentAppData componentAppData;
+//	componentAppData.mdl = NULL;
+//	componentAppData.csys = NULL;
+//	ProUtilWstrcpy(componentAppData.mdl_name, mdl_name);
+//
+//	status = ProSolidFeatVisit(ProMdlToSolid(asm_mdl), (ProFeatureVisitAction)ComponentVisitAction, (ProFeatureFilterAction)ComponentFilterAction, (ProAppData)&componentAppData);
+//
+//	if (status != PRO_TK_NO_ERROR)
+//		return status;
+//	if (componentAppData.mdl == NULL)
+//		return PRO_TK_E_NOT_FOUND;
+//	else
+//	{
+//		app_data->mdl = componentAppData.mdl;
+//		ProUtilWstrcpy(app_data->mdl_name, componentAppData.mdl_name);
+//		status = FindCsys(csys_name, app_data);
+//		return status;
+//	}
+//}
+//#pragma endregion
