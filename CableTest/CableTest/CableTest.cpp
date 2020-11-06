@@ -457,7 +457,9 @@ ProError ComponentSysVisitAction(ProAsmcomppath *path, ProSolid solid, ProError 
 	return status;
 }
 
-//ProSolidDispCompVisit访问子装配体的part和asm，所以不需要遍历，但是带来的问题是多个同名零件的区分，ProAsmcomppath；本例靠循环读取所有的，所以如果用同名的零件会读取到装配树种最后的零件
+//ProSolidDispCompVisit访问子装配体的part和asm
+//所以不需要遍历，但是带来的问题是多个同名零件的区分用ProAsmcomppath
+//本例靠循环读取所有的，所以如果用同名的零件会读取到装配树中最后的零件
 //IN,IN,IN,OUT
 ProError FindCsysinComponent(ProName mdl_name, ProName csys_name, UserComponentAppData *app_data)
 {
