@@ -83,9 +83,13 @@ static uiCmdAccessState AccessASM(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
-void FitTolListCmd()
+void FitTolListCmd1()
 {
 	GToInterCal();
+}
+void FitTolListCmd2()
+{
+	SelpartInterference();
 }
 extern "C" int user_initialize()
 {
@@ -98,11 +102,16 @@ extern "C" int user_initialize()
 	AfxEnableControlContainer();
 
 	ProError status;
-	uiCmdCmdId FitTolList_cmd_id1;
+	uiCmdCmdId FitTolList_cmd_id1, FitTolList_cmd_id2;
 	status = ProMenubarMenuAdd("FitTolList", "FitTolList", "File", PRO_B_TRUE, L"FitTolList.txt");
 
-	status = ProCmdActionAdd("IMI_FitTolList_Act1", (uiCmdCmdActFn)FitTolListCmd, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &FitTolList_cmd_id1);
+	status = ProCmdActionAdd("IMI_FitTolList_Act1", (uiCmdCmdActFn)FitTolListCmd1, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &FitTolList_cmd_id1);
 	status = ProMenubarmenuPushbuttonAdd("FitTolList", "Cmd1", "Cmd1", "Tips1", NULL, PRO_B_TRUE, FitTolList_cmd_id1, L"FitTolList.txt");
+	
+	status = ProCmdActionAdd("IMI_FitTolList_Act2", (uiCmdCmdActFn)FitTolListCmd2, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &FitTolList_cmd_id2);
+	status = ProMenubarmenuPushbuttonAdd("FitTolList", "Cmd2", "Cmd2", "Tips2", NULL, PRO_B_TRUE, FitTolList_cmd_id2, L"FitTolList.txt");
+	
+
 	return PRO_TK_NO_ERROR;
 }
 extern "C" void user_terminate()

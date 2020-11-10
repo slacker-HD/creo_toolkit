@@ -2,5 +2,5 @@
 #define __FITTOL_H_
 #include "StdAfx.h"
 ProError GToInterCal();
-ProError ConstrainsList();
+ProError SelpartInterference();
 #endif //__FITTOL_H_

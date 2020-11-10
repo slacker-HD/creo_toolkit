@@ -48,3 +48,4 @@
 #include <ProAsmcomp.h>
 #include <ProSolid.h>
 #include <ProFeatType.h>
+#include <ProSelection.h>
