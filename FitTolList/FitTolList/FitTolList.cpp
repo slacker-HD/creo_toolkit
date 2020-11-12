@@ -107,10 +107,9 @@ extern "C" int user_initialize()
 
 	status = ProCmdActionAdd("IMI_FitTolList_Act1", (uiCmdCmdActFn)FitTolListCmd1, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &FitTolList_cmd_id1);
 	status = ProMenubarmenuPushbuttonAdd("FitTolList", "Cmd1", "Cmd1", "Tips1", NULL, PRO_B_TRUE, FitTolList_cmd_id1, L"FitTolList.txt");
-	
+
 	status = ProCmdActionAdd("IMI_FitTolList_Act2", (uiCmdCmdActFn)FitTolListCmd2, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &FitTolList_cmd_id2);
 	status = ProMenubarmenuPushbuttonAdd("FitTolList", "Cmd2", "Cmd2", "Tips2", NULL, PRO_B_TRUE, FitTolList_cmd_id2, L"FitTolList.txt");
-	
 
 	return PRO_TK_NO_ERROR;
 }

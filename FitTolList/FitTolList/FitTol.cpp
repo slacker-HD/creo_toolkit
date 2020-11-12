@@ -33,7 +33,6 @@ ProError GToInterCal()
 	return PRO_TK_NO_ERROR;
 }
 
-
 ProError SelpartInterference()
 {
 	ProError status;
@@ -42,7 +41,7 @@ ProError SelpartInterference()
 	ProModelitem part1, part2;
 	ProName name1, name2;
 	ProInterferenceData interf_data;
-    double volume;
+	double volume;
 	CString inter;
 
 	status = ProSelect("prt_or_asm", 2, NULL, NULL, NULL, NULL, &sel_array, &nSels);
@@ -52,10 +51,10 @@ ProError SelpartInterference()
 	}
 	status = ProFitInterferenceCompute(sel_array[0], sel_array[1], PRO_B_FALSE, PRO_B_FALSE, &interf_data);
 	if (interf_data == NULL)
-    {
+	{
 		AfxMessageBox(_T("未发生干涉。"));
-        return PRO_TK_NO_ERROR;
-    }
+		return PRO_TK_NO_ERROR;
+	}
 
 	status = ProSelectionModelitemGet(sel_array[0], &part1);
 	status = ProMdlNameGet(part1.owner, name1);
@@ -67,6 +66,7 @@ ProError SelpartInterference()
 	CString c;
 	c.Format(_T("%lf"), volume);
 	AfxMessageBox(a + _T("和") + b + _T("发生干涉，干涉量为") + c);
+	status = ProFitInterferencevolumeDisplay(interf_data, PRO_COLOR_HIGHLITE);
 	status = ProInterferenceDataFree(interf_data);
-    return PRO_TK_NO_ERROR;
+	return PRO_TK_NO_ERROR;
 }
