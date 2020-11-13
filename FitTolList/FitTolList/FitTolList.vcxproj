@@ -186,7 +186,6 @@
     <None Include="res\FitTolList.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FitTol.cpp" />
     <ClCompile Include="FitTolList.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -196,7 +195,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FitTol.h" />
     <ClInclude Include="FitTolList.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />

@@ -131,14 +131,14 @@ typedef struct pro_cbl_harness
 } ProCblHarness;
 
 //IN,IN,IN,OUT
-ProError ProCblHarnessInit(ProPart harness_mdl, ProName name, ProAssembly asm_mdl, ProCblHarness *p_cblharness)
+ProError InitHarness(ProPart harness_mdl, ProName name, ProAssembly asm_mdl, ProCblHarness *p_harness)
 {
-	if (p_cblharness == NULL)
-		return (PRO_TK_BAD_INPUTS);
-	p_cblharness->harness = harness_mdl;
-	ProUtilWstrcpy(p_cblharness->name, name);
-	p_cblharness->owner = asm_mdl;
-	return (PRO_TK_NO_ERROR);
+	if (p_harness == NULL)
+		return PRO_TK_BAD_INPUTS;
+	p_harness->harness = harness_mdl;
+	ProUtilWstrcpy(p_harness->name, name);
+	p_harness->owner = asm_mdl;
+	return PRO_TK_NO_ERROR;
 }
 
 //IN,IN,OUT
@@ -163,25 +163,13 @@ ProError GetHarness(ProAssembly asm_mdl, ProName harnesss_name, ProCblHarness *p
 		{
 			if (ProUtilWstrcmp(name, harnesss_name) == 0)
 			{
-				status = ProCblHarnessInit((ProPart)harness_array[i], name, asm_mdl, p_cblharness);
-				status = ProArrayFree((ProArray *)&harness_array);
-				return PRO_TK_NO_ERROR;
+				status = InitHarness((ProPart)harness_array[i], name, asm_mdl, p_cblharness);
+				break;
 			}
 		}
 	}
 	status = ProArrayFree((ProArray *)&harness_array);
 	return PRO_TK_E_NOT_FOUND;
-}
-
-//IN,IN,IN,OUT
-ProError InitHarness(ProPart harness_mdl, ProName name, ProAssembly asm_mdl, ProCblHarness *p_harness)
-{
-	if (p_harness == NULL)
-		return PRO_TK_BAD_INPUTS;
-	p_harness->harness = harness_mdl;
-	ProUtilWstrcpy(p_harness->name, name);
-	p_harness->owner = asm_mdl;
-	return PRO_TK_NO_ERROR;
 }
 
 //IN,IN,OUT
@@ -220,13 +208,6 @@ ProError ReadSpoolFile(ProMdl asm_mdl, ProName file_fullname, ProSpool *p_spool)
 	return status;
 }
 
-//IN,OUT
-ProError ProCblSpoolNameGet(ProSpool *p_spool, ProName w_name)
-{
-	ProUtilWstrcpy(w_name, p_spool->name);
-	return PRO_TK_NO_ERROR;
-}
-
 //IN,IN,IN,IN,OUT
 ProError ProCblSpoolCreate(ProAssembly asm_mdl, ProName harness_name, ProCableType cable_type, ProBundleType sheath_type, ProSpool *p_spool)
 {
@@ -242,7 +223,7 @@ ProError ProCblSpoolCreate(ProAssembly asm_mdl, ProName harness_name, ProCableTy
 
 #pragma region 元件相关的定义和函数
 //IN,IN,IN,IN,OUT
-ProError ProCblCableCreate(ProAssembly asm_mdl, ProCblHarness *p_cblharness, ProSpool *p_spool, ProName cable_name, ProCable *p_cable)
+ProError ProCblCableCreate(ProCblHarness *p_cblharness, ProSpool *p_spool, ProName cable_name, ProCable *p_cable)
 {
 	ProError status;
 	if (p_cblharness == NULL || p_cable == NULL)
@@ -253,6 +234,7 @@ ProError ProCblCableCreate(ProAssembly asm_mdl, ProCblHarness *p_cblharness, Pro
 		return status;
 	return status;
 }
+
 #pragma endregion
 
 #pragma region 布线
@@ -300,7 +282,7 @@ void RouteCable(ProSelection *sel_array, ProName harnessname, ProPath spoolpath,
 		return;
 	}
 	//新建元件(Cable)
-	status = ProCblCableCreate(asm_mdl, &cblharness, &spool, cablename, &cable);
+	status = ProCblCableCreate(&cblharness, &spool, cablename, &cable);
 	if (status != PRO_TK_NO_ERROR)
 	{
 		AfxMessageBox(_T("无法新建名为“") + CString(cablename) + _T("”的元件对象。\n这是一个测试程序，名称已写死，请在当前打开的装配体中删除和拭除同名元件。"));
@@ -442,7 +424,6 @@ ProError ComponentSysVisitAction(ProAsmcomppath *path, ProSolid solid, ProError 
 	ProName mdlname;
 	status = ProAsmcomppathMdlGet(path, &mdl);
 	status = ProMdlNameGet(mdl, mdlname);
-	AfxMessageBox(CString(mdlname));
 	if (ProUtilWstrcmp(((UserComponentAppData *)app_data)->mdl_name, mdlname) == 0)
 	{
 		((UserComponentAppData *)app_data)->mdl = mdl;
@@ -497,34 +478,36 @@ void InsertCable()
 	UserComponentAppData componentAppData_start, componentAppData_end;
 	ProName mdl_name;
 	ProName csys_name;
-	/***************************************/
+	/**************************************/
 	/*********手动选择两个坐标系的代码********/
-	/***************************************/
-	//int nSels = 0;
-	//ProSelection *sel_array;
-	//////选择两个坐标系用于布线，	//自动化的时候遍历装配体可以使用ProSelectionAlloc程序自动添加selection
-	//AfxMessageBox(_T("同时选择两个坐标系用于布线"));
-	//status = ProSelect("csys", 2, NULL, NULL, NULL, NULL, &sel_array, &nSels); //filter与ProCablelocationref类型一致
-	//if (status != PRO_TK_NO_ERROR || nSels <= 0)
-	//{
-	//	AfxMessageBox(_T("需要选择两个坐标系才能进行布线。\n这是一个测试程序，仅为演示使用。"));
-	//	return;
-	//}
+	/**************************************/
+	int nSels = 0;
+	////选择两个坐标系用于布线，	//自动化的时候遍历装配体可以使用ProSelectionAlloc程序自动添加selection
+	AfxMessageBox(_T("同时选择两个坐标系用于布线"));
+	status = ProSelect("csys", 2, NULL, NULL, NULL, NULL, &sel_array, &nSels); //filter与ProCablelocationref类型一致
+	if (status != PRO_TK_NO_ERROR || nSels <= 0)
+	{
+		AfxMessageBox(_T("需要选择两个坐标系才能进行布线。\n这是一个测试程序，仅为演示使用。"));
+		return;
+	}
 
-	ProUtilWstrcpy(mdl_name, L"PRT0001");
-	ProUtilWstrcpy(csys_name, L"CS01");
-	status = FindCsysinComponent(mdl_name, csys_name, &componentAppData_start);
+	/********************************************/
+	/*********指定坐标系、零件的名称自动操作********/
+	/********************************************/
+	//ProUtilWstrcpy(mdl_name, L"PRT0001");
+	//ProUtilWstrcpy(csys_name, L"CS01");
+	//status = FindCsysinComponent(mdl_name, csys_name, &componentAppData_start);
 
-	ProUtilWstrcpy(mdl_name, L"PRT0002");
-	ProUtilWstrcpy(csys_name, L"CS02");
-	status = FindCsysinComponent(mdl_name, csys_name, &componentAppData_end);
+	//ProUtilWstrcpy(mdl_name, L"PRT0002");
+	//ProUtilWstrcpy(csys_name, L"CS02");
+	//status = FindCsysinComponent(mdl_name, csys_name, &componentAppData_end);
 
-	status = ProSelectionAlloc(&(componentAppData_start.asmcomppath), &(componentAppData_start.modelitem), &ss1);
-	status = ProSelectionAlloc(&(componentAppData_end.asmcomppath), &(componentAppData_end.modelitem), &ss2);
+	//status = ProSelectionAlloc(&(componentAppData_start.asmcomppath), &(componentAppData_start.modelitem), &ss1);
+	//status = ProSelectionAlloc(&(componentAppData_end.asmcomppath), &(componentAppData_end.modelitem), &ss2);
 
-	status = ProArrayAlloc(0, sizeof(ProSelection), 1, (ProArray *)&sel_array);
-	status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss1);
-	status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss2);
+	//status = ProArrayAlloc(0, sizeof(ProSelection), 1, (ProArray *)&sel_array);
+	//status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss1);
+	//status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss2);
 
 	//注意Creo会自动把Harness和Cable的名称改为大写，调用下面函数时两个参数自行转为大写
 	RouteCable(sel_array, L"NEWHARNESS", L"D:\\ProeRes\\cabletest\\awg_20_red.spl", L"NEWCABLE");
