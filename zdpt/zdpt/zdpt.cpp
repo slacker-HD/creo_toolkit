@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CzdptApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CzdptApp 构造
 
 CzdptApp::CzdptApp()
@@ -47,11 +46,9 @@ CzdptApp::CzdptApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CzdptApp 对象
 
 CzdptApp theApp;
-
 
 // CzdptApp 初始化
 
@@ -64,7 +61,7 @@ BOOL CzdptApp::InitInstance()
 
 typedef enum _hint
 {
-	Fun = 0,   
+	Fun = 0,
 	About = 1,
 } HINT;
 HINT hint;
@@ -80,8 +77,6 @@ ProError ShowDialog(wchar_t *Message)
 	return PRO_TK_NO_ERROR;
 }
 
-
-
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
 	return ACCESS_AVAILABLE;
@@ -91,7 +86,7 @@ void zdpt()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProError status;
-	ProPath *file_list,*dir_list;
+	ProPath *file_list, *dir_list;
 	int n_files;
 	ProPath currentpath;
 	CString filename;
@@ -101,48 +96,48 @@ void zdpt()
 	CString Cfilter = _T("*.drw");
 	wchar_t *filter = NULL;
 	filter = Cfilter.AllocSysString();
-	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray*)&file_list);
-	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray*)&dir_list);
-	status = ProFilesList(currentpath, filter, PRO_FILE_LIST_LATEST,  &file_list, &dir_list);
+	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&file_list);
+	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dir_list);
+	status = ProFilesList(currentpath, filter, PRO_FILE_LIST_LATEST, &file_list, &dir_list);
 
-	if(filter!=NULL)
+	if (filter != NULL)
 		SysFreeString(filter);
 	if (status == PRO_TK_NO_ERROR)
 	{
 		status = ProArraySizeGet((ProArray)file_list, &n_files);
-		if(n_files>1)
+		if (n_files > 1)
 		{
 			ProPath savepath;
-			status = ProFileSave(NULL,filter,NULL,NULL,NULL,NULL,savepath);
-			if(status != PRO_TK_NO_ERROR)
+			status = ProFileSave(NULL, filter, NULL, NULL, NULL, NULL, savepath);
+			if (status != PRO_TK_NO_ERROR)
 				return;
-			status = ProMdlfileCopy(PRO_MDL_DRAWING,file_list[0],savepath);
-			if(status != PRO_TK_NO_ERROR)
+			status = ProMdlfileCopy(PRO_MDL_DRAWING, file_list[0], savepath);
+			if (status != PRO_TK_NO_ERROR)
 			{
 				AfxMessageBox(_T("无法创建或覆盖文件!"));
-				status = ProArrayFree((ProArray*)&file_list);
-				status = ProArrayFree((ProArray*)&dir_list);
+				status = ProArrayFree((ProArray *)&file_list);
+				status = ProArrayFree((ProArray *)&dir_list);
 				return;
 			}
 			filename = CString(savepath);
-			filename.Replace(_T("\\"),_T("\\\\"));
-			macro = _T("~ Command `ProCmdModelOpen` ;~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` `file_open`;~ Update `file_open` `Inputname` `"+filename+"`;~ Trail `UI Desktop` `UI Desktop` `PREVIEW_POPUP_TIMER` `file_open:Ph_list.Filelist:<NULL>`;~ Command `ProFileSelPushOpen@context_dlg_open_cmd`;");
+			filename.Replace(_T("\\"), _T("\\\\"));
+			macro = _T("~ Command `ProCmdModelOpen` ;~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` `file_open`;~ Update `file_open` `Inputname` `" + filename + "`;~ Trail `UI Desktop` `UI Desktop` `PREVIEW_POPUP_TIMER` `file_open:Ph_list.Filelist:<NULL>`;~ Command `ProFileSelPushOpen@context_dlg_open_cmd`;");
 		}
 		else
 		{
 			AfxMessageBox(_T("当前目录包含的绘图文件数量小于1,无需排图!"));
 		}
-		for (int i=1; i<n_files; i++)
+		for (int i = 1; i < n_files; i++)
 		{
 			CString tmp = CString(file_list[i]);
-			tmp.Replace(_T("\\"),_T("\\\\"));
-			if(tmp == filename)
+			tmp.Replace(_T("\\"), _T("\\\\"));
+			if (tmp == filename)
 				continue;
-			macro+=_T("~ Command `ProCmdDwgImpAppend` ;~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` `file_open`;~ Update `file_open` `Inputname` `")+tmp+_T("`;~ Command `ProFileSelPushOpen@context_dlg_open_cmd`;");
+			macro += _T("~ Command `ProCmdDwgImpAppend` ;~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` `file_open`;~ Update `file_open` `Inputname` `") + tmp + _T("`;~ Command `ProFileSelPushOpen@context_dlg_open_cmd`;");
 		}
 	}
-	status = ProArrayFree((ProArray*)&file_list);
-	status = ProArrayFree((ProArray*)&dir_list);
+	status = ProArrayFree((ProArray *)&file_list);
+	status = ProArrayFree((ProArray *)&dir_list);
 	macro += _T("~ Command `About_Act`;");
 	hint = Fun;
 	wchar_t *p = macro.AllocSysString();
@@ -163,7 +158,6 @@ void about()
 	}
 	hint = About;
 }
-
 
 extern "C" int user_initialize()
 {
