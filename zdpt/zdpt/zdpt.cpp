@@ -177,7 +177,7 @@ extern "C" int user_initialize()
 	status = ProMenubarmenuPushbuttonAdd("zdpt", "zdptmenu", "zdptmenu", "zdptmenutips", NULL, PRO_B_TRUE, zdptID, MSGFILE);
 
 	status = ProCmdActionAdd("About_Act", (uiCmdCmdActFn)about, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &AboutId);
-	status = ProMenubarmenuPushbuttonAdd("ColorPaint", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);
+	status = ProMenubarmenuPushbuttonAdd("zdpt", "About", "About", "Abouttips", NULL, PRO_B_TRUE, AboutId, MSGFILE);
 
 	hint = About;
 
