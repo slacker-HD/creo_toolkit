@@ -1,0 +1,7 @@
+name zdpt
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\zdpt\x64\Debug\zdpt.dll
+text_dir  D:\mydoc\creo_toolkit\zdpt\text
+revision   18.0
+end
