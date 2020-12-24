@@ -478,6 +478,8 @@ void InsertCable()
 	UserComponentAppData componentAppData_start, componentAppData_end;
 	ProName mdl_name;
 	ProName csys_name;
+	ProPath r_selected_file;
+	ProPath default_path;
 	/**************************************/
 	/*********手动选择两个坐标系的代码********/
 	/**************************************/
@@ -509,8 +511,14 @@ void InsertCable()
 	//status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss1);
 	//status = ProArrayObjectAdd((ProArray *)&sel_array, -1, 1, &ss2);
 
+	//RouteCable(sel_array, L"NEWHARNESS", L"D:\\ProeRes\\cabletest\\awg_20_red.spl", L"NEWCABLE");
+
 	//注意Creo会自动把Harness和Cable的名称改为大写，调用下面函数时两个参数自行转为大写
-	RouteCable(sel_array, L"NEWHARNESS", L"D:\\ProeRes\\cabletest\\awg_20_red.spl", L"NEWCABLE");
+	status = ProDirectoryCurrentGet(default_path);
+	if (ProFileOpen(L"选择线轴文件", L"*.spl", NULL, NULL, default_path, NULL, r_selected_file) == PRO_TK_NO_ERROR)
+	{
+		RouteCable(sel_array, L"NEWHARNESS", r_selected_file, L"NEWCABLE");
+	}
 	status = ProArrayFree((ProArray *)&sel_array);
 }
 
