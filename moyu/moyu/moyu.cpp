@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "moyu.h"
+#include "JumpLineDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -59,9 +60,9 @@ BOOL CmoyuApp::InitInstance()
 	return TRUE;
 }
 
-int _linenum = 1;
+int _currentlinenum = 1;
 bool _showOrhide = false;
-int _maxlinecount = 0;
+int _maxlinenum = 0;
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
@@ -74,10 +75,10 @@ void PrevLine()
 	ProError status;
 	CString LineStr;
 	char *p;
-	if(_linenum > 1)
+	if(_currentlinenum > 1)
 	{
-		_linenum--;
-		LineStr.Format(_T("IMI%d"),_linenum);
+		_currentlinenum--;
+		LineStr.Format(_T("IMI%d"),_currentlinenum);
 		p = LineStr.GetBuffer();
 		status = ProMessageDisplay(NOVELFILE, p);
 		LineStr.ReleaseBuffer();
@@ -93,20 +94,15 @@ void NextLine()
 	char *p;
 	if(_showOrhide == true)
 	{
-		if(_linenum < _maxlinecount+1)
+		if(_currentlinenum < _maxlinenum+1)
 		{
-			_linenum++;
-			LineStr.Format(_T("IMI%d"),_linenum);
+			_currentlinenum++;
+			LineStr.Format(_T("IMI%d"),_currentlinenum);
 			p = LineStr.GetBuffer();
 			status = ProMessageDisplay(NOVELFILE, p);
 			LineStr.ReleaseBuffer();
 		}
 	}
-}
-
-void ClearLine()
-{
-	ProMessageClear();
 }
 
 void ShowOrHide()
@@ -121,12 +117,41 @@ void ShowOrHide()
 	}
 	else
 	{
-		LineStr.Format(_T("IMI%d"),_linenum);
+		LineStr.Format(_T("IMI%d"),_currentlinenum);
 		p = LineStr.GetBuffer();
 		status = ProMessageDisplay(NOVELFILE, p);
 		LineStr.ReleaseBuffer();
 	}
 	_showOrhide = !_showOrhide;
+}
+
+void JumpLine()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	CString LineStr;
+	char *p;
+	CJumpLineDialog jumpdialog;
+	jumpdialog.MaxLineNum = _maxlinenum;
+	jumpdialog.CurrentLineNum = _currentlinenum;
+	if(jumpdialog.DoModal() == IDOK)
+	{
+		if(jumpdialog.m_currentlinenumEdit > _maxlinenum)
+		{
+			_currentlinenum = _maxlinenum+1;
+		}
+		else
+		{
+			_currentlinenum = jumpdialog.m_currentlinenumEdit;
+		}
+		if(_showOrhide == true)
+		{
+			LineStr.Format(_T("IMI%d"),_currentlinenum);
+			p = LineStr.GetBuffer();
+			status = ProMessageDisplay(NOVELFILE, p);
+			LineStr.ReleaseBuffer();
+		}
+	}
 }
 
 extern "C" int user_initialize()
@@ -146,12 +171,12 @@ extern "C" int user_initialize()
 	status = ProCmdActionAdd("ShowOrHideLineID_Act", (uiCmdCmdActFn)ShowOrHide, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &ShowOrHideLineID);
 	status = ProMenubarmenuPushbuttonAdd("moyu", "ShowOrHideLine", "ShowOrHideLine", "ShowOrHideLinetips", NULL, PRO_B_TRUE, ShowOrHideLineID, MSGFILE);
 
-	status = ProCmdActionAdd("JumpLineID_Act", (uiCmdCmdActFn)ClearLine, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &JumpLineID);
+	status = ProCmdActionAdd("JumpLineID_Act", (uiCmdCmdActFn)JumpLine, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &JumpLineID);
 	status = ProMenubarmenuPushbuttonAdd("moyu", "JumpLine", "JumpLine", "JumpLinetips", NULL, PRO_B_TRUE, JumpLineID, MSGFILE);
 
 	ProLine buffer;
 	status = ProMessageToBuffer(buffer, NOVELFILE, (char*)"IMILINELENGTH");
-	_maxlinecount = atoi(CString(buffer));
+	_maxlinenum = atoi(CString(buffer));
 
 	_showOrhide = false;
 	return PRO_TK_NO_ERROR;

@@ -6,7 +6,7 @@ namespace CreoMsgGen
 {
     internal class Program
     {
-        private const int LINELENGTH = 120;
+        private const int LINELENGTH = 100;
         private const int FILELINELENGTH = 2000;
 
         private static String[] getstr(string strs, int len)
