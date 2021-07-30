@@ -1,0 +1,7 @@
+name moyu
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\moyu\x64\Debug\moyu.dll
+text_dir  D:\mydoc\creo_toolkit\moyu\text
+revision   18.0
+end
