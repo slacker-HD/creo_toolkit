@@ -198,6 +198,7 @@
     <None Include="res\moyu.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IniFile.cpp" />
     <ClCompile Include="JumpLineDialog.cpp" />
     <ClCompile Include="moyu.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -208,6 +209,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IniFile.h" />
     <ClInclude Include="JumpLineDialog.h" />
     <ClInclude Include="moyu.h" />
     <ClInclude Include="Resource.h" />

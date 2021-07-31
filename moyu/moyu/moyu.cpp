@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "moyu.h"
 #include "JumpLineDialog.h"
+#include "IniFile.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -75,14 +76,13 @@ void PrevLine()
 	ProError status;
 	CString LineStr;
 	char *p;
-	if(_currentlinenum > 1)
+	if (_currentlinenum > 1)
 	{
 		_currentlinenum--;
-		LineStr.Format(_T("IMI%d"),_currentlinenum);
+		LineStr.Format(_T("IMI%d"), _currentlinenum);
 		p = LineStr.GetBuffer();
 		status = ProMessageDisplay(NOVELFILE, p);
 		LineStr.ReleaseBuffer();
-
 	}
 }
 
@@ -92,12 +92,12 @@ void NextLine()
 	ProError status;
 	CString LineStr;
 	char *p;
-	if(_showOrhide == true)
+	if (_showOrhide == true)
 	{
-		if(_currentlinenum < _maxlinenum+1)
+		if (_currentlinenum < _maxlinenum + 1)
 		{
 			_currentlinenum++;
-			LineStr.Format(_T("IMI%d"),_currentlinenum);
+			LineStr.Format(_T("IMI%d"), _currentlinenum);
 			p = LineStr.GetBuffer();
 			status = ProMessageDisplay(NOVELFILE, p);
 			LineStr.ReleaseBuffer();
@@ -111,13 +111,13 @@ void ShowOrHide()
 	ProError status;
 	CString LineStr;
 	char *p;
-	if(_showOrhide == true)
+	if (_showOrhide == true)
 	{
 		ProMessageClear();
 	}
 	else
 	{
-		LineStr.Format(_T("IMI%d"),_currentlinenum);
+		LineStr.Format(_T("IMI%d"), _currentlinenum);
 		p = LineStr.GetBuffer();
 		status = ProMessageDisplay(NOVELFILE, p);
 		LineStr.ReleaseBuffer();
@@ -134,19 +134,19 @@ void JumpLine()
 	CJumpLineDialog jumpdialog;
 	jumpdialog.MaxLineNum = _maxlinenum;
 	jumpdialog.CurrentLineNum = _currentlinenum;
-	if(jumpdialog.DoModal() == IDOK)
+	if (jumpdialog.DoModal() == IDOK)
 	{
-		if(jumpdialog.m_currentlinenumEdit > _maxlinenum)
+		if (jumpdialog.m_currentlinenumEdit > _maxlinenum)
 		{
-			_currentlinenum = _maxlinenum+1;
+			_currentlinenum = _maxlinenum + 1;
 		}
 		else
 		{
 			_currentlinenum = jumpdialog.m_currentlinenumEdit;
 		}
-		if(_showOrhide == true)
+		if (_showOrhide == true)
 		{
-			LineStr.Format(_T("IMI%d"),_currentlinenum);
+			LineStr.Format(_T("IMI%d"), _currentlinenum);
 			p = LineStr.GetBuffer();
 			status = ProMessageDisplay(NOVELFILE, p);
 			LineStr.ReleaseBuffer();
@@ -157,7 +157,7 @@ void JumpLine()
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId PrevLineID, NextLineID,ShowOrHideLineID,JumpLineID;
+	uiCmdCmdId PrevLineID, NextLineID, ShowOrHideLineID, JumpLineID;
 
 	status = ProMenubarMenuAdd("moyu", "moyu", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("moyu", "moyu", "moyu", NULL, PRO_B_TRUE, MSGFILE);
@@ -175,13 +175,33 @@ extern "C" int user_initialize()
 	status = ProMenubarmenuPushbuttonAdd("moyu", "JumpLine", "JumpLine", "JumpLinetips", NULL, PRO_B_TRUE, JumpLineID, MSGFILE);
 
 	ProLine buffer;
-	status = ProMessageToBuffer(buffer, NOVELFILE, (char*)"IMILINELENGTH");
+	status = ProMessageToBuffer(buffer, NOVELFILE, (char *)"IMILINELENGTH");
 	_maxlinenum = atoi(CString(buffer));
 
 	_showOrhide = false;
+
+	CString CurrentLine, CurrentPath;
+	ProPath TextPath;
+	status = ProToolkitApplTextPathGet(TextPath);
+	CurrentPath = CString(TextPath) + _T("\\text\\moyu.ini");
+	CIniFile inif(CurrentPath);
+	inif.EnsureIniFileExist();
+	inif.IniFile_GetString(_T("设置"), _T("当前行"), _T("1"), CurrentLine);
+	_currentlinenum = atoi(CurrentLine);
+
 	return PRO_TK_NO_ERROR;
 }
 
 extern "C" void user_terminate()
 {
+	ProError status;
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	CString CurrentLine, CurrentPath;
+	ProPath TextPath;
+	status = ProToolkitApplTextPathGet(TextPath);
+	CurrentPath = CString(TextPath) + _T("\\text\\moyu.ini");
+	CIniFile inif(CurrentPath);
+	inif.EnsureIniFileExist();
+	CurrentLine.Format("%d", _currentlinenum);
+	inif.IniFile_WriteString(_T("设置"), _T("当前行"), CurrentLine);
 }

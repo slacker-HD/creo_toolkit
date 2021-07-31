@@ -33,6 +33,9 @@
     <ClCompile Include="JumpLineDialog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="IniFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="moyu.h">
@@ -48,6 +51,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="JumpLineDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IniFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
