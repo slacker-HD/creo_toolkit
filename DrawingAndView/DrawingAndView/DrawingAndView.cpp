@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CDrawingAndViewApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CDrawingAndViewApp 构造
 
 CDrawingAndViewApp::CDrawingAndViewApp()
@@ -47,11 +46,9 @@ CDrawingAndViewApp::CDrawingAndViewApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CDrawingAndViewApp 对象
 
 CDrawingAndViewApp theApp;
-
 
 // CDrawingAndViewApp 初始化
 
@@ -93,41 +90,41 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
-ProError CreateDrawing(CString TemplateName)
+ProError _createDrawing(CString TemplateName)
 {
-	ProMdl solid_mdl;
+	ProMdl solidmdl;
 	ProPath currentpath;
 	ProError status;
-	ProMdlType mdl_type;
+	ProMdlType mdltype;
 	ProMdldata data;
 	ProModel model;
-	ProDrawing created_drawing= NULL;
+	ProDrawing created_drawing = NULL;
 	ProDwgcreateOptions options = PRODWGCREATE_DISPLAY_DRAWING;
-	ProDwgcreateErrs  errors;
+	ProDwgcreateErrs errors;
 	int new_win_id;
 
-	status = ProMdlCurrentGet(&solid_mdl);
+	status = ProMdlCurrentGet(&solidmdl);
 	if (status != PRO_TK_NO_ERROR)
 		return status;
-	status = ProMdlTypeGet (solid_mdl, &mdl_type);
+	status = ProMdlTypeGet(solidmdl, &mdltype);
 	if (status != PRO_TK_NO_ERROR)
 		return status;
-	
-	if(mdl_type == PRO_MDL_PART || mdl_type == PRO_MDL_ASSEMBLY)
+
+	if (mdltype == PRO_MDL_PART || mdltype == PRO_MDL_ASSEMBLY)
 	{
-		status = ProMdlDataGet (solid_mdl, &data);
-		status =  ProDirectoryCurrentGet(currentpath);
-		CString Path = CString(data.device)+ _T(":") + CString(data.path);
-		wchar_t * path = Path.AllocSysString();
+		status = ProMdlDataGet(solidmdl, &data);
+		status = ProDirectoryCurrentGet(currentpath);
+		CString Path = CString(data.device) + _T(":") + CString(data.path);
+		wchar_t *path = Path.AllocSysString();
 		status = ProDirectoryChange(path);
-		if(path!=NULL)
+		if (path != NULL)
 			SysFreeString(path);
 
-		for(int i = 0; i<10; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			model.type[i] = data.type[i];
 		}
-		for(int i = 0; i<80; i++)
+		for (int i = 0; i < 80; i++)
 		{
 			model.name[i] = data.name[i];
 		}
@@ -135,27 +132,30 @@ ProError CreateDrawing(CString TemplateName)
 		wchar_t *wtemplatename = NULL;
 		wtemplatename = TemplateName.AllocSysString();
 
-		status = ProDrawingFromTmpltCreate (model.name, wtemplatename, &model, options, &created_drawing, &errors);
+		status = ProDrawingFromTmpltCreate(model.name, wtemplatename, &model, options, &created_drawing, &errors);
 
-		if(wtemplatename!=NULL)
+		if (wtemplatename != NULL)
 			SysFreeString(wtemplatename);
 
-		if(status == PRO_TK_NO_ERROR)
+		if (status == PRO_TK_NO_ERROR)
 		{
 			status = ProObjectwindowCreate(model.name, PRO_DRAWING, &new_win_id);
 		}
 		else if (status == PRO_TK_E_FOUND)
 		{
-			status = ProMdlLoad(model.name, PRO_MDL_DRAWING, PRO_B_FALSE, (ProMdl*)&created_drawing);
-			status = ProObjectwindowCreate(model.name,PRO_DRAWING,&new_win_id);
+			status = ProMdlLoad(model.name, PRO_MDL_DRAWING, PRO_B_FALSE, (ProMdl *)&created_drawing);
+			status = ProObjectwindowCreate(model.name, PRO_DRAWING, &new_win_id);
 		}
 		else
 		{
-			status =  ProDirectoryCurrentGet(currentpath);
+			status = ProDirectoryCurrentGet(currentpath);
 			return PRO_TK_NO_ERROR;
 		}
 	}
-	
+	else
+	{
+		return PRO_TK_E_NOT_FOUND;
+	}
 	status = ProMdlDisplay(created_drawing);
 	status = ProWindowActivate(new_win_id);
 	status = ProDirectoryChange(currentpath);
@@ -164,71 +164,90 @@ ProError CreateDrawing(CString TemplateName)
 
 void CreateDrw()
 {
-	if(CreateDrawing(_T("D:\\mydoc\\creo_toolkit\\DrawingAndView\\drwtpl.drw")) == PRO_TK_NO_ERROR)
+	if (_createDrawing(_T("D:\\mydoc\\creo_toolkit\\DrawingAndView\\drwtpl.drw")) == PRO_TK_NO_ERROR)
 	{
 		//do some thing
 	}
 }
 
-void CreateView()
+ProError _createView()
 {
 	ProError status;
 	ProMdl mdl;
-	ProPoint3d position,outline[2];
+	ProPoint3d position, outline[2];
 	ProVector to_vec;
 	ProMatrix matrix;
-	ProView positive_view,top_view,left_view;
+	ProView positive_view, top_view, left_view;
 	ProDrawing drawing;
 	ProSolid solid;
+	ProMdlType mdltype;
 	ProPlotPaperSize p_size;
-	double p_width,p_height;
+	double p_width, p_height;
 	int sheet;
+
 	status = ProMdlCurrentGet(&mdl);
-	drawing = (ProDrawing)mdl;
-	status = ProDrawingCurrentsolidGet(drawing,&solid);
-	status = ProDrawingCurrentSheetGet(drawing,&sheet);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
+	status = ProMdlTypeGet(mdl, &mdltype);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
 
-	//绘图大小
-	// status = ProDrawingFormatSizeGet(drawing,sheet,&p_size,&p_width,&p_height);
-
-	//////////////定义摆放位置,以坐标系为基准
-	position[0] = 200;
-	position[1] = 600;
-	position[2] = 0;
-
-	//////////////定义摆放方向,FRONT
-	for(int i = 0 ;i<4; i++)
+	if (mdltype == PRO_DRAWING)
 	{
-		for(int j =0;j<4;j++)
+		drawing = (ProDrawing)mdl;
+		status = ProDrawingCurrentsolidGet(drawing, &solid);
+		status = ProDrawingCurrentSheetGet(drawing, &sheet);
+
+		//绘图大小
+		// status = ProDrawingFormatSizeGet(drawing,sheet,&p_size,&p_width,&p_height);
+		//////////////定义摆放位置,以坐标系为基准
+		position[0] = 200;
+		position[1] = 600;
+		position[2] = 0;
+
+		//////////////定义摆放方向,FRONT
+		for (int i = 0; i < 4; i++)
 		{
-			matrix[i][j] = 0;
+			for (int j = 0; j < 4; j++)
+			{
+				matrix[i][j] = 0;
+			}
 		}
+		matrix[0][0] = 1;
+		matrix[1][1] = 1;
+		matrix[2][2] = 1;
+		matrix[3][3] = 1;
+
+		status = ProDrawingGeneralviewCreate(drawing, solid, sheet, PRO_B_FALSE, position, 1, matrix, &positive_view);
+		//视图大小
+		//status = ProDrawingViewOutlineGet(drawing,positive_view,outline);
+		//移动视图
+		// 移动视图对应的向量
+		// to_vec[0] = position[0] - 100;
+		// to_vec[1] = position[1] - 10;
+		// to_vec[2] = position[2] - 0;
+		//status = ProDrawingViewMove(drawing,positive_view,to_vec);
+
+		position[0] += 500;
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &top_view);
+
+		position[0] -= 500;
+		position[1] -= 400;
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &left_view);
+
+		status = ProDwgSheetRegenerate(drawing, sheet);
+		return PRO_TK_NO_ERROR;
 	}
-	matrix[0][0] =1;
-	matrix[1][1] =1;
-	matrix[2][2] =1;
-	matrix[3][3] =1;
+	else
+		return PRO_TK_BAD_CONTEXT;
+}
 
-	// //移动视图对应的向量
-	// to_vec[0] = position[0] - 100;
-    // to_vec[1] = position[1] - 10;
-    // to_vec[2] = position[2] - 0;
-
-
-	status = ProDrawingGeneralviewCreate(drawing,solid,sheet,PRO_B_FALSE,position,1,matrix,&positive_view);
-	//视图大小
-	//status = ProDrawingViewOutlineGet(drawing,positive_view,outline);
-	//移动视图
-	//status = ProDrawingViewMove(drawing,positive_view,to_vec);
-	
-	position[0] += 500;
-	status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE,position,&top_view);
-
-	position[0] -= 500;
-	position[1] -= 400;
-	status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE,position,&left_view);
-	
-	status = ProDwgSheetRegenerate(drawing,sheet);
+void CreateView()
+{
+	if (_createView() == PRO_TK_NO_ERROR)
+	{
+		//do some thing
+	}
 }
 extern "C" int user_initialize()
 {
