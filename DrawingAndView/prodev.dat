@@ -1,0 +1,7 @@
+name DrawingAndView
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\DrawingAndView\x64\Debug\DrawingAndView.dll
+text_dir D:\mydoc\creo_toolkit\DrawingAndView\text
+revision   18.0
+end
