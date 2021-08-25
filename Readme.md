@@ -145,7 +145,7 @@
 + 包含两个工程，C#工程生成对应的Creo消息文件，Toolkit提供按行读取信息功能。
 + 将上面生成的novel_X.txt文件重命名为novel.txt再复制到插件text文件夹下即可。
 
-##DrawingAndView
+## DrawingAndView
 
 + 一键新建或打开同名绘图文件
 + 生成主视图、俯视图和左视图
