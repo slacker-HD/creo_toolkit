@@ -45,3 +45,5 @@
 #include <ProMenubar.h>
 #include <ProDrawing.h>
 #include <ProWindows.h>
+#include <ProSelection.h>
+#include <ProDrawingView.h>

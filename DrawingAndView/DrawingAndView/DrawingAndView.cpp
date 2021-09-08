@@ -170,19 +170,27 @@ void CreateDrw()
 	}
 }
 
+void Getsize(ProDrawing drawing, int sheet)
+{
+	ProError status;
+	ProPlotPaperSize size_type;
+	double width, height;
+	status = ProDrawingFormatSizeGet(drawing, sheet, &size_type, &width, &height);
+}
 ProError _createView()
 {
 	ProError status;
 	ProMdl mdl;
-	ProPoint3d position, outline[2];
-	ProVector to_vec;
+	ProPoint3d position;
+	//ProPoint3d outline[2];
+	//ProVector to_vec;
 	ProMatrix matrix;
 	ProView positive_view, top_view, left_view;
 	ProDrawing drawing;
 	ProSolid solid;
 	ProMdlType mdltype;
-	ProPlotPaperSize p_size;
-	double p_width, p_height;
+	//ProPlotPaperSize p_size;
+	//double p_width, p_height;
 	int sheet;
 
 	status = ProMdlCurrentGet(&mdl);
@@ -198,6 +206,7 @@ ProError _createView()
 		status = ProDrawingCurrentsolidGet(drawing, &solid);
 		status = ProDrawingCurrentSheetGet(drawing, &sheet);
 
+		//Getsize(drawing,sheet);
 		//绘图大小
 		// status = ProDrawingFormatSizeGet(drawing,sheet,&p_size,&p_width,&p_height);
 		//////////////定义摆放位置,以坐标系为基准
@@ -249,10 +258,63 @@ void CreateView()
 		//do some thing
 	}
 }
+
+ProError _createAuxiliayView()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	ProMdl mdl;
+	ProView auxiliaryview;
+	ProDrawing drawing;
+	ProMdlType mdltype;
+	ProSelection *sel;
+	int n_sel;
+	int sheet;
+	ProPoint3d point;
+	//根据实际确定位置
+	point[0] = 200;
+	point[1] = 700;
+	point[2] = 0;
+
+	status = ProMdlCurrentGet(&mdl);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
+	status = ProMdlTypeGet(mdl, &mdltype);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
+
+	if (mdltype == PRO_DRAWING)
+	{
+		drawing = (ProDrawing)mdl;
+		status = ProDrawingCurrentSheetGet(drawing, &sheet);
+
+		drawing = (ProDrawing)mdl;
+		status = ProSelect((char *)"edge", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
+		if (status == PRO_TK_NO_ERROR)
+		{
+			status = ProDrawingViewAuxiliaryCreate(drawing, *sel, point, &auxiliaryview);
+			status = ProDwgSheetRegenerate(drawing, sheet);
+			return PRO_TK_NO_ERROR;
+		}
+		else
+			return status;
+	}
+	else
+		return PRO_TK_BAD_CONTEXT;
+}
+
+void CreateAuxiliaryView()
+{
+	if (_createAuxiliayView() == PRO_TK_NO_ERROR)
+	{
+		//do some thing
+	}
+}
+
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId CreateDrwID, CreateViewID;
+	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID;
 
 	status = ProMenubarMenuAdd("DrawingAndView", "DrawingAndView", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("DrawingAndView", "DrawingAndView", "DrawingAndView", NULL, PRO_B_TRUE, MSGFILE);
@@ -262,6 +324,9 @@ extern "C" int user_initialize()
 
 	status = ProCmdActionAdd("CreateView_Act", (uiCmdCmdActFn)CreateView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &CreateViewID);
 	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "CreateView", "CreateView", "CreateViewtips", NULL, PRO_B_TRUE, CreateViewID, MSGFILE);
+
+	status = ProCmdActionAdd("CreateAuxiliaryView_Act", (uiCmdCmdActFn)CreateAuxiliaryView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &CreateAuxiliaryViewID);
+	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "CreateAuxiliaryView", "CreateAuxiliaryView", "CreateAuxiliaryViewtips", NULL, PRO_B_TRUE, CreateAuxiliaryViewID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

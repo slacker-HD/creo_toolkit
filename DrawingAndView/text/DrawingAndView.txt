@@ -14,11 +14,21 @@ CreateDrwtips
 #
 
 CreateView
-生成视图
-生成视图
+生成三视图
+生成三视图
 #
 
 CreateViewtips
-生成视图
-生成视图
+生成三视图
+生成三视图
+#
+
+CreateAuxiliaryView
+生成辅助视图
+生成辅助视图
+#
+
+CreateAuxiliaryViewtips
+生成辅助视图
+生成辅助视图
 #
