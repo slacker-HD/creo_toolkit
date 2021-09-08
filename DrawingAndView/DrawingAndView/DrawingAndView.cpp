@@ -90,6 +90,16 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 		return ACCESS_INVISIBLE;
 }
 
+ProError _setDisplayStyle(ProDrawing drawing,ProView view,ProDisplayStyle style)
+{
+	ProError status;
+	ProDrawingViewDisplay displayStatus;
+	status = ProDrawingViewDisplayGet(drawing,view,&displayStatus);
+	displayStatus.style = style;
+	status = ProDrawingViewDisplaySet(drawing,view,&displayStatus);
+	return status;
+}
+
 ProError _createDrawing(CString TemplateName)
 {
 	ProMdl solidmdl;
@@ -228,6 +238,7 @@ ProError _createView()
 		matrix[3][3] = 1;
 
 		status = ProDrawingGeneralviewCreate(drawing, solid, sheet, PRO_B_FALSE, position, 1, matrix, &positive_view);
+		status = _setDisplayStyle(drawing,positive_view,PRO_DISPSTYLE_HIDDEN_LINE);
 		//视图大小
 		//status = ProDrawingViewOutlineGet(drawing,positive_view,outline);
 		//移动视图
@@ -239,11 +250,12 @@ ProError _createView()
 
 		position[0] += 500;
 		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &top_view);
+		status = _setDisplayStyle(drawing,top_view,PRO_DISPSTYLE_HIDDEN_LINE);
 
 		position[0] -= 500;
 		position[1] -= 400;
 		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &left_view);
-
+		status = _setDisplayStyle(drawing,left_view,PRO_DISPSTYLE_HIDDEN_LINE);
 		status = ProDwgSheetRegenerate(drawing, sheet);
 		return PRO_TK_NO_ERROR;
 	}
@@ -272,8 +284,8 @@ ProError _createAuxiliayView()
 	int sheet;
 	ProPoint3d point;
 	//根据实际确定位置
-	point[0] = 200;
-	point[1] = 700;
+	point[0] = 300;
+	point[1] = 0;
 	point[2] = 0;
 
 	status = ProMdlCurrentGet(&mdl);
@@ -293,6 +305,7 @@ ProError _createAuxiliayView()
 		if (status == PRO_TK_NO_ERROR)
 		{
 			status = ProDrawingViewAuxiliaryCreate(drawing, *sel, point, &auxiliaryview);
+			status = _setDisplayStyle(drawing,auxiliaryview,PRO_DISPSTYLE_HIDDEN_LINE);
 			status = ProDwgSheetRegenerate(drawing, sheet);
 			return PRO_TK_NO_ERROR;
 		}
