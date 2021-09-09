@@ -1,0 +1,7 @@
+name CoordTrf
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\CoordTrf\x64\Debug\CoordTrf.dll
+text_dir D:\mydoc\creo_toolkit\CoordTrf\text
+revision   18.0
+end
