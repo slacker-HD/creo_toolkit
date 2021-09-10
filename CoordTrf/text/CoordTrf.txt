@@ -13,22 +13,22 @@ ComponentToAsmtips
 组件坐标转换为装配体坐标
 #
 
-ViewtoDrawing
-视图坐标变换为绘图坐标
-视图坐标变换为绘图坐标
+ViewtoScreen
+视图坐标变换为屏幕坐标
+视图坐标变换为屏幕坐标
 #
 
-ViewtoDrawingtips
-视图坐标变换为绘图坐标
-视图坐标变换为绘图坐标
+ViewtoScreentips
+视图坐标变换为屏幕坐标
+视图坐标变换为屏幕坐标
 #
 
-solidtoDrawing
-换为绘图坐标
-换为绘图坐标
+solidtoScreen
+组件坐标转换为装配体坐标再转换为屏幕坐标
+组件坐标转换为装配体坐标再转换为屏幕坐标
 #
 
-solidtoDrawingtips
-视图坐标变换为绘图坐标
-视图坐标变换为绘图坐标
+solidtoScreentips 
+组件坐标转换为装配体坐标再转换为屏幕坐标
+组件坐标转换为装配体坐标再转换为屏幕坐标
 #

@@ -47,4 +47,4 @@
 #include <ProWindows.h>
 #include <ProSelection.h>
 #include <ProAsmcomppath.h>
-
+#include <ProGraphic.h>

@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CCoordTrfApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CCoordTrfApp 构造
 
 CCoordTrfApp::CCoordTrfApp()
@@ -47,11 +46,9 @@ CCoordTrfApp::CCoordTrfApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CCoordTrfApp 对象
 
 CCoordTrfApp theApp;
-
 
 // CCoordTrfApp 初始化
 
@@ -61,8 +58,6 @@ BOOL CCoordTrfApp::InitInstance()
 
 	return TRUE;
 }
-
-
 
 int CurrentMdlType()
 {
@@ -99,7 +94,7 @@ void CoordComponentToAsm()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProError status;
-	ProPoint3d pointCompCoord,pointAsmCoord;
+	ProPoint3d pointCompCoord, pointAsmCoord;
 	ProSelection *sel;
 	int n_sel;
 	ProMatrix transformation;
@@ -111,46 +106,53 @@ void CoordComponentToAsm()
 	{
 		status = ProSelectionPoint3dGet(sel[0], pointCompCoord);
 		status = ProSelectionAsmcomppathGet(sel[0], &comppath);
-		status = ProAsmcomppathTrfGet(&comppath,PRO_B_TRUE,transformation);
-		status = ProPntTrfEval(pointCompCoord,transformation,pointAsmCoord);
+		status = ProAsmcomppathTrfGet(&comppath, PRO_B_TRUE, transformation);
+		status = ProPntTrfEval(pointCompCoord, transformation, pointAsmCoord);
 
-		message.Format("点在组件默认坐标系下的坐标为(%f,%f,%f)，\n在装配体默认坐标系下的坐标为(%f,%f,%f)",pointCompCoord[0],pointCompCoord[1],pointCompCoord[2],pointAsmCoord[0],pointAsmCoord[1],pointAsmCoord[2]);
+		message.Format("点在组件默认坐标系下的坐标为(%f,%f,%f)，\n在装配体默认坐标系下的坐标为(%f,%f,%f)", pointCompCoord[0], pointCompCoord[1], pointCompCoord[2], pointAsmCoord[0], pointAsmCoord[1], pointAsmCoord[2]);
 		AfxMessageBox(message);
 	}
 }
 
-void CoordViewtoDrawing()
+void CoordViewtoScreen()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProError status;
-	ProPoint3d pointDrawingCoord,pointViewCoord;
+	ProPoint3d pointOrig, pointDrawingCoord, pointViewCoord;
 	ProView view;
 	ProSelection *sel;
 	int n_sel;
-	ProMatrix transViewtoDrawing;
+	ProMatrix transViewtoScreen;
 	ProMdl mdl;
+	pointOrig[0] = 0;
+	pointOrig[1] = 0;
+	pointOrig[2] = 0;
+
 	CString message;
 	pointViewCoord[0] = 0;
 	pointViewCoord[1] = 0;
 	pointViewCoord[2] = 0;
-	AfxMessageBox(_T("选择一个视图查看视图原点坐标转换为绘图的坐标。"));
+	AfxMessageBox(_T("选择一个视图查看视图原点坐标转换到屏幕上的坐标。"));
 	status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 	if (status == PRO_TK_NO_ERROR)
 	{
-		status = ProSelectionViewGet(sel[0],&view);
+		status = ProSelectionViewGet(sel[0], &view);
 		status = ProMdlCurrentGet(&mdl);
-		status = ProDrawingViewTransformGet(ProDrawing(mdl),view,PRO_B_TRUE,transViewtoDrawing);
-		status = ProPntTrfEval(pointViewCoord,transViewtoDrawing,pointDrawingCoord);
-		message.Format("视图原点坐标在绘图的坐标系下坐标为(%f,%f,%f)",pointDrawingCoord[0],pointDrawingCoord[1],pointDrawingCoord[2]);
+		status = ProDrawingViewTransformGet(ProDrawing(mdl), view, PRO_B_TRUE, transViewtoScreen);
+		status = ProPntTrfEval(pointViewCoord, transViewtoScreen, pointDrawingCoord);
+		message.Format("视图原点坐标在绘图的坐标系下坐标为(%f,%f)", pointDrawingCoord[0], pointDrawingCoord[1]);
 		AfxMessageBox(message);
+		AfxMessageBox(_T("接下来将会绘制从屏幕原点到选择点的直线，刷新窗口、重生或者移动、缩放视图直线会消失。"));
+		ProGraphicsPenPosition(pointOrig);
+		ProGraphicsLineDraw(pointDrawingCoord);
 	}
 }
 
-void CoordsolidtoDrawing()
+void CoordsolidtoScreen()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProError status;
-	ProPoint3d pointCompCoord,pointAsmCoord,pointDrawingCoord,pointViewCoord;
+	ProPoint3d pointOrig, pointCompCoord, pointAsmCoord, pointScreenCoord;
 	ProAsmcomppath comppath;
 	ProView view;
 	ProSelection *sel;
@@ -158,36 +160,38 @@ void CoordsolidtoDrawing()
 	ProMdl mdl;
 	ProSolid solid;
 	CString message;
-	ProMatrix transComptoAsm,transAsmtoDrawing,transDrawingtoView;
-	AfxMessageBox(_T("选择一个点查看其在组件、装配体及所选视图下的中的坐标"));
+
+	pointOrig[0] = 0;
+	pointOrig[1] = 0;
+	pointOrig[2] = 0;
+
+	ProMatrix transComptoAsm, transAsmtoScreen;
+	AfxMessageBox(_T("选择一个点查看其在组件、装配体及当前屏幕下的中的坐标"));
 	status = ProSelect((char *)"point", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 	if (status == PRO_TK_NO_ERROR)
 	{
 		status = ProSelectionPoint3dGet(sel[0], pointCompCoord);
 		status = ProSelectionAsmcomppathGet(sel[0], &comppath);
-		status = ProAsmcomppathTrfGet(&comppath,PRO_B_TRUE,transComptoAsm);
-		status = ProPntTrfEval(pointCompCoord,transComptoAsm,pointAsmCoord);
+		status = ProAsmcomppathTrfGet(&comppath, PRO_B_TRUE, transComptoAsm);
+		status = ProPntTrfEval(pointCompCoord, transComptoAsm, pointAsmCoord);
 
 		status = ProMdlCurrentGet(&mdl);
-		status = ProDrawingCurrentsolidGet(ProDrawing(mdl),&solid);
-		status = ProSelectionViewGet(sel[0],&view);
-		status = ProViewMatrixGet(ProMdl(solid),view,transAsmtoDrawing);
-		status = ProPntTrfEval(pointAsmCoord,transAsmtoDrawing,pointDrawingCoord);
+		status = ProDrawingCurrentsolidGet(ProDrawing(mdl), &solid);
+		status = ProSelectionViewGet(sel[0], &view);
+		status = ProViewMatrixGet(ProMdl(solid), view, transAsmtoScreen);
+		status = ProPntTrfEval(pointAsmCoord, transAsmtoScreen, pointScreenCoord);
 
-
-		status = ProDrawingViewTransformGet(ProDrawing(mdl),view,PRO_B_FALSE,transDrawingtoView);
-		status = ProPntTrfEval(pointDrawingCoord,transDrawingtoView,pointViewCoord);
-
-		message.Format("点在组件默认坐标系下的坐标为(%f,%f,%f)，\n在装配体默认坐标系下的坐标为(%f,%f,%f)\n，在所选点所在视图下的坐标为(%f,%f)",pointCompCoord[0],pointCompCoord[1],pointCompCoord[2],pointAsmCoord[0],pointAsmCoord[1],pointAsmCoord[2],pointViewCoord[0],pointViewCoord[1]);
-
+		message.Format("点在组件默认坐标系下的坐标为(%f,%f,%f)，\n在装配体默认坐标系下的坐标为(%f,%f,%f)，\n在当前屏幕下的坐标为(%f,%f)", pointCompCoord[0], pointCompCoord[1], pointCompCoord[2], pointAsmCoord[0], pointAsmCoord[1], pointAsmCoord[2], pointScreenCoord[0], pointScreenCoord[1]);
 		AfxMessageBox(message);
-
+		AfxMessageBox(_T("接下来将会绘制从屏幕原点到选择点的直线，刷新窗口、重生或者移动、缩放视图直线会消失。"));
+		ProGraphicsPenPosition(pointOrig);
+		ProGraphicsLineDraw(pointScreenCoord);
 	}
 }
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId ComponentToAsmID,ViewtoDrawingID, solidtoDrawingID;
+	uiCmdCmdId ComponentToAsmID, ViewtoScreenID, solidtoScreenID;
 
 	status = ProMenubarMenuAdd("CoordTrf", "CoordTrf", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("CoordTrf", "CoordTrf", "CoordTrf", NULL, PRO_B_TRUE, MSGFILE);
@@ -195,12 +199,12 @@ extern "C" int user_initialize()
 	status = ProCmdActionAdd("ComponentToAsm_Act", (uiCmdCmdActFn)CoordComponentToAsm, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &ComponentToAsmID);
 	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "ComponentToAsm", "ComponentToAsm", "ComponentToAsmtips", NULL, PRO_B_TRUE, ComponentToAsmID, MSGFILE);
 
-	status = ProCmdActionAdd("ViewtoDrawing_Act", (uiCmdCmdActFn)CoordViewtoDrawing, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &ViewtoDrawingID);
-	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "ViewtoDrawing", "ViewtoDrawing", "ViewtoDrawingtips", NULL, PRO_B_TRUE, ViewtoDrawingID, MSGFILE);
+	status = ProCmdActionAdd("ViewtoScreen_Act", (uiCmdCmdActFn)CoordViewtoScreen, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &ViewtoScreenID);
+	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "ViewtoScreen", "ViewtoScreen", "ViewtoScreentips", NULL, PRO_B_TRUE, ViewtoScreenID, MSGFILE);
 
-	status = ProCmdActionAdd("solidtoDrawing_Act", (uiCmdCmdActFn)CoordsolidtoDrawing, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &solidtoDrawingID);
-	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "solidtoDrawing", "solidtoDrawing", "solidtoDrawingtips", NULL, PRO_B_TRUE, solidtoDrawingID, MSGFILE);
-	
+	status = ProCmdActionAdd("solidtoScreen_Act", (uiCmdCmdActFn)CoordsolidtoScreen, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &solidtoScreenID);
+	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "solidtoScreen", "solidtoScreen", "solidtoScreentips", NULL, PRO_B_TRUE, solidtoScreenID, MSGFILE);
+
 	return PRO_TK_NO_ERROR;
 }
 
