@@ -47,3 +47,5 @@
 #include <ProWindows.h>
 #include <ProSelection.h>
 #include <ProDrawingView.h>
+#include <ProWstring.h>
+#include <ProCurve.h>
