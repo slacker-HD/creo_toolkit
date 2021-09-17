@@ -377,6 +377,21 @@ double ProUtilVectorLength(double v[3])
 	return (sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
 }
 
+ProError _coordsolidtoScreen(ProView view, ProPoint3d pointsolidCoord, ProPoint3d pointScreenCoord)
+{
+	ProError status;
+	ProMdl mdl;
+	ProSolid solid;
+	CString message;
+
+	ProMatrix transSolidtoScreen;
+	status = ProMdlCurrentGet(&mdl);
+	status = ProDrawingCurrentsolidGet(ProDrawing(mdl), &solid);
+	status = ProViewMatrixGet(ProMdl(solid), view, transSolidtoScreen);
+	status = ProPntTrfEval(pointsolidCoord, transSolidtoScreen, pointScreenCoord);
+	return status;
+}
+
 ProError _createDetailedView()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
@@ -389,11 +404,11 @@ ProError _createDetailedView()
 	ProSolid solid;
 	int n_sel;
 	int sheet;
-	ProPoint3d refPoint;
+	ProPoint3d refPoint, refPointScreen;
 
 	int np, n;
-	ProMouseButton btn;
-	Pro3dPnt sel_pnt, *pnt_arr, chord, *p_tan, *tan_arr;
+
+	Pro3dPnt *pnt_arr, chord, *p_tan, *tan_arr;
 	ProCurvedata crv_data;
 
 	double start_angle = 0.0, end_angle = 0.0, radius = 0.0;
@@ -420,18 +435,42 @@ ProError _createDetailedView()
 			status = ProSelectionPoint3dGet(sel[0], refPoint);
 			status = ProSelectionViewGet(sel[0], &parentView);
 
+			/////////////////////////////////////////////////////////////////////////////
+			////以下代码为手动选择点可以和下面的一段代码互换
+			//Pro3dPnt sel_pnt;
+			//ProMouseButton btn;
+			//AfxMessageBox(_T("请点击选择边周围的点以生成边界，按鼠标中键以结束。"));
+			//status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&pnt_arr);
+			//while (TRUE)
+			//{
+			//	status = ProMousePickGet(PRO_ANY_BUTTON, &btn, sel_pnt);
+			//	if (btn != PRO_LEFT_BUTTON || status != PRO_TK_NO_ERROR)
+			//		break;
+			//	ProGraphicsCircleDraw(sel_pnt, 0.5);
+			//	status = ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, sel_pnt);
+			//}
+			/////////////////////////////////////////////////////////////////////////////
+			////以下代码为自动生样条曲线，四个点为上下左右各偏移20四个点
+			//注意没有做装配体的检测以及组件转装配体的坐标变换等
+			status = _coordsolidtoScreen(parentView, refPoint, refPointScreen);
+			//样条曲线四个点为上下左右各偏移20四个点作为圆的内接正方形
 			status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&pnt_arr);
-			AfxMessageBox(_T("请点击选择边周围的点以生成边界，按鼠标中键以结束。"));
+			refPointScreen[0] -= 20;
+			ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, refPointScreen);
 
-			//做演示这里手动选择点，实际可以根据上面选择的点然后上下左右各偏移一段距离自动生成四个点作为圆的内接正方形即可
-			while (TRUE)
-			{
-				status = ProMousePickGet(PRO_ANY_BUTTON, &btn, sel_pnt);
-				if (btn != PRO_LEFT_BUTTON || status != PRO_TK_NO_ERROR)
-					break;
-				ProGraphicsCircleDraw(sel_pnt, 0.5);
-				status = ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, sel_pnt);
-			}
+			refPointScreen[0] += 20;
+			refPointScreen[1] -= 20;
+			ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, refPointScreen);
+
+			refPointScreen[0] += 20;
+			refPointScreen[1] += 20;
+			ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, refPointScreen);
+
+			refPointScreen[0] -= 20;
+			refPointScreen[1] += 20;
+			ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, refPointScreen);
+			/////////////////////////////////////////////////////////////////////////////
+
 			status = ProArraySizeGet((ProArray)pnt_arr, &np);
 			if (status != PRO_TK_NO_ERROR || np == 0)
 				return PRO_TK_BAD_CONTEXT;
@@ -467,8 +506,8 @@ ProError _createDetailedView()
 			status = ProSplinedataInit(par_arr, pnt_arr, p_tan, np, &crv_data);
 
 			//根据实际计算调整，这里做死了
-			refPoint[1] -= 100;
-			status = ProDrawingViewDetailCreate(drawing, parentView, sel[0], &crv_data, refPoint, &detailedView);
+			refPointScreen[1] -= 100;
+			status = ProDrawingViewDetailCreate(drawing, parentView, sel[0], &crv_data, refPointScreen, &detailedView);
 			status = _setDisplayStyle(drawing, detailedView, PRO_DISPSTYLE_HIDDEN_LINE);
 			status = ProDwgSheetRegenerate(drawing, sheet);
 
