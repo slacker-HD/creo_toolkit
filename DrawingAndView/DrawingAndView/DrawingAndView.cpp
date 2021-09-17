@@ -332,7 +332,9 @@ ProError _create2DSectionView()
 		{
 			status = ProSelectionPoint3dGet(sel[0], refPoint);
 			status = ProSelectionViewGet(sel[0], &parentView);
-			refPoint[1] -= 500;
+
+			//根据实际计算调整，这里做死了
+			refPoint[1] -= 300;
 			status = ProDrawingProjectedviewCreate(drawing, parentView, PRO_B_FALSE, refPoint, &_2DSectionView);
 			status = ProDrawingView2DSectionSet(drawing, _2DSectionView, L"TESTSEC", PRO_VIEW_SECTION_AREA_FULL, NULL, NULL, parentView);
 			status = _setDisplayStyle(drawing, _2DSectionView, PRO_DISPSTYLE_HIDDEN_LINE);
@@ -353,6 +355,27 @@ void Create2DSectionView()
 		//do some thing
 	}
 }
+//下面两个函数直接拷贝官方帮助文件
+/*====================================================================*\
+    FUNCTION :	ProUtilVectorDiff()
+    PURPOSE  :	Difference of two vectors
+\*====================================================================*/
+double *ProUtilVectorDiff(double a[3], double b[3], double c[3])
+{
+	c[0] = a[0] - b[0];
+	c[1] = a[1] - b[1];
+	c[2] = a[2] - b[2];
+	return (c);
+}
+
+/*====================================================================*\
+    FUNCTION :	ProUtilVectorLength()
+    PURPOSE  :	Length of a vector
+\*====================================================================*/
+double ProUtilVectorLength(double v[3])
+{
+	return (sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
+}
 
 ProError _createDetailedView()
 {
@@ -366,11 +389,16 @@ ProError _createDetailedView()
 	ProSolid solid;
 	int n_sel;
 	int sheet;
-	ProPoint3d refPoint, locationPoint;
-	//根据实际确定位置
-	locationPoint[0] = 0;
-	locationPoint[1] = 300;
-	locationPoint[2] = 0;
+	ProPoint3d refPoint;
+
+	int np, n;
+	ProMouseButton btn;
+	Pro3dPnt sel_pnt, *pnt_arr, chord, *p_tan, *tan_arr;
+	ProCurvedata crv_data;
+
+	double start_angle = 0.0, end_angle = 0.0, radius = 0.0;
+	double angle = 0.0, maj_lenth = 0.0, min_lenth = 0.0, len = 0.0;
+	double range[2] = {0.0, 90.0}, *par_arr;
 
 	status = ProMdlCurrentGet(&mdl);
 	if (status != PRO_TK_NO_ERROR)
@@ -392,23 +420,62 @@ ProError _createDetailedView()
 			status = ProSelectionPoint3dGet(sel[0], refPoint);
 			status = ProSelectionViewGet(sel[0], &parentView);
 
-			ProSelection *sel1;
-			int n_sel1;
+			status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&pnt_arr);
+			AfxMessageBox(_T("请点击选择边周围的点以生成边界，按鼠标中键以结束。"));
 
-			status = ProSelect((char *)"draft_ent", 1, NULL, NULL, NULL, NULL, &sel1, &n_sel1);
+			//做演示这里手动选择点，实际可以根据上面选择的点然后上下左右各偏移一段距离自动生成四个点作为圆的内接正方形即可
+			while (TRUE)
+			{
+				status = ProMousePickGet(PRO_ANY_BUTTON, &btn, sel_pnt);
+				if (btn != PRO_LEFT_BUTTON || status != PRO_TK_NO_ERROR)
+					break;
+				ProGraphicsCircleDraw(sel_pnt, 0.5);
+				status = ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, sel_pnt);
+			}
+			status = ProArraySizeGet((ProArray)pnt_arr, &np);
+			if (status != PRO_TK_NO_ERROR || np == 0)
+				return PRO_TK_BAD_CONTEXT;
+			status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&p_tan);
+			status = ProArrayAlloc(0, sizeof(double), 1, (ProArray *)&par_arr);
+			tan_arr = (ProPoint3d *)calloc(np, sizeof(ProPoint3d));
+			tan_arr[0][0] = pnt_arr[1][0] - pnt_arr[0][0];
+			tan_arr[0][1] = 2 * pnt_arr[1][1] - pnt_arr[2][1] - pnt_arr[0][1];
+			tan_arr[np - 1][0] = -(pnt_arr[np - 2][0] - pnt_arr[np - 1][0]);
+			tan_arr[np - 1][1] = -(2 * pnt_arr[np - 2][1] - pnt_arr[np - 3][1] - pnt_arr[np - 1][1]);
 
-			ProGeomitem geomItem;
-			ProCurve p_curve;
-			status = ProSelectionModelitemGet(sel[0], &geomItem);
-			status = ProGeomitemToCurve(&geomItem, &p_curve);
-			ProGeomitemdata *gitem_data = NULL;
-			status = ProCurveDataGet(p_curve, &gitem_data);
+			for (n = 1; n < np - 1; n++)
+			{
+				tan_arr[n][0] = pnt_arr[n + 1][0] - pnt_arr[n - 1][0];
+				tan_arr[n][1] = pnt_arr[n + 1][1] - pnt_arr[n - 1][1];
+			}
+			for (n = 0; n < np; n++)
+			{
+				len = (tan_arr[n][0] * tan_arr[n][0]) + (tan_arr[n][1] * tan_arr[n][1]);
+				len = sqrt(len);
+				tan_arr[n][0] /= len;
+				tan_arr[n][1] /= len;
+				status = ProArrayObjectAdd((ProArray *)&p_tan, PRO_VALUE_UNUSED, 1, tan_arr[n]);
+			}
+			angle = 0.0;
+			status = ProArrayObjectAdd((ProArray *)&par_arr, PRO_VALUE_UNUSED, 1, &angle);
+			for (n = 1; n < np; n++)
+			{
+				ProUtilVectorDiff(pnt_arr[n], pnt_arr[n - 1], chord);
+				angle = ProUtilVectorLength(chord) + par_arr[n - 1];
+				status = ProArrayObjectAdd((ProArray *)&par_arr, PRO_VALUE_UNUSED, 1, &angle);
+			}
+			status = ProSplinedataInit(par_arr, pnt_arr, p_tan, np, &crv_data);
 
-			//ProCurvedata* curve_data = 	(ProCurvedata*)(gitem_data[0].data);
+			//根据实际计算调整，这里做死了
+			refPoint[1] -= 100;
+			status = ProDrawingViewDetailCreate(drawing, parentView, sel[0], &crv_data, refPoint, &detailedView);
+			status = _setDisplayStyle(drawing, detailedView, PRO_DISPSTYLE_HIDDEN_LINE);
+			status = ProDwgSheetRegenerate(drawing, sheet);
 
-			//status = ProDrawingViewDetailCreate(drawing,parentView,sel[0],curve_data,locationPoint,&detailedView);
-
-			status = ProGeomitemdataFree(&gitem_data);
+			status = ProArrayFree((ProArray *)&p_tan);
+			status = ProArrayFree((ProArray *)&par_arr);
+			status = ProArrayFree((ProArray *)&pnt_arr);
+			return PRO_TK_NO_ERROR;
 		}
 		else
 			return status;
@@ -424,6 +491,7 @@ void CreateDetailedView()
 		//do some thing
 	}
 }
+
 extern "C" int user_initialize()
 {
 	ProError status;

@@ -36,6 +36,8 @@
 #include <afxcmn.h>                     // MFC 对 Windows 公共控件的支持
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+#include<math.h>
+
 #define MSGFILE L"DrawingAndView.txt"
 
 #include <ProUICmd.h>
@@ -49,3 +51,4 @@
 #include <ProDrawingView.h>
 #include <ProWstring.h>
 #include <ProCurve.h>
+#include <ProGraphic.h>
