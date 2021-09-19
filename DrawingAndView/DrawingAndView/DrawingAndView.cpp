@@ -531,10 +531,87 @@ void CreateDetailedView()
 	}
 }
 
+ProError _createRevolveView()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	ProMdl mdl;
+	ProSolid solid;
+	ProView revolveView;
+	ProDrawing drawing;
+	ProXsec xsec;
+	ProMdlType mdlType;
+	ProSelection *sel;
+	int n_sel;
+	int sheet;
+	ProPoint3d point;
+
+	//根据实际确定位置
+	point[0] = 300;
+	point[1] = 0;
+	point[2] = 0;
+
+	status = ProMdlCurrentGet(&mdl);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
+	status = ProMdlTypeGet(mdl, &mdlType);
+	if (status != PRO_TK_NO_ERROR)
+		return status;
+
+	if (mdlType == PRO_DRAWING)
+	{
+		drawing = (ProDrawing)mdl;
+		status = ProDrawingCurrentsolidGet(drawing, &solid);
+		status = ProDrawingCurrentSheetGet(drawing, &sheet);
+		
+
+
+		status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
+
+		status = ProSelectionViewGet(sel[0],&revolveView);
+
+		status = ProDrawingViewRevolveInfoGet(drawing,revolveView,&xsec,sel,point);
+
+
+
+
+
+
+		AfxMessageBox(_T("请选择一个视图以生成旋转视图。"));
+		//status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
+		if (status == PRO_TK_NO_ERROR)
+		{
+			//status = ProWStringCopy(L"XSEC0001", xsec.xsec_name, PRO_VALUE_UNUSED);
+		/*	xsec.xsec_name[0] = 'X';
+			xsec.xsec_name[1] = '\0';
+
+			xsec.solid_owner = solid;*/
+
+			status = ProDrawingViewRevolveCreate(drawing, &xsec, sel[0], point, &revolveView);
+
+			status = _setDisplayStyle(drawing, revolveView, PRO_DISPSTYLE_HIDDEN_LINE);
+			status = ProDwgSheetRegenerate(drawing, sheet);
+			return PRO_TK_NO_ERROR;
+		}
+		else
+			return status;
+	}
+	else
+		return PRO_TK_BAD_CONTEXT;
+}
+
+void CreateRevolveView()
+{
+	if (_createRevolveView() == PRO_TK_NO_ERROR)
+	{
+		//do some thing
+	}
+}
+
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID, Create2DSectionViewID;
+	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID, CreateRevolveViewID, Create2DSectionViewID;
 
 	status = ProMenubarMenuAdd("DrawingAndView", "DrawingAndView", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("DrawingAndView", "DrawingAndView", "DrawingAndView", NULL, PRO_B_TRUE, MSGFILE);
@@ -553,6 +630,9 @@ extern "C" int user_initialize()
 
 	status = ProCmdActionAdd("Create2DSectionView_Act", (uiCmdCmdActFn)Create2DSectionView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &Create2DSectionViewID);
 	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "Create2DSectionView", "Create2DSectionView", "Create2DSectionViewtips", NULL, PRO_B_TRUE, Create2DSectionViewID, MSGFILE);
+
+	status = ProCmdActionAdd("CreateRevolveView_Act", (uiCmdCmdActFn)CreateRevolveView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &CreateRevolveViewID);
+	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "CreateRevolveView", "CreateRevolveView", "CreateRevolveViewtips", NULL, PRO_B_TRUE, CreateRevolveViewID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

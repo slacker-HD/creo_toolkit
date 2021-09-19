@@ -52,3 +52,5 @@
 #include <ProWstring.h>
 #include <ProCurve.h>
 #include <ProGraphic.h>
+#include <ProWstring.h>
+
