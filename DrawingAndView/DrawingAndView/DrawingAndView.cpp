@@ -184,7 +184,7 @@ ProError _createView()
 {
 	ProError status;
 	ProMdl mdl;
-	ProPoint3d position;
+	ProPoint3d refPoint;
 	ProMatrix matrix;
 	ProView positive_view, top_view, left_view;
 	ProDrawing drawing;
@@ -205,9 +205,9 @@ ProError _createView()
 		status = ProDrawingCurrentsolidGet(drawing, &solid);
 		status = ProDrawingCurrentSheetGet(drawing, &sheet);
 
-		position[0] = 200;
-		position[1] = 600;
-		position[2] = 0;
+		refPoint[0] = 200;
+		refPoint[1] = 600;
+		refPoint[2] = 0;
 
 		//////////////定义摆放方向,FRONT，设置比例0.015
 		for (int i = 0; i < 4; i++)
@@ -218,17 +218,17 @@ ProError _createView()
 			}
 		}
 
-		status = ProDrawingGeneralviewCreate(drawing, solid, sheet, PRO_B_FALSE, position, 1, matrix, &positive_view);
+		status = ProDrawingGeneralviewCreate(drawing, solid, sheet, PRO_B_FALSE, refPoint, 1, matrix, &positive_view);
 		status = _setDisplayStyle(drawing, positive_view, PRO_DISPSTYLE_HIDDEN_LINE);
 		status = ProDrawingViewScaleSet(drawing, positive_view, 0.15);
 
-		position[0] += 500;
-		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &top_view);
+		refPoint[0] += 500;
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &top_view);
 		status = _setDisplayStyle(drawing, top_view, PRO_DISPSTYLE_HIDDEN_LINE);
 
-		position[0] -= 500;
-		position[1] -= 400;
-		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, position, &left_view);
+		refPoint[0] -= 500;
+		refPoint[1] -= 200;
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &left_view);
 		status = _setDisplayStyle(drawing, left_view, PRO_DISPSTYLE_HIDDEN_LINE);
 		status = ProDwgSheetRegenerate(drawing, sheet);
 		return PRO_TK_NO_ERROR;
@@ -258,7 +258,7 @@ ProError _createAuxiliayView()
 	int sheet;
 	ProPoint3d point;
 	//根据实际确定位置
-	point[0] = 300;
+	point[0] = 150;
 	point[1] = 0;
 	point[2] = 0;
 
@@ -506,6 +506,7 @@ ProError _createDetailedView()
 			status = ProSplinedataInit(par_arr, pnt_arr, p_tan, np, &crv_data);
 
 			//根据实际计算调整，这里做死了
+			refPointScreen[0] += 500;
 			refPointScreen[1] -= 100;
 			status = ProDrawingViewDetailCreate(drawing, parentView, sel[0], &crv_data, refPointScreen, &detailedView);
 			status = _setDisplayStyle(drawing, detailedView, PRO_DISPSTYLE_HIDDEN_LINE);
@@ -531,87 +532,83 @@ void CreateDetailedView()
 	}
 }
 
-ProError _createRevolveView()
-{
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-	ProError status;
-	ProMdl mdl;
-	ProSolid solid;
-	ProView revolveView;
-	ProDrawing drawing;
-	ProXsec xsec;
-	ProMdlType mdlType;
-	ProSelection *sel;
-	int n_sel;
-	int sheet;
-	ProPoint3d point;
+//ProError _createRevolveView()
+//{
+//	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+//	ProError status;
+//	ProMdl mdl;
+//	ProSolid solid;
+//	ProView revolveView;
+//	ProDrawing drawing;
+//	ProXsec xsec;
+//	ProMdlType mdlType;
+//	ProSelection *sel,*sel1;
+//	int n_sel;
+//	int sheet;
+//	ProPoint3d point;
+//
+//	//根据实际确定位置
+//	point[0] = 300;
+//	point[1] = 0;
+//	point[2] = 0;
+//
+//	status = ProMdlCurrentGet(&mdl);
+//	if (status != PRO_TK_NO_ERROR)
+//		return status;
+//	status = ProMdlTypeGet(mdl, &mdlType);
+//	if (status != PRO_TK_NO_ERROR)
+//		return status;
+//
+//	if (mdlType == PRO_DRAWING)
+//	{
+//		drawing = (ProDrawing)mdl;
+//		status = ProDrawingCurrentsolidGet(drawing, &solid);
+//		status = ProDrawingCurrentSheetGet(drawing, &sheet);
+//
+//		status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel1, &n_sel);
+//		status = ProSelectionViewGet(sel1[0],&revolveView);
+//		status = ProDrawingViewRevolveInfoGet(drawing,revolveView,&xsec,sel1,point);
+//
+//
+//
+//
+//
+//
+// 		AfxMessageBox(_T("请选择一个视图以生成旋转视图。"));
+//		//status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
+//		if (status == PRO_TK_NO_ERROR)
+//		{
+//			//status = ProWStringCopy(L"XSEC0001", xsec.xsec_name, PRO_VALUE_UNUSED);
+//			xsec.xsec_name[0] = 'A';
+//			xsec.xsec_name[1] = '\0';
+//
+//			xsec.solid_owner = solid;
+//
+//			status = ProDrawingViewRevolveCreate(drawing, NULL, *sel1, point, &revolveView);
+//
+//			status = _setDisplayStyle(drawing, revolveView, PRO_DISPSTYLE_HIDDEN_LINE);
+//			status = ProDwgSheetRegenerate(drawing, sheet);
+//			return PRO_TK_NO_ERROR;
+//		}
+//		else
+//			return status;
+//	}
+//	else
+//		return PRO_TK_BAD_CONTEXT;
+//}
 
-	//根据实际确定位置
-	point[0] = 300;
-	point[1] = 0;
-	point[2] = 0;
-
-	status = ProMdlCurrentGet(&mdl);
-	if (status != PRO_TK_NO_ERROR)
-		return status;
-	status = ProMdlTypeGet(mdl, &mdlType);
-	if (status != PRO_TK_NO_ERROR)
-		return status;
-
-	if (mdlType == PRO_DRAWING)
-	{
-		drawing = (ProDrawing)mdl;
-		status = ProDrawingCurrentsolidGet(drawing, &solid);
-		status = ProDrawingCurrentSheetGet(drawing, &sheet);
-		
-
-
-		status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
-
-		status = ProSelectionViewGet(sel[0],&revolveView);
-
-		status = ProDrawingViewRevolveInfoGet(drawing,revolveView,&xsec,sel,point);
-
-
-
-
-
-
-		AfxMessageBox(_T("请选择一个视图以生成旋转视图。"));
-		//status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
-		if (status == PRO_TK_NO_ERROR)
-		{
-			//status = ProWStringCopy(L"XSEC0001", xsec.xsec_name, PRO_VALUE_UNUSED);
-		/*	xsec.xsec_name[0] = 'X';
-			xsec.xsec_name[1] = '\0';
-
-			xsec.solid_owner = solid;*/
-
-			status = ProDrawingViewRevolveCreate(drawing, &xsec, sel[0], point, &revolveView);
-
-			status = _setDisplayStyle(drawing, revolveView, PRO_DISPSTYLE_HIDDEN_LINE);
-			status = ProDwgSheetRegenerate(drawing, sheet);
-			return PRO_TK_NO_ERROR;
-		}
-		else
-			return status;
-	}
-	else
-		return PRO_TK_BAD_CONTEXT;
-}
-
-void CreateRevolveView()
-{
-	if (_createRevolveView() == PRO_TK_NO_ERROR)
-	{
-		//do some thing
-	}
-}
+//void CreateRevolveView()
+//{
+//	if (_createRevolveView() == PRO_TK_NO_ERROR)
+//	{
+//		//do some thing
+//	}
+//}
 
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID, CreateRevolveViewID, Create2DSectionViewID;
+	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID,/* CreateRevolveViewID, */Create2DSectionViewID;
 
 	status = ProMenubarMenuAdd("DrawingAndView", "DrawingAndView", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("DrawingAndView", "DrawingAndView", "DrawingAndView", NULL, PRO_B_TRUE, MSGFILE);
@@ -631,8 +628,8 @@ extern "C" int user_initialize()
 	status = ProCmdActionAdd("Create2DSectionView_Act", (uiCmdCmdActFn)Create2DSectionView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &Create2DSectionViewID);
 	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "Create2DSectionView", "Create2DSectionView", "Create2DSectionViewtips", NULL, PRO_B_TRUE, Create2DSectionViewID, MSGFILE);
 
-	status = ProCmdActionAdd("CreateRevolveView_Act", (uiCmdCmdActFn)CreateRevolveView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &CreateRevolveViewID);
-	status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "CreateRevolveView", "CreateRevolveView", "CreateRevolveViewtips", NULL, PRO_B_TRUE, CreateRevolveViewID, MSGFILE);
+	//status = ProCmdActionAdd("CreateRevolveView_Act", (uiCmdCmdActFn)CreateRevolveView, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &CreateRevolveViewID);
+	//status = ProMenubarmenuPushbuttonAdd("DrawingAndView", "CreateRevolveView", "CreateRevolveView", "CreateRevolveViewtips", NULL, PRO_B_TRUE, CreateRevolveViewID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }
