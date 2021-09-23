@@ -377,12 +377,12 @@ double ProUtilVectorLength(double v[3])
 	return (sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
 }
 
-ProError _coordsolidtoScreen(ProView view, ProPoint3d pointsolidCoord, ProPoint3d pointScreenCoord)
+ProError 
+(ProView view, ProPoint3d pointsolidCoord, ProPoint3d pointScreenCoord)
 {
 	ProError status;
 	ProMdl mdl;
 	ProSolid solid;
-	CString message;
 
 	ProMatrix transSolidtoScreen;
 	status = ProMdlCurrentGet(&mdl);
