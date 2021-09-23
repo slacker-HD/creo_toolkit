@@ -1,4 +1,4 @@
-// DrawingAndView.cpp : ¶¨Òå DLL µÄ³õÊ¼»¯Àý³Ì¡£
+// DrawingAndView.cpp : å®šä¹‰ DLL çš„åˆå§‹åŒ–ä¾‹ç¨‹ã€‚
 //
 
 #include "stdafx.h"
@@ -9,28 +9,28 @@
 #endif
 
 //
-//TODO: Èç¹û´Ë DLL Ïà¶ÔÓÚ MFC DLL ÊÇ¶¯Ì¬Á´½ÓµÄ£¬
-//		Ôò´Ó´Ë DLL µ¼³öµÄÈÎºÎµ÷Èë
-//		MFC µÄº¯Êý±ØÐë½« AFX_MANAGE_STATE ºêÌí¼Óµ½
-//		¸Ãº¯ÊýµÄ×îÇ°Ãæ¡£
+//TODO: å¦‚æžœæ­¤ DLL ç›¸å¯¹äºŽ MFC DLL æ˜¯åŠ¨æ€é“¾æŽ¥çš„ï¼Œ
+//		åˆ™ä»Žæ­¤ DLL å¯¼å‡ºçš„ä»»ä½•è°ƒå…¥
+//		MFC çš„å‡½æ•°å¿…é¡»å°† AFX_MANAGE_STATE å®æ·»åŠ åˆ°
+//		è¯¥å‡½æ•°çš„æœ€å‰é¢ã€‚
 //
-//		ÀýÈç:
+//		ä¾‹å¦‚:
 //
 //		extern "C" BOOL PASCAL EXPORT ExportedFunction()
 //		{
 //			AFX_MANAGE_STATE(AfxGetStaticModuleState());
-//			// ´Ë´¦ÎªÆÕÍ¨º¯ÊýÌå
+//			// æ­¤å¤„ä¸ºæ™®é€šå‡½æ•°ä½“
 //		}
 //
-//		´ËºêÏÈÓÚÈÎºÎ MFC µ÷ÓÃ
-//		³öÏÖÔÚÃ¿¸öº¯ÊýÖÐÊ®·ÖÖØÒª¡£ÕâÒâÎ¶×Å
-//		Ëü±ØÐë×÷Îªº¯ÊýÖÐµÄµÚÒ»¸öÓï¾ä
-//		³öÏÖ£¬ÉõÖÁÏÈÓÚËùÓÐ¶ÔÏó±äÁ¿ÉùÃ÷£¬
-//		ÕâÊÇÒòÎªËüÃÇµÄ¹¹Ôìº¯Êý¿ÉÄÜÉú³É MFC
-//		DLL µ÷ÓÃ¡£
+//		æ­¤å®å…ˆäºŽä»»ä½• MFC è°ƒç”¨
+//		å‡ºçŽ°åœ¨æ¯ä¸ªå‡½æ•°ä¸­ååˆ†é‡è¦ã€‚è¿™æ„å‘³ç€
+//		å®ƒå¿…é¡»ä½œä¸ºå‡½æ•°ä¸­çš„ç¬¬ä¸€ä¸ªè¯­å¥
+//		å‡ºçŽ°ï¼Œç”šè‡³å…ˆäºŽæ‰€æœ‰å¯¹è±¡å˜é‡å£°æ˜Žï¼Œ
+//		è¿™æ˜¯å› ä¸ºå®ƒä»¬çš„æž„é€ å‡½æ•°å¯èƒ½ç”Ÿæˆ MFC
+//		DLL è°ƒç”¨ã€‚
 //
-//		ÓÐ¹ØÆäËûÏêÏ¸ÐÅÏ¢£¬
-//		Çë²ÎÔÄ MFC ¼¼ÊõËµÃ÷ 33 ºÍ 58¡£
+//		æœ‰å…³å…¶ä»–è¯¦ç»†ä¿¡æ¯ï¼Œ
+//		è¯·å‚é˜… MFC æŠ€æœ¯è¯´æ˜Ž 33 å’Œ 58ã€‚
 //
 
 // CDrawingAndViewApp
@@ -38,19 +38,19 @@
 BEGIN_MESSAGE_MAP(CDrawingAndViewApp, CWinApp)
 END_MESSAGE_MAP()
 
-// CDrawingAndViewApp ¹¹Ôì
+// CDrawingAndViewApp æž„é€ 
 
 CDrawingAndViewApp::CDrawingAndViewApp()
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼Ó¹¹Ôì´úÂë£¬
-	// ½«ËùÓÐÖØÒªµÄ³õÊ¼»¯·ÅÖÃÔÚ InitInstance ÖÐ
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ æž„é€ ä»£ç ï¼Œ
+	// å°†æ‰€æœ‰é‡è¦çš„åˆå§‹åŒ–æ”¾ç½®åœ¨ InitInstance ä¸­
 }
 
-// Î¨Ò»µÄÒ»¸ö CDrawingAndViewApp ¶ÔÏó
+// å”¯ä¸€çš„ä¸€ä¸ª CDrawingAndViewApp å¯¹è±¡
 
 CDrawingAndViewApp theApp;
 
-// CDrawingAndViewApp ³õÊ¼»¯
+// CDrawingAndViewApp åˆå§‹åŒ–
 
 BOOL CDrawingAndViewApp::InitInstance()
 {
@@ -209,7 +209,7 @@ ProError _createView()
 		refPoint[1] = 600;
 		refPoint[2] = 0;
 
-		//////////////¶¨Òå°Ú·Å·½Ïò,FRONT£¬ÉèÖÃ±ÈÀý0.015
+		//////////////å®šä¹‰æ‘†æ”¾æ–¹å‘,FRONTï¼Œè®¾ç½®æ¯”ä¾‹0.015
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -223,13 +223,13 @@ ProError _createView()
 		status = ProDrawingViewScaleSet(drawing, positive_view, 0.15);
 
 		refPoint[0] += 500;
-		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &top_view);
-		status = _setDisplayStyle(drawing, top_view, PRO_DISPSTYLE_HIDDEN_LINE);
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &left_view);
+		status = _setDisplayStyle(drawing, left_view, PRO_DISPSTYLE_HIDDEN_LINE);
 
 		refPoint[0] -= 500;
 		refPoint[1] -= 200;
-		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &left_view);
-		status = _setDisplayStyle(drawing, left_view, PRO_DISPSTYLE_HIDDEN_LINE);
+		status = ProDrawingProjectedviewCreate(drawing, positive_view, PRO_B_FALSE, refPoint, &top_view);
+		status = _setDisplayStyle(drawing, top_view, PRO_DISPSTYLE_HIDDEN_LINE);
 		status = ProDwgSheetRegenerate(drawing, sheet);
 		return PRO_TK_NO_ERROR;
 	}
@@ -257,7 +257,7 @@ ProError _createAuxiliayView()
 	int n_sel;
 	int sheet;
 	ProPoint3d point;
-	//¸ù¾ÝÊµ¼ÊÈ·¶¨Î»ÖÃ
+	//æ ¹æ®å®žé™…ç¡®å®šä½ç½®
 	point[0] = 150;
 	point[1] = 0;
 	point[2] = 0;
@@ -275,7 +275,7 @@ ProError _createAuxiliayView()
 		status = ProDrawingCurrentSheetGet(drawing, &sheet);
 
 		drawing = (ProDrawing)mdl;
-		AfxMessageBox(_T("ÇëÑ¡ÔñÒ»Ìõ±ßÒÔÉú³É¸¨ÖúÊÓÍ¼¡£"));
+		AfxMessageBox(_T("è¯·é€‰æ‹©ä¸€æ¡è¾¹ä»¥ç”Ÿæˆè¾…åŠ©è§†å›¾ã€‚"));
 		status = ProSelect((char *)"edge", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 		if (status == PRO_TK_NO_ERROR)
 		{
@@ -326,14 +326,14 @@ ProError _create2DSectionView()
 		status = ProDrawingCurrentSheetGet(drawing, &sheet);
 		status = ProDrawingCurrentsolidGet(drawing, &solid);
 
-		AfxMessageBox(_T("±¾Àý½öÎªÊ¾Àý£¬ËùÒÔ´úÂëÐ´ËÀ£¬Ä¬ÈÏ´´½¨µÄÊÓÍ¼ºá½ØÃæÃûÎª\"TESTSEC\"£¬ËùÒÔÇëÈ·±£µ±Ç°Ä£ÐÍÒÑ´´½¨ÁËÒ»¸öÃûÎª\"TESTSEC\"µÄ½ØÃæ¡£\n½ÓÏÂÀ´ÇëÑ¡ÔñÒ»¸öÊÓÍ¼ÒÔÉú³ÉÆÊÊÓÍ¼¡£"));
+		AfxMessageBox(_T("æœ¬ä¾‹ä»…ä¸ºç¤ºä¾‹ï¼Œæ‰€ä»¥ä»£ç å†™æ­»ï¼Œé»˜è®¤åˆ›å»ºçš„è§†å›¾æ¨ªæˆªé¢åä¸º\"TESTSEC\"ï¼Œæ‰€ä»¥è¯·ç¡®ä¿å½“å‰æ¨¡åž‹å·²åˆ›å»ºäº†ä¸€ä¸ªåä¸º\"TESTSEC\"çš„æˆªé¢ã€‚\næŽ¥ä¸‹æ¥è¯·é€‰æ‹©ä¸€ä¸ªè§†å›¾ä»¥ç”Ÿæˆå‰–è§†å›¾ã€‚"));
 		status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 		if (status == PRO_TK_NO_ERROR)
 		{
 			status = ProSelectionPoint3dGet(sel[0], refPoint);
 			status = ProSelectionViewGet(sel[0], &parentView);
 
-			//¸ù¾ÝÊµ¼Ê¼ÆËãµ÷Õû£¬ÕâÀï×öËÀÁË
+			//æ ¹æ®å®žé™…è®¡ç®—è°ƒæ•´ï¼Œè¿™é‡Œåšæ­»äº†
 			refPoint[1] -= 300;
 			status = ProDrawingProjectedviewCreate(drawing, parentView, PRO_B_FALSE, refPoint, &_2DSectionView);
 			status = ProDrawingView2DSectionSet(drawing, _2DSectionView, L"TESTSEC", PRO_VIEW_SECTION_AREA_FULL, NULL, NULL, parentView);
@@ -355,7 +355,7 @@ void Create2DSectionView()
 		//do some thing
 	}
 }
-//ÏÂÃæÁ½¸öº¯ÊýÖ±½Ó¿½±´¹Ù·½°ïÖúÎÄ¼þ
+//ä¸‹é¢ä¸¤ä¸ªå‡½æ•°ç›´æŽ¥æ‹·è´å®˜æ–¹å¸®åŠ©æ–‡ä»¶
 /*====================================================================*\
     FUNCTION :	ProUtilVectorDiff()
     PURPOSE  :	Difference of two vectors
@@ -428,7 +428,7 @@ ProError _createDetailedView()
 		status = ProDrawingCurrentSheetGet(drawing, &sheet);
 		status = ProDrawingCurrentsolidGet(drawing, &solid);
 
-		AfxMessageBox(_T("ÇëÑ¡ÔñÒ»¸ö±ßÒÔÉú³ÉÏêÏ¸ÊÓÍ¼¡£"));
+		AfxMessageBox(_T("è¯·é€‰æ‹©ä¸€ä¸ªè¾¹ä»¥ç”Ÿæˆè¯¦ç»†è§†å›¾ã€‚"));
 		status = ProSelect((char *)"edge", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 		if (status == PRO_TK_NO_ERROR)
 		{
@@ -436,10 +436,10 @@ ProError _createDetailedView()
 			status = ProSelectionViewGet(sel[0], &parentView);
 
 			/////////////////////////////////////////////////////////////////////////////
-			////ÒÔÏÂ´úÂëÎªÊÖ¶¯Ñ¡Ôñµã¿ÉÒÔºÍÏÂÃæµÄÒ»¶Î´úÂë»¥»»
+			////ä»¥ä¸‹ä»£ç ä¸ºæ‰‹åŠ¨é€‰æ‹©ç‚¹å¯ä»¥å’Œä¸‹é¢çš„ä¸€æ®µä»£ç äº’æ¢
 			//Pro3dPnt sel_pnt;
 			//ProMouseButton btn;
-			//AfxMessageBox(_T("Çëµã»÷Ñ¡Ôñ±ßÖÜÎ§µÄµãÒÔÉú³É±ß½ç£¬°´Êó±êÖÐ¼üÒÔ½áÊø¡£"));
+			//AfxMessageBox(_T("è¯·ç‚¹å‡»é€‰æ‹©è¾¹å‘¨å›´çš„ç‚¹ä»¥ç”Ÿæˆè¾¹ç•Œï¼ŒæŒ‰é¼ æ ‡ä¸­é”®ä»¥ç»“æŸã€‚"));
 			//status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&pnt_arr);
 			//while (TRUE)
 			//{
@@ -450,10 +450,10 @@ ProError _createDetailedView()
 			//	status = ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, sel_pnt);
 			//}
 			/////////////////////////////////////////////////////////////////////////////
-			////ÒÔÏÂ´úÂëÎª×Ô¶¯ÉúÑùÌõÇúÏß£¬ËÄ¸öµãÎªÉÏÏÂ×óÓÒ¸÷Æ«ÒÆ20ËÄ¸öµã
-			//×¢ÒâÃ»ÓÐ×ö×°ÅäÌåµÄ¼ì²âÒÔ¼°×é¼þ×ª×°ÅäÌåµÄ×ø±ê±ä»»µÈ
+			////ä»¥ä¸‹ä»£ç ä¸ºè‡ªåŠ¨ç”Ÿæ ·æ¡æ›²çº¿ï¼Œå››ä¸ªç‚¹ä¸ºä¸Šä¸‹å·¦å³å„åç§»20å››ä¸ªç‚¹
+			//æ³¨æ„æ²¡æœ‰åšè£…é…ä½“çš„æ£€æµ‹ä»¥åŠç»„ä»¶è½¬è£…é…ä½“çš„åæ ‡å˜æ¢ç­‰
 			status = _coordsolidtoScreen(parentView, refPoint, refPointScreen);
-			//ÑùÌõÇúÏßËÄ¸öµãÎªÉÏÏÂ×óÓÒ¸÷Æ«ÒÆ20ËÄ¸öµã×÷ÎªÔ²µÄÄÚ½ÓÕý·½ÐÎ
+			//æ ·æ¡æ›²çº¿å››ä¸ªç‚¹ä¸ºä¸Šä¸‹å·¦å³å„åç§»20å››ä¸ªç‚¹ä½œä¸ºåœ†çš„å†…æŽ¥æ­£æ–¹å½¢
 			status = ProArrayAlloc(0, sizeof(ProPoint3d), 1, (ProArray *)&pnt_arr);
 			refPointScreen[0] -= 20;
 			ProArrayObjectAdd((ProArray *)&pnt_arr, PRO_VALUE_UNUSED, 1, refPointScreen);
@@ -505,7 +505,7 @@ ProError _createDetailedView()
 			}
 			status = ProSplinedataInit(par_arr, pnt_arr, p_tan, np, &crv_data);
 
-			//¸ù¾ÝÊµ¼Ê¼ÆËãµ÷Õû£¬ÕâÀï×öËÀÁË
+			//æ ¹æ®å®žé™…è®¡ç®—è°ƒæ•´ï¼Œè¿™é‡Œåšæ­»äº†
 			refPointScreen[0] += 500;
 			refPointScreen[1] -= 100;
 			status = ProDrawingViewDetailCreate(drawing, parentView, sel[0], &crv_data, refPointScreen, &detailedView);
@@ -547,7 +547,7 @@ void CreateDetailedView()
 //	int sheet;
 //	ProPoint3d point;
 //
-//	//¸ù¾ÝÊµ¼ÊÈ·¶¨Î»ÖÃ
+//	//æ ¹æ®å®žé™…ç¡®å®šä½ç½®
 //	point[0] = 300;
 //	point[1] = 0;
 //	point[2] = 0;
@@ -574,7 +574,7 @@ void CreateDetailedView()
 //
 //
 //
-// 		AfxMessageBox(_T("ÇëÑ¡ÔñÒ»¸öÊÓÍ¼ÒÔÉú³ÉÐý×ªÊÓÍ¼¡£"));
+// 		AfxMessageBox(_T("è¯·é€‰æ‹©ä¸€ä¸ªè§†å›¾ä»¥ç”Ÿæˆæ—‹è½¬è§†å›¾ã€‚"));
 //		//status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &sel, &n_sel);
 //		if (status == PRO_TK_NO_ERROR)
 //		{
