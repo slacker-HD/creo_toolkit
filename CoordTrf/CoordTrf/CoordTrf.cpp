@@ -191,7 +191,7 @@ void CoordsolidtoScreen()
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId ComponentToAsmID, ViewtoScreenID, solidtoScreenID;
+	uiCmdCmdId ComponentToAsmID, ViewtoScreenID, SolidtoScreenID;
 
 	status = ProMenubarMenuAdd("CoordTrf", "CoordTrf", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("CoordTrf", "CoordTrf", "CoordTrf", NULL, PRO_B_TRUE, MSGFILE);
@@ -202,8 +202,8 @@ extern "C" int user_initialize()
 	status = ProCmdActionAdd("ViewtoScreen_Act", (uiCmdCmdActFn)CoordViewtoScreen, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &ViewtoScreenID);
 	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "ViewtoScreen", "ViewtoScreen", "ViewtoScreentips", NULL, PRO_B_TRUE, ViewtoScreenID, MSGFILE);
 
-	status = ProCmdActionAdd("solidtoScreen_Act", (uiCmdCmdActFn)CoordsolidtoScreen, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &solidtoScreenID);
-	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "solidtoScreen", "solidtoScreen", "solidtoScreentips", NULL, PRO_B_TRUE, solidtoScreenID, MSGFILE);
+	status = ProCmdActionAdd("solidtoScreen_Act", (uiCmdCmdActFn)CoordsolidtoScreen, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &SolidtoScreenID);
+	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "solidtoScreen", "solidtoScreen", "solidtoScreentips", NULL, PRO_B_TRUE, SolidtoScreenID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }
