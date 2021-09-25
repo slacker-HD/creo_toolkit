@@ -377,8 +377,7 @@ double ProUtilVectorLength(double v[3])
 	return (sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
 }
 
-ProError 
-(ProView view, ProPoint3d pointsolidCoord, ProPoint3d pointScreenCoord)
+ProError _coordsolidtoScreen(ProView view, ProPoint3d pointsolidCoord, ProPoint3d pointScreenCoord)
 {
 	ProError status;
 	ProMdl mdl;
@@ -608,7 +607,7 @@ void CreateDetailedView()
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID,/* CreateRevolveViewID, */Create2DSectionViewID;
+	uiCmdCmdId CreateDrwID, CreateViewID, CreateAuxiliaryViewID, CreateDetailedViewID, /* CreateRevolveViewID, */ Create2DSectionViewID;
 
 	status = ProMenubarMenuAdd("DrawingAndView", "DrawingAndView", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("DrawingAndView", "DrawingAndView", "DrawingAndView", NULL, PRO_B_TRUE, MSGFILE);
