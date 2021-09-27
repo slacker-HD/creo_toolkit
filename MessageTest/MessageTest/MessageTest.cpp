@@ -62,16 +62,89 @@ BOOL CMessageTestApp::InitInstance()
 	return TRUE;
 }
 
+static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
+{
+	return ACCESS_AVAILABLE;
+}
+
+void ShowMessageText()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	ProError status;
+	AfxMessageBox(_T("显示一般类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_TestMessage"); 
+
+	AfxMessageBox(_T("显示提示类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_Prompt"); 
+
+	AfxMessageBox(_T("显示信息类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_Info"); 
+
+	AfxMessageBox(_T("显示警告类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_Warning"); 
+
+	AfxMessageBox(_T("显示错误类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_Error"); 
+
+	AfxMessageBox(_T("显示严重错误类型的消息"));
+	status = ProMessageDisplay (MSGFILE, "IMI_Critical"); 
+}
+
+void InputMessage()
+{
+	ProError status;
+	wchar_t wcharString[MAXMESSAGESTRINGLENGTH] = L"测试用宽字符串";
+	int intRange[2],intValue=14;
+	intRange[0] =1;
+	intRange[1]=100;
+	double doubleValue = 3.1415926;
+
+	status = ProMessageDisplay (MSGFILE, "IMI_WCharStringPrompt|||%0w",wcharString); 
+	status = ProMessageStringRead(MAXMESSAGESTRINGLENGTH, wcharString);
+	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	{
+	     return;
+	}
+
+	status = ProMessageDisplay (MSGFILE, "IMI_IntegerPrompt|||%0d",&intValue); 
+	status = ProMessageIntegerRead(intRange, &intValue);
+	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	{
+	     return;
+	}
+
+	status = ProMessageDisplay (MSGFILE, "IMI_DoublePrompt|||%0f",&doubleValue); 
+	status = ProMessageDoubleRead(NULL,&doubleValue);
+	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	{
+	     return;
+	}
+
+	status = ProMessageDisplay (MSGFILE, "IMI_ResultPrompt",wcharString, &intValue,&doubleValue); 
+}
+
+void ClearMessageText()
+{
+	ProMessageClear();
+}
+
+
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId MessageClearID;
+	uiCmdCmdId ShowMessageTextID, ClearMessageID,InputMessageID;
 
-	status = ProMenubarMenuAdd("CoordTrf", "CoordTrf", "About", PRO_B_TRUE, MSGFILE);
-	status = ProMenubarmenuMenuAdd("CoordTrf", "CoordTrf", "CoordTrf", NULL, PRO_B_TRUE, MSGFILE);
+	status = ProMenubarMenuAdd("IMI_MessageTest", "IMI_MessageTest", "About", PRO_B_TRUE, MSGFILE);
+	status = ProMenubarmenuMenuAdd("IMI_MessageTest", "IMI_MessageTest", "IMI_MessageTest", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("ComponentToAsm_Act", (uiCmdCmdActFn)CoordComponentToAsm, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &MessageClearID);
-	status = ProMenubarmenuPushbuttonAdd("CoordTrf", "ComponentToAsm", "ComponentToAsm", "ComponentToAsmtips", NULL, PRO_B_TRUE, MessageClearID, MSGFILE);
+	status = ProCmdActionAdd("ShowMessage_Act", (uiCmdCmdActFn)ShowMessageText, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &ShowMessageTextID);
+	status = ProMenubarmenuPushbuttonAdd("IMI_MessageTest", "IMI_ShowMessage", "IMI_ShowMessage", "IMI_ShowMessageTips", NULL, PRO_B_TRUE, ShowMessageTextID, MSGFILE);
+
+	status = ProCmdActionAdd("InputMessage_Act", (uiCmdCmdActFn)InputMessage, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &InputMessageID);
+	status = ProMenubarmenuPushbuttonAdd("IMI_MessageTest", "IMI_InputMessage", "IMI_InputMessage", "IMI_InputMessageTips", NULL, PRO_B_TRUE, InputMessageID, MSGFILE);
+	
+	status = ProCmdActionAdd("ClearMessage_Act", (uiCmdCmdActFn)ClearMessageText, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &ClearMessageID);
+	status = ProMenubarmenuPushbuttonAdd("IMI_MessageTest", "IMI_ClearMessage", "IMI_ClearMessage", "IMI_ClearMessageTips", NULL, PRO_B_TRUE, ClearMessageID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

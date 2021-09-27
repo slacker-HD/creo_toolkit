@@ -37,7 +37,7 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #define MSGFILE L"MessageTest.txt"
-
+#define MAXMESSAGESTRINGLENGTH 127
 #include <ProUICmd.h>
 #include <ProUtil.h>
 #include <ProMenu.h>

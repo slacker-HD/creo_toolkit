@@ -1,0 +1,80 @@
+﻿IMI_MessageTest
+Message file test
+消息文件测试
+#
+
+IMI_ShowMessage
+Show test message in MesaageTest.txt
+显示MesaageTest.txt的测试内容
+#
+
+IMI_ShowMessageTips
+Show test message in MesaageTest.txt
+显示MesaageTest.txt的测试内容
+#
+
+IMI_ClearMessage
+Clear message display area
+清空消息区
+#
+
+IMI_ClearMessageTips
+Clear message display area
+清空消息区
+#
+
+IMI_TestMessage
+Test Message.
+测试消息。
+
+%CPIMI_Prompt
+Message for the type of Prompt.
+测试提示类型的消息。
+#
+
+%CIIMI_Info
+Message for the type of Info.
+测试信息类型的消息。
+#
+
+%CWIMI_Warning
+Message for the type of Warning.
+测试警告类型的消息。
+#
+
+%CEIMI_Error
+Message for the type of Error.
+测试错误类型的消息。
+#
+
+%CCIMI_Critical
+Message for the type of Critical.
+测试严重错误类型的消息。
+#
+
+IMI_InputMessage
+Test input messagese
+测试输入消息
+#
+
+IMI_InputMessageTips
+Test input messagese
+测试输入消息
+#
+
+%CPIMI_WCharStringPrompt|||%0w
+Input a wide character string(wchar_t)|||%0w
+输入一个宽字符类型（wchar_t）|||%0w
+
+%CPIMI_IntegerPrompt|||%0d
+Input a integer between 1 and 100|||%0d
+输入1到100之间的一个整数|||%0d
+
+%CPIMI_DoublePrompt|||%0f
+Input any double|||%0f
+输入任意浮点型数据|||%0f
+
+%CIIMI_ResultPrompt
+The input wide character string is %0w, integer is %1d， double with one significant digits is %2(3.1)f
+输入的宽字符串是 %0w， 整数是 %1d， 保留一位有效数字的浮点型数据是 %2(3.1)f
+#

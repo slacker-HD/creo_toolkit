@@ -1,0 +1,7 @@
+name MessageTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\MessageTest\x64\Debug\MessageTest.dll
+text_dir D:\mydoc\creo_toolkit\MessageTest\text
+revision   18.0
+end
