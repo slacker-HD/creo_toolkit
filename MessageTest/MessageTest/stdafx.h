@@ -44,3 +44,4 @@
 #include <ProToolkitDll.h>
 #include <ProMenubar.h>
 #include <ProMessage.h>
+#include <ProWstring.h>

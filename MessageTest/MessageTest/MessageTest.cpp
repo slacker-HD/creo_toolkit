@@ -38,7 +38,6 @@
 BEGIN_MESSAGE_MAP(CMessageTestApp, CWinApp)
 END_MESSAGE_MAP()
 
-
 // CMessageTestApp 构造
 
 CMessageTestApp::CMessageTestApp()
@@ -47,11 +46,9 @@ CMessageTestApp::CMessageTestApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的一个 CMessageTestApp 对象
 
 CMessageTestApp theApp;
-
 
 // CMessageTestApp 初始化
 
@@ -72,55 +69,60 @@ void ShowMessageText()
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	ProError status;
 	AfxMessageBox(_T("显示一般类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_TestMessage"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_TestMessage");
 
 	AfxMessageBox(_T("显示提示类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_Prompt"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_Prompt");
 
 	AfxMessageBox(_T("显示信息类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_Info"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_Info");
 
 	AfxMessageBox(_T("显示警告类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_Warning"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_Warning");
 
 	AfxMessageBox(_T("显示错误类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_Error"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_Error");
 
 	AfxMessageBox(_T("显示严重错误类型的消息"));
-	status = ProMessageDisplay (MSGFILE, "IMI_Critical"); 
+	status = ProMessageDisplay(MSGFILE, "IMI_Critical");
 }
 
 void InputMessage()
 {
 	ProError status;
 	wchar_t wcharString[MAXMESSAGESTRINGLENGTH] = L"测试用宽字符串";
-	int intRange[2],intValue=14;
-	intRange[0] =1;
-	intRange[1]=100;
+	int intRange[2], intValue = 14;
+	intRange[0] = 1;
+	intRange[1] = 100;
 	double doubleValue = 3.1415926;
 
-	status = ProMessageDisplay (MSGFILE, "IMI_WCharStringPrompt|||%0w",wcharString); 
+	status = ProMessageDisplay(MSGFILE, "IMI_WCharStringPrompt|||%0w", wcharString);
 	status = ProMessageStringRead(MAXMESSAGESTRINGLENGTH, wcharString);
-	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	if (status != PRO_TK_NO_ERROR)
 	{
-	     return;
+		if (status != PRO_TK_MSG_USER_QUIT)
+		{
+			status = ProWstringCopy(L"测试用宽字符串", wcharString, PRO_VALUE_UNUSED);
+		}
+		else
+			return;
 	}
 
-	status = ProMessageDisplay (MSGFILE, "IMI_IntegerPrompt|||%0d",&intValue); 
+	status = ProMessageDisplay(MSGFILE, "IMI_IntegerPrompt|||%0d", &intValue);
 	status = ProMessageIntegerRead(intRange, &intValue);
-	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
 	{
-	     return;
+		return;
 	}
 
-	status = ProMessageDisplay (MSGFILE, "IMI_DoublePrompt|||%0f",&doubleValue); 
-	status = ProMessageDoubleRead(NULL,&doubleValue);
-	if ( status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+	status = ProMessageDisplay(MSGFILE, "IMI_DoublePrompt|||%0f", &doubleValue);
+	status = ProMessageDoubleRead(NULL, &doubleValue);
+	if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
 	{
-	     return;
+		return;
 	}
 
-	status = ProMessageDisplay (MSGFILE, "IMI_ResultPrompt",wcharString, &intValue,&doubleValue); 
+	status = ProMessageDisplay(MSGFILE, "IMI_ResultPrompt", wcharString, &intValue, &doubleValue);
 }
 
 void ClearMessageText()
@@ -128,11 +130,10 @@ void ClearMessageText()
 	ProMessageClear();
 }
 
-
 extern "C" int user_initialize()
 {
 	ProError status;
-	uiCmdCmdId ShowMessageTextID, ClearMessageID,InputMessageID;
+	uiCmdCmdId ShowMessageTextID, ClearMessageID, InputMessageID;
 
 	status = ProMenubarMenuAdd("IMI_MessageTest", "IMI_MessageTest", "About", PRO_B_TRUE, MSGFILE);
 	status = ProMenubarmenuMenuAdd("IMI_MessageTest", "IMI_MessageTest", "IMI_MessageTest", NULL, PRO_B_TRUE, MSGFILE);
@@ -142,7 +143,7 @@ extern "C" int user_initialize()
 
 	status = ProCmdActionAdd("InputMessage_Act", (uiCmdCmdActFn)InputMessage, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &InputMessageID);
 	status = ProMenubarmenuPushbuttonAdd("IMI_MessageTest", "IMI_InputMessage", "IMI_InputMessage", "IMI_InputMessageTips", NULL, PRO_B_TRUE, InputMessageID, MSGFILE);
-	
+
 	status = ProCmdActionAdd("ClearMessage_Act", (uiCmdCmdActFn)ClearMessageText, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &ClearMessageID);
 	status = ProMenubarmenuPushbuttonAdd("IMI_MessageTest", "IMI_ClearMessage", "IMI_ClearMessage", "IMI_ClearMessageTips", NULL, PRO_B_TRUE, ClearMessageID, MSGFILE);
 
@@ -152,4 +153,3 @@ extern "C" int user_initialize()
 extern "C" void user_terminate()
 {
 }
-
