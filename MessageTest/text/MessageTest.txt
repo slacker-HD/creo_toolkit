@@ -62,15 +62,15 @@ Test input messagese
 测试输入消息
 #
 
-%CPIMI_WCharStringPrompt|||%0w
+%CPIMI_WCharStringPrompt
 Input a wide character string(wchar_t)|||%0w
 输入一个宽字符类型（wchar_t）|||%0w
 
-%CPIMI_IntegerPrompt|||%0d
+%CPIMI_IntegerPrompt
 Input a integer between 1 and 100|||%0d
 输入1到100之间的一个整数|||%0d
 
-%CPIMI_DoublePrompt|||%0f
+%CPIMI_DoublePrompt
 Input any double|||%0f
 输入任意浮点型数据|||%0f
 

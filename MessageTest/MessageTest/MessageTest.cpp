@@ -96,7 +96,7 @@ void InputMessage()
 	intRange[1] = 100;
 	double doubleValue = 3.1415926;
 
-	status = ProMessageDisplay(MSGFILE, "IMI_WCharStringPrompt|||%0w", wcharString);
+	status = ProMessageDisplay(MSGFILE, "IMI_WCharStringPrompt", wcharString);
 	status = ProMessageStringRead(MAXMESSAGESTRINGLENGTH, wcharString);
 	if (status != PRO_TK_NO_ERROR)
 	{
@@ -108,14 +108,14 @@ void InputMessage()
 			return;
 	}
 
-	status = ProMessageDisplay(MSGFILE, "IMI_IntegerPrompt|||%0d", &intValue);
+	status = ProMessageDisplay(MSGFILE, "IMI_IntegerPrompt", &intValue);
 	status = ProMessageIntegerRead(intRange, &intValue);
 	if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
 	{
 		return;
 	}
 
-	status = ProMessageDisplay(MSGFILE, "IMI_DoublePrompt|||%0f", &doubleValue);
+	status = ProMessageDisplay(MSGFILE, "IMI_DoublePrompt", &doubleValue);
 	status = ProMessageDoubleRead(NULL, &doubleValue);
 	if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
 	{
