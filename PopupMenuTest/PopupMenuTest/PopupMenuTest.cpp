@@ -107,8 +107,9 @@ int ShowContent(ProAppData app_data, int app_int)
 	status = ProMenubuttonActionSet("Content", "Custom String 2", (ProMenubuttonAction)SetDialogContent, ProAppData(Content2), 0);
 	status = ProMenubuttonActionSet("Content", "Done/Return", (ProMenubuttonAction)ProMenuDelete, NULL, 0);
 	status = ProMenubuttonActionSet("Content", "Content", (ProMenubuttonAction)ProMenuDelete, NULL, 0);
-	status = ProMenuPush();
+	//status = ProMenuPush();
 	status = ProMenuCreate(PROMENUTYPE_MAIN, "Content", &ContentMenuID);
+	status = ProMenubuttonHighlight("Content", "Custom String 1");
 	status = ProMenuProcess("", &action);
 	return 0;
 }
@@ -116,6 +117,14 @@ int ShowContent(ProAppData app_data, int app_int)
 int SetDialogStyle(ProAppData app_data, int dialogStyle)
 {
 	_dialogStyle = dialogStyle;
+	return 0;
+}
+
+int DeleteMenuadnPop(ProAppData app_data, int dialogStyle)
+{
+	ProError status;
+	status = ProMenuDelete();
+	status = ProMenuPop();
 	return 0;
 }
 
@@ -127,10 +136,11 @@ int ShowDialogStyle(ProAppData app_data, int app_int)
 	status = ProMenuFileRegister("Dialog Style", "DialogStyle.mnu", &DialogStyleMenuID);
 	status = ProMenubuttonActionSet("Dialog Style", "Single YES Button", (ProMenubuttonAction)SetDialogStyle, NULL, SINGLEYESDIALOG);
 	status = ProMenubuttonActionSet("Dialog Style", "YES/NO Button", (ProMenubuttonAction)SetDialogStyle, NULL, YESNODIALOG);
-	status = ProMenubuttonActionSet("Dialog Style", "Done/Return", (ProMenubuttonAction)ProMenuDelete, NULL, 0);
-	status = ProMenubuttonActionSet("Dialog Style", "Dialog Style", (ProMenubuttonAction)ProMenuDelete, NULL, 0);
+	status = ProMenubuttonActionSet("Dialog Style", "Done/Return", (ProMenubuttonAction)DeleteMenuadnPop, NULL, 0);
+	status = ProMenubuttonActionSet("Dialog Style", "Dialog Style", (ProMenubuttonAction)DeleteMenuadnPop, NULL, 0);
 	status = ProMenuPush();
 	status = ProMenuCreate(PROMENUTYPE_MAIN, "Dialog Style", &DialogStyleMenuID);
+	status = ProMenubuttonHighlight("Dialog Style", "Single YES Button");
 	status = ProMenuProcess("", &action);
 	return 0;
 }
