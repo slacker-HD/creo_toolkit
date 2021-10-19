@@ -1,0 +1,7 @@
+name NavigatorpaneTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\NavigatorpaneTest\x64\Debug\NavigatorpaneTest.dll
+text_dir D:\mydoc\creo_toolkit\NavigatorpaneTest\text
+revision   18.0
+end

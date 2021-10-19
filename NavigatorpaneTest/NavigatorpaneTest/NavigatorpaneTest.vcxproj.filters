@@ -16,15 +16,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="PopupMenuTest.def">
+    <None Include="NavigatorpaneTest.def">
       <Filter>源文件</Filter>
     </None>
-    <None Include="res\PopupMenuTest.rc2">
+    <None Include="res\NavigatorpaneTest.rc2">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PopupMenuTest.cpp">
+    <ClCompile Include="NavigatorpaneTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PopupMenuTest.h">
+    <ClInclude Include="NavigatorpaneTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -46,7 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PopupMenuTest.rc">
+    <ResourceCompile Include="NavigatorpaneTest.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>

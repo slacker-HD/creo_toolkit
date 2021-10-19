@@ -1,8 +1,8 @@
-// PopupMenuTest.cpp : 定义 DLL 的初始化例程。
+// CascadingMenuTest.cpp : 定义 DLL 的初始化例程。
 //
 
 #include "stdafx.h"
-#include "PopupMenuTest.h"
+#include "CascadingMenuTest.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,31 +33,35 @@
 //		请参阅 MFC 技术说明 33 和 58。
 //
 
-// CPopupMenuTestApp
+// CCascadingMenuTestApp
 
-BEGIN_MESSAGE_MAP(CPopupMenuTestApp, CWinApp)
+BEGIN_MESSAGE_MAP(CCascadingMenuTestApp, CWinApp)
 END_MESSAGE_MAP()
 
-// CPopupMenuTestApp 构造
 
-CPopupMenuTestApp::CPopupMenuTestApp()
+// CCascadingMenuTestApp 构造
+
+CCascadingMenuTestApp::CCascadingMenuTestApp()
 {
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-// 唯一的一个 CPopupMenuTestApp 对象
 
-CPopupMenuTestApp theApp;
+// 唯一的一个 CCascadingMenuTestApp 对象
 
-// CPopupMenuTestApp 初始化
+CCascadingMenuTestApp theApp;
 
-BOOL CPopupMenuTestApp::InitInstance()
+
+// CCascadingMenuTestApp 初始化
+
+BOOL CCascadingMenuTestApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
 	return TRUE;
 }
+
 
 int _dialogStyle = 1;
 wchar_t *_dialogcontent = L"测试内容1";
@@ -152,7 +156,7 @@ int QuitAction(ProAppData app_data, int app_int)
 	return 0;
 }
 
-void ShowPopupMenu()
+void ShowCascadingMenu()
 {
 	ProError status;
 	int TestMenuId;
@@ -180,11 +184,11 @@ extern "C" int user_initialize()
 	ProError status;
 	uiCmdCmdId showPopupMenuID;
 
-	status = ProMenubarMenuAdd("PopupMenTuest", "PopupMenuTest", "About", PRO_B_TRUE, MSGFILE);
-	status = ProMenubarmenuMenuAdd("PopupMenuTest", "PopupMenuTest", "PopupMenuTest", NULL, PRO_B_TRUE, MSGFILE);
+	status = ProMenubarMenuAdd("CascadingMenuTest", "CascadingMenuTest", "About", PRO_B_TRUE, MSGFILE);
+	status = ProMenubarmenuMenuAdd("CascadingMenuTest", "CascadingMenuTest", "CascadingMenuTest", NULL, PRO_B_TRUE, MSGFILE);
 
-	status = ProCmdActionAdd("ShowPopupMenu_Act", (uiCmdCmdActFn)ShowPopupMenu, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &showPopupMenuID);
-	status = ProMenubarmenuPushbuttonAdd("PopupMenTuest", "ShowPopupMenu", "ShowPopupMenu", "ShowPopupMenuTips", NULL, PRO_B_TRUE, showPopupMenuID, MSGFILE);
+	status = ProCmdActionAdd("ShowCascadingMenu_Act", (uiCmdCmdActFn)ShowCascadingMenu, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &showPopupMenuID);
+	status = ProMenubarmenuPushbuttonAdd("CascadingMenuTest", "ShowCascadingMenu", "ShowCascadingMenu", "ShowCascadingMenuTips", NULL, PRO_B_TRUE, showPopupMenuID, MSGFILE);
 
 	return PRO_TK_NO_ERROR;
 }

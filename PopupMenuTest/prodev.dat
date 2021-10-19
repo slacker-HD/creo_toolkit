@@ -1,7 +1,0 @@
-name PopupMenuTest
-startup dll 
-allow_stop TRUE 
-exec_file D:\mydoc\creo_toolkit\PopupMenuTest\x64\Debug\PopupMenuTest.dll
-text_dir D:\mydoc\creo_toolkit\PopupMenuTest\text
-revision   18.0
-end

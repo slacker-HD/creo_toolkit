@@ -1,4 +1,4 @@
-// PopupMenuTest.h : PopupMenuTest DLL 的主头文件
+// NavigatorpaneTest.h : NavigatorpaneTest DLL 的主头文件
 //
 
 #pragma once
@@ -10,14 +10,14 @@
 #include "resource.h"		// 主符号
 
 
-// CPopupMenuTestApp
-// 有关此类实现的信息，请参阅 PopupMenuTest.cpp
+// CNavigatorpaneTestApp
+// 有关此类实现的信息，请参阅 NavigatorpaneTest.cpp
 //
 
-class CPopupMenuTestApp : public CWinApp
+class CNavigatorpaneTestApp : public CWinApp
 {
 public:
-	CPopupMenuTestApp();
+	CNavigatorpaneTestApp();
 
 // 重写
 public:

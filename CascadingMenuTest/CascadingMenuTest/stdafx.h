@@ -25,18 +25,7 @@
 #include <afxdb.h>                      // MFC ODBC 数据库类
 #endif // _AFX_NO_DB_SUPPORT
 
-#ifndef _AFX_NO_DAO_SUPPORT
-#include <afxdao.h>                     // MFC DAO 数据库类
-#endif // _AFX_NO_DAO_SUPPORT
-
-#ifndef _AFX_NO_OLE_SUPPORT
-#include <afxdtctl.h>           // MFC 对 Internet Explorer 4 公共控件的支持
-#endif
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>                     // MFC 对 Windows 公共控件的支持
-#endif // _AFX_NO_AFXCMN_SUPPORT
-
-#define MSGFILE L"PopupMenuTest.txt"
+#define MSGFILE L"CascadingMenuTest.txt"
 #define POPUPMENU_QUIT	0 //退出，不做任何更改
 #define POPUPMENU_DONE	1 //退出，同时显示对话框
 #define SINGLEYESDIALOG 1 //包含yes/no按钮的对话框
@@ -48,3 +37,17 @@
 #include <ProMenubar.h>
 #include <ProUIMessage.h>
 #include <ProArray.h>
+
+
+#ifndef _AFX_NO_DAO_SUPPORT
+#include <afxdao.h>                     // MFC DAO 数据库类
+#endif // _AFX_NO_DAO_SUPPORT
+
+#ifndef _AFX_NO_OLE_SUPPORT
+#include <afxdtctl.h>           // MFC 对 Internet Explorer 4 公共控件的支持
+#endif
+#ifndef _AFX_NO_AFXCMN_SUPPORT
+#include <afxcmn.h>                     // MFC 对 Windows 公共控件的支持
+#endif // _AFX_NO_AFXCMN_SUPPORT
+
+

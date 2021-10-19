@@ -1,14 +1,14 @@
-﻿PopupMenuTest
+﻿CascadingMenuTest
 弹出式菜单测试
 弹出式菜单测试
 #
 
-ShowPopupMenu
+ShowCascadingMenu
 显示弹出式菜单
 显示弹出式菜单
 #
 
-ShowPopupMenuTips
+ShowCascadingMenuTips
 显示弹出式菜单
 显示弹出式菜单
 #

@@ -166,7 +166,7 @@
 + 读取输入消息
 + 清空消息区
 
-## PopupMenuTest
+## CascadingMenuTest
 
-+ 显示多级瀑布式菜单
++ 显示级联式菜单
 + 通过菜单选择选项

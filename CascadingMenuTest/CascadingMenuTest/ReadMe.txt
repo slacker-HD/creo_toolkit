@@ -1,41 +1,41 @@
 ﻿========================================================================
-    MICROSOFT 基础类库 : PopupMenuTest 项目概述
+    MICROSOFT 基础类库 : CascadingMenuTest 项目概述
 ========================================================================
 
 
-应用程序向导已为您创建了此 PopupMenuTest DLL。  此 DLL 不仅演示 
+应用程序向导已为您创建了此 CascadingMenuTest DLL。  此 DLL 不仅演示 
 Microsoft 基础类的基本使用方法，还可作为您编写 DLL 的起点。
 
-本文件概要介绍组成 PopupMenuTest DLL 的每个文件的内容。
+本文件概要介绍组成 CascadingMenuTest DLL 的每个文件的内容。
 
-PopupMenuTest.vcxproj
+CascadingMenuTest.vcxproj
     这是使用应用程序向导生成的 VC++ 项目的主项目文件，
     其中包含生成该文件的 Visual C++ 
     的版本信息，以及有关使用应用程序向导选择的平台、配置和项目功能的信息。
 
-PopupMenuTest.vcxproj.filters
+CascadingMenuTest.vcxproj.filters
     这是使用“应用程序向导”生成的 VC++ 项目筛选器文件。 
     它包含有关项目文件与筛选器之间的关联信息。 在 IDE 
     中，通过这种关联，
     在特定节点下以分组形式显示具有相似扩展名的文件。
     例如，“.cpp”文件与“源文件”筛选器关联。
 
-PopupMenuTest.h
-    这是 DLL 的主头文件。  它声明了 CPopupMenuTestApp 类。
+CascadingMenuTest.h
+    这是 DLL 的主头文件。  它声明了 CCascadingMenuTestApp 类。
 
-PopupMenuTest.cpp
-    这是主 DLL 源文件。  它包含 CPopupMenuTestApp 类。
+CascadingMenuTest.cpp
+    这是主 DLL 源文件。  它包含 CCascadingMenuTestApp 类。
 
-PopupMenuTest.rc
+CascadingMenuTest.rc
     这是程序使用的所有 Microsoft Windows 资源的列表。  它包括 RES 
     子目录中存储的图标、位图和光标。  此文件可以直接在 Microsoft Visual C++ 
     中进行编辑。
 
-res\PopupMenuTest.rc2
+res\CascadingMenuTest.rc2
     此文件包含不在 Microsoft Visual C++ 中进行编辑的资源。  
     您应该将不可由资源编辑器编辑的所有资源放在此文件中。
 
-PopupMenuTest.def
+CascadingMenuTest.def
     此文件包含在 Microsoft Windows 中运行所必需的 DLL 的有关信息。它定义了 DLL 
     的名称和说明等参数，而且还从 DLL 导出函数。
 
@@ -43,7 +43,7 @@ PopupMenuTest.def
 其他标准文件：
 
 StdAfx.h，StdAfx.cpp
-    这些文件用于生成名为 PopupMenuTest.pch 的预编译头 (PCH) 文件和名为 
+    这些文件用于生成名为 CascadingMenuTest.pch 的预编译头 (PCH) 文件和名为 
     StdAfx.obj 的预编译类型文件。
 
 Resource.h
