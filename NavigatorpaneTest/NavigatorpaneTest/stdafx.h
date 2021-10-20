@@ -44,3 +44,8 @@
 #include <ProToolkitDll.h>
 #include <ProMenubar.h>
 #include <ProNavigator.h>
+#include <ProUIPushbutton.h>
+#include <ProNotify.h>
+#include <ProWindows.h>
+#include <ProUIMessage.h>
+#include <ProArray.h>

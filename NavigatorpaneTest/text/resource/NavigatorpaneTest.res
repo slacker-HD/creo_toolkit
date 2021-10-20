@@ -1,23 +1,22 @@
-
-(Layout NavigatorpaneTest
+﻿(Layout NavigatorpaneTest
     (Components
-        (Label                          Question)
-        (PushButton                     OK)
-        (PushButton                     Cancel)
+        (Label                          Info)
+        (PushButton                     BtnName)
+        (PushButton                     BtnDialog)
     )
 
     (Resources
-        (Question.Label                 "Dummy Label")
-        (OK.Label                       "OK")
-        (Cancel.Label                   "Cancel")
+        (Info.Label                 "获取当前打开模型信息")
+        (BtnName.Label              "当前模型名称")
+        (BtnDialog.Label            "显示自定义对话框")
         (.Layout
             (Grid (Rows 1 1) (Cols 1 1 1)
                 (Pos 1 2)
-                Question
+                Info
                 (Pos 2 1)
-                OK
+                BtnName
                 (Pos 2 3)
-                Cancel
+                BtnDialog
             )
         )
     )
