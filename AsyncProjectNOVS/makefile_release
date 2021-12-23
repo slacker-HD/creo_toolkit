@@ -19,7 +19,7 @@ INCS = -I. -I"C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes" -I$(PROTOOL
 # Compiler Flags
 CC = cl
 MACH = -DPRO_MACHINE=36 -DPRO_OS=4
-CCFLAGS = /wd4430  /TP -c -GS -fp:precise -D_WSTDIO_DEFINED -DPRO_USE_VAR_ARGS -DPRO_USE_VAR_ARG  /Od /Z7
+CCFLAGS = /wd4430  /TP -c -GS -fp:precise -D_WSTDIO_DEFINED -DPRO_USE_VAR_ARGS -DPRO_USE_VAR_ARG
 CFLAGS = $(CCFLAGS) $(INCS) $(MACH)
 
 # Libraries
@@ -36,7 +36,7 @@ LINK = link
 
 $(EXE) :  $(OBJS) $(PTCLIBS)
 #Executable applications compiled using WinMain() instead of main() should set the subsystem to windows instead of console.
-	$(LINK) /subsystem:console -out:$(EXE) /debug /debugtype:cv /machine:amd64 @<<longline.list 
+	$(LINK) /subsystem:console -out:$(EXE) /debug:none /debugtype:cv /machine:amd64 @<<longline.list 
 $(OBJS) $(PTCLIBS) $(LIBS)
 <<
 
