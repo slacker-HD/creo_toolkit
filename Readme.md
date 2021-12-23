@@ -180,3 +180,6 @@
 
 + 使用makefile而非visual studio异步开发
 
+## SyncProjectNOVS
+
++ 使用makefile而非visual studio同步开发

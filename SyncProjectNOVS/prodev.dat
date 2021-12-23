@@ -1,0 +1,7 @@
+name SyncProjectNOVS
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\SyncProjectNOVS\SyncProjectNOVS.dll
+text_dir D:\mydoc\creo_toolkit\SyncProjectNOVS\text
+revision   18.0
+end

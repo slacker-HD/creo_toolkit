@@ -13,7 +13,6 @@ PROTOOL_SRC = ./src
 # PROTOOL_SYS = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64"
 # PROTOOL_HEAD = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes"
 
-
 # Include File Paths
 INCS = -I. -I"C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes" -I$(PROTOOL_SRC)/includes
 
