@@ -175,3 +175,8 @@
 
 + 添加自定义网址到侧边栏面板
 + 添加自定义对话框到侧边栏面板
+
+## AsyncProjectNOVS
+
++ 使用makefile而非visual studio异步开发
+
