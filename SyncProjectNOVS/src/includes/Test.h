@@ -1,4 +1,8 @@
+
+#ifndef __TEST__
+#define __TEST__
 #define MSGFILE L"SyncProjectNOVS.txt"
+
 #include <ProUICmd.h>
 #include <ProUtil.h>
 #include <ProMenu.h>
@@ -6,3 +10,5 @@
 #include <ProMenubar.h>
 #include <ProUIMessage.h>
 #include <ProArray.h>
+
+#endif
