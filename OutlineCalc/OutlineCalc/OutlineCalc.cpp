@@ -112,66 +112,6 @@ void ProUtilMatrixCopy(double input[4][4], double output[4][4])
 }
 
 /*====================================================================*\
-    FUNCTION :	ProUtilMatrixInvert()
-    PURPOSE  :	Find the inverse of a transformation matrix
-\*====================================================================*/
-int ProUtilMatrixInvert(double m[4][4], double output[4][4])
-{
-	double vec[3], scale_sq, inv_sq_scale;
-	int i, j;
-
-	/*--------------------------------------------------------------------*\
-    If the matrix is null, return the identity matrix
-	\*--------------------------------------------------------------------*/
-	if (m == NULL)
-	{
-		ProUtilMatrixCopy(NULL, output);
-		return (1);
-	}
-
-	/*--------------------------------------------------------------------*\
-    Obtain the matrix scale
-	\*--------------------------------------------------------------------*/
-	vec[0] = m[0][0];
-	vec[1] = m[0][1];
-	vec[2] = m[0][2];
-	scale_sq = vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
-
-	/*--------------------------------------------------------------------*\
-    Check whether there is an inverse, and if not, return 0
-	\*--------------------------------------------------------------------*/
-	if (scale_sq < (.000000001 * .000000001))
-		return (0);
-
-	/*--------------------------------------------------------------------*\
-    Need the inverse scale squared 
-	\*--------------------------------------------------------------------*/
-	inv_sq_scale = 1.0 / scale_sq;
-
-	/*--------------------------------------------------------------------*\
-    The orientation vectors
-	\*--------------------------------------------------------------------*/
-	for (j = 0; j < 3; j++)
-	{
-		for (i = 0; i < 3; i++)
-			output[j][i] = m[i][j] * inv_sq_scale;
-		output[j][3] = 0.0;
-	}
-
-	/*--------------------------------------------------------------------*\
-    The shift vectors
-	\*--------------------------------------------------------------------*/
-	for (i = 0; i < 3; i++)
-	{
-		output[3][i] = 0.0;
-		for (j = 0; j < 3; j++)
-			output[3][i] -= m[i][j] * m[3][j] * inv_sq_scale;
-	}
-	output[3][3] = 1.0;
-	return (1);
-}
-
-/*====================================================================*\
 Function :  ProUtilVectorsToTransf()
 Purpose  :  Creates transformation from vectors defining it
 \*====================================================================*/
@@ -224,7 +164,7 @@ void OutlineCalc()
 	ProCsysdata *p_csys = NULL;
 	ProMdl solid;
 	Pro3dPnt outline[2];
-	ProMatrix transf, itranf;
+	ProMatrix transf;
 	ProSolidOutlExclTypes excludes[] = {PRO_OUTL_EXC_DATUM_PLANE, PRO_OUTL_EXC_DATUM_POINT, PRO_OUTL_EXC_DATUM_CSYS};
 	status = ProMessageDisplay(MSGFILE, "entermsg");
 	if ((ProSelect("csys", 1, NULL, NULL, NULL, NULL, &psels, &sel_count) != PRO_TK_NO_ERROR) || (sel_count < 1))
@@ -239,7 +179,6 @@ void OutlineCalc()
 	}
 	p_csys = geom_data->data.p_csys_data;
 	ProUtilVectorsToTransf(p_csys->x_vector, p_csys->y_vector, p_csys->z_vector, p_csys->origin, transf);
-	ProUtilMatrixInvert(transf, itranf);
 	status = ProMdlCurrentGet(&solid);
 	status = ProSolidOutlineCompute((ProSolid)solid, transf, excludes, 3, outline);
 	CString Msg;
