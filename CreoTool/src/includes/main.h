@@ -13,5 +13,7 @@
 #include <ProMenubar.h>
 #include <ProMdl.h>
 #include <ProWstring.h>
+#include <ProUIMessage.h>
+#include <ProArray.h>
 
 #endif

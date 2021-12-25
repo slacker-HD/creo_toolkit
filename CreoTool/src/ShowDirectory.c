@@ -19,3 +19,11 @@ void ShowDirectory()
         }
     }
 }
+
+void ShowWorkDirectory()
+{
+    ProError status;
+    ProPath path;
+    status = ProDirectoryCurrentGet(path);
+    ShellExecuteW(NULL, L"open", L"explorer.exe", path, NULL, SW_SHOWNORMAL);
+}

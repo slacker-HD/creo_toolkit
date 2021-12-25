@@ -20,6 +20,7 @@ int user_initialize()
 {
     ProError status;
     uiCmdCmdId IMI_ShowDirectoryID;
+    uiCmdCmdId IMI_ShowWorkDirmenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
 
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
@@ -28,10 +29,13 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_ShowDirectory_Act", (uiCmdCmdActFn)ShowDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowDirectoryID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenuTips", NULL, PRO_B_TRUE, IMI_ShowDirectoryID, MSGFILE);
 
+    status = ProCmdActionAdd("IMI_ShowWorkDirectory_Act", (uiCmdCmdActFn)ShowWorkDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowWorkDirmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_ShowWorkDirmenuID, MSGFILE);
+
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenuTips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
 
-     return PRO_TK_NO_ERROR;
+    return PRO_TK_NO_ERROR;
 }
 
 void user_terminate()

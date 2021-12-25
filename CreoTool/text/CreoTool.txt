@@ -4,7 +4,7 @@
 #
 
 IMI_ShowDirmenu
-打开当前模型目录 
+打开当前模型目录
 打开当前模型目录
 #
 
@@ -13,8 +13,18 @@ IMI_ShowDirmenuTips
 打开当前模型目录
 #
 
+IMI_ShowWorkDirmenu
+打开当前工作目录
+打开当前工作目录
+#
+
+IMI_ShowWorkDirmenuTips
+打开当前工作目录
+打开当前工作目录
+#
+
 IMI_OpenSamenameDrwmenu
-打开同名工程图 
+打开同名工程图
 打开同名工程图
 #
 
