@@ -15,7 +15,7 @@ int CurrentMdlType()
         return mdlType;
 }
 
-ProError ShowMessageDialog(int style, wchar_t *Message)
+ProUIMessageButton ShowMessageDialog(int style, wchar_t *Message)
 {
     ProUIMessageButton *buttons;
     ProUIMessageButton user_choice;
@@ -34,5 +34,5 @@ ProError ShowMessageDialog(int style, wchar_t *Message)
 
     status = ProUIMessageDialogDisplay(PROUIMESSAGE_QUESTION, L"ÌבÊ¾", Message, buttons, buttons[0], &user_choice);
     ProArrayFree((ProArray *)&buttons);
-    return PRO_TK_NO_ERROR;
+    return user_choice;
 }

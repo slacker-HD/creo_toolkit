@@ -3,6 +3,11 @@
 小工具
 #
 
+IMI_DirToolsubmenu
+目录操作
+目录操作
+#
+
 IMI_ShowDirmenu
 打开当前模型目录
 打开当前模型目录
@@ -14,13 +19,18 @@ IMI_ShowDirmenuTips
 #
 
 IMI_ShowWorkDirmenu
-打开当前工作目录
-打开当前工作目录
+打开工作目录
+打开工作目录
 #
 
 IMI_ShowWorkDirmenuTips
-打开当前工作目录
-打开当前工作目录
+打开工作目录
+打开工作目录
+#
+
+IMI_DirDRWsubmenu
+工程图快捷操作
+工程图快捷操作
 #
 
 IMI_OpenSamenameDrwmenu
@@ -33,6 +43,11 @@ IMI_OpenSamenameDrwmenuTips
 打开同名工程图
 #
 
+IMI_Filesubmenu
+文件快捷操作
+文件快捷操作
+#
+
 IMI_PurgeWorkDirmenu
 一键清除工作目录下旧版本(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
@@ -41,4 +56,24 @@ IMI_PurgeWorkDirmenu
 IMI_PurgeWorkDirmenuTips
 一键清除工作目录下旧版本(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
+#
+
+IMI_TimeSaveSettingmenu
+定时保存设置
+定时保存设置
+#
+
+IMI_TimeSaveSettingmenuTips
+定时保存设置
+定时保存设置
+#
+
+IMI_Aboutmenu
+关于
+关于
+#
+
+IMI_AboutmenuTips
+关于
+关于
 #
