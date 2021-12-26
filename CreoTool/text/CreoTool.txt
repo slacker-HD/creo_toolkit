@@ -32,3 +32,13 @@ IMI_OpenSamenameDrwmenuTips
 打开同名工程图
 打开同名工程图
 #
+
+IMI_PurgeWorkDirmenu
+一键清除工作目录下旧版本(prt、asm、drw)
+一键清除工作目录下旧版本(prt、asm、drw)
+#
+
+IMI_PurgeWorkDirmenuTips
+一键清除工作目录下旧版本(prt、asm、drw)
+一键清除工作目录下旧版本(prt、asm、drw)
+#

@@ -1,14 +1,14 @@
 #             PTC             File
 # -----------------------------------------------------------------------------
 # File Name
-MAKEFILENAME = SyncProjectNOVS
+MAKEFILENAME = CreoTool
 
 # Machine Type
 PRO_MACHINE_TYPE = x86e_win64
 
 # Executable names
-EXE = SyncProjectNOVS.exe
-EXE_DLL = SyncProjectNOVS.dll
+EXE = CreoTool.exe
+EXE_DLL = CreoTool.dll
 
 # Pro/Toolkit Source & Machine Loadpoint  (EXTERNAL USE - DEFAULT)
 PROTOOL_SRC = ./src
@@ -19,7 +19,7 @@ INCS = -I. -I"C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes" -I$(PROTOOL
 # Compiler Flags
 CC = cl
 MACH = -DPRO_MACHINE=36 -DPRO_OS=4
-CCFLAGS = -c -GS -fp:precise -D_WSTDIO_DEFINED
+CCFLAGS = -c -GS -fp:precise -D_WSTDIO_DEFINED /Od /Z
 CFLAGS = $(CCFLAGS) $(INCS) $(MACH)
 
 # Libraries
@@ -28,7 +28,7 @@ PTCLIBS_DLL = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64/obj/protk
 LIBS = libcmt.lib kernel32.lib user32.lib wsock32.lib advapi32.lib mpr.lib winspool.lib netapi32.lib psapi.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib ws2_32.lib
 
 # Object files
-OBJS = Test.obj
+OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDirectory.obj
 
 
 # Linker
@@ -49,8 +49,20 @@ $(OBJS) $(PTCLIBS_DLL) $(LIBS)
 <<
 
 # object dependencies
-Test.obj:  $(PROTOOL_SRC)/Test.c
-	$(CC) $(CFLAGS) $(PROTOOL_SRC)/Test.c
+main.obj:  $(PROTOOL_SRC)/main.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/main.c
+
+ShowDirectory.obj:  $(PROTOOL_SRC)/ShowDirectory.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/ShowDirectory.c
+
+OpenSamenameDrw.obj:  $(PROTOOL_SRC)/OpenSamenameDrw.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/OpenSamenameDrw.c
+
+CommonFuns.obj:  $(PROTOOL_SRC)/CommonFuns.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/CommonFuns.c
+
+CleanWorkDirectory.obj:  $(PROTOOL_SRC)/CleanWorkDirectory.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/CleanWorkDirectory.c
 
 clean :
 	del $(OBJS)

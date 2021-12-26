@@ -2,6 +2,7 @@
 #include "./includes/ShowDirectory.h"
 #include "./includes/OpenSamenameDrw.h"
 #include "./includes/CommonFuns.h"
+#include "./includes/CleanWorkDirectory.h"
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
@@ -22,6 +23,10 @@ int user_initialize()
     uiCmdCmdId IMI_ShowDirectoryID;
     uiCmdCmdId IMI_ShowWorkDirmenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
+    uiCmdCmdId IMI_PurgeWorkDirmenuID;
+
+
+
 
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
@@ -34,6 +39,14 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenuTips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_PurgeWorkDir_Act", (uiCmdCmdActFn)ProMdlPurgeAll, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PurgeWorkDirmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_PurgeWorkDirmenuID, MSGFILE);
+
+
+
+
+
 
     return PRO_TK_NO_ERROR;
 }

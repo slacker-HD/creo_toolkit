@@ -1,5 +1,9 @@
 #ifndef __MAIN__
 #define __MAIN__
+
+#define UNICODE
+#define _UNICODE
+
 #define MSGFILE L"CreoTool.txt"
 #define TRUEPATHSIZE PRO_PATH_SIZE + 20 + 1
 
