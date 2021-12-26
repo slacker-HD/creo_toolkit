@@ -4,18 +4,18 @@ int minute = 10;
 ProBoolean saveAll = PRO_B_FALSE;
 ProBoolean autoSave = PRO_B_FALSE;
 
-ProError ProCollect2ParamDBVisitAction(void *p_object, ProAppData app_data)
+ProError ProCollect2ParamDBVisitAction(void *P_object, ProAppData AppData)
 {
 	ProError status;
 	ProArray *p_array;
-	p_array = (ProArray *)((void **)app_data)[0];
-	status = ProArrayObjectAdd(p_array, PRO_VALUE_UNUSED, 1, p_object);
+	p_array = (ProArray *)((void **)AppData)[0];
+	status = ProArrayObjectAdd(p_array, PRO_VALUE_UNUSED, 1, P_object);
 	return (status);
 }
 
-ProError ProCollect2ParamIdVisitAction(int id, ProAppData app_data)
+ProError ProCollect2ParamIdVisitAction(int id, ProAppData AppData)
 {
-	return (ProCollect2ParamDBVisitAction((void *)&id, app_data));
+	return (ProCollect2ParamDBVisitAction((void *)&id, AppData));
 }
 
 ProError ProCollectWindowIds(int **p_winid)
@@ -72,7 +72,7 @@ void SaveMdl(BOOL saveall)
 		status = ProArrayFree((ProArray *)&p_array);
 	}
 	ProMacroLoad(L"~ Command `ProCmdModelSave` ;~ Activate `file_saveas` `OK`;");
-	status = ProMessageDisplay(MSGFILE, "AutoSaved");
+	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_AutoSaved");
 }
 
 static VOID CALLBACK SaveProc(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
@@ -89,50 +89,48 @@ void _commitOK()
 	wchar_t *value;
 	int ntime;
 
-	status = ProUIInputpanelValueGet("TimerSaver", "InputTime", &value);
+	status = ProUIInputpanelValueGet("TimeSave", "InputTime", &value);
 	ntime = _wtoi(value);
 	if (ntime >= 5 && ntime <= 60)
 	{
 		minute = ntime;
-		status = ProUICheckbuttonGetState("TimerSaver", "CBAutoSave", &autoSave);
-		status = ProUICheckbuttonGetState("TimerSaver", "CBSaveAll", &saveAll);
+		status = ProUICheckbuttonGetState("TimeSave", "CBAutoSave", &autoSave);
+		status = ProUICheckbuttonGetState("TimeSave", "CBSaveAll", &saveAll);
 	}
 	else
 	{
-		ShowDialog(_T("时间范围必须设定在5~60分钟以内。"));
+		ShowMessageDialog(1,L"时间范围必须设定在5~60分钟以内。");
 		return;
 	}
 	status = ProWstringFree(value);
 	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)SaveProc);
-	status = ProUIDialogExit("TimerSaver", 1);
+	status = ProUIDialogExit("TimeSave", 1);
 }
 
 void _commitCancel()
 {
 	ProError status;
 	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)SaveProc);
-	status = ProUIDialogExit("TimerSaver", 0);
+	status = ProUIDialogExit("TimeSave", 0);
 }
-
 
 void ShowTimeSaveDialog()
 {
 	ProError status;
 	wchar_t text[5];
-	// KillTimer(NULL, TIMERID);
-
+	KillTimer(NULL, TIMERID);
 	
 	status = ProUIDialogCreate("TimeSave", "TimeSave");
 	status = ProUIInputpanelInputtypeSet("TimeSave", "InputTime", PROUIINPUTTYPE_INTEGER);
-	// if (autoSave)
-	// 	status = ProUICheckbuttonSet("TimeSave", "CBAutoSave");
-	// if (saveAll)
-	// 	status = ProUICheckbuttonSet("TimeSave", "CBSaveAll");
-	// _itow_s(minute, text, 5, 10);
-	// status = ProUIInputpanelValueSet("TimeSave", "InputTime", text);
+	if (autoSave)
+		status = ProUICheckbuttonSet("TimeSave", "CBAutoSave");
+	if (saveAll)
+		status = ProUICheckbuttonSet("TimeSave", "CBSaveAll");
+	_itow_s(minute, text, 5, 10);
+	status = ProUIInputpanelValueSet("TimeSave", "InputTime", text);
 
-	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitOK", ProUIAction(_commitOK), NULL);
-	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitCancel", ProUIAction(_commitCancel), NULL);
+	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitOK", (ProUIAction)_commitOK, NULL);
+	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitCancel", (ProUIAction)_commitCancel, NULL);
 
 	status = ProUIDialogActivate("TimeSave", NULL);
 	status = ProUIDialogDestroy("TimeSave");

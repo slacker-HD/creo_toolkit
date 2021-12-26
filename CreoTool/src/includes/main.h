@@ -19,5 +19,7 @@
 #include <ProWstring.h>
 #include <ProUIMessage.h>
 #include <ProArray.h>
+#include <ProWindows.h>
+#include <ProUI.h>
 
 #endif

@@ -77,3 +77,8 @@ IMI_AboutmenuTips
 关于
 关于
 #
+
+IMI_MESSAGE_AutoSaved
+已自动保存
+已自动保存
+#
