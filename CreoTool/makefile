@@ -28,7 +28,7 @@ PTCLIBS_DLL = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64/obj/protk
 LIBS = libcmt.lib kernel32.lib user32.lib wsock32.lib advapi32.lib mpr.lib winspool.lib netapi32.lib psapi.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib ws2_32.lib
 
 # Object files
-OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDirectory.obj TimeSave.obj
+OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDirectory.obj TimeSave.obj PaintColor.obj
 
 
 # Linker
@@ -66,6 +66,9 @@ CleanWorkDirectory.obj:  $(PROTOOL_SRC)/CleanWorkDirectory.c
 
 TimeSave.obj:  $(PROTOOL_SRC)/TimeSave.c
 	$(CC) $(CFLAGS) $(PROTOOL_SRC)/TimeSave.c
+
+PaintColor.obj:  $(PROTOOL_SRC)/PaintColor.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/PaintColor.c
 
 clean :
 	del $(OBJS)

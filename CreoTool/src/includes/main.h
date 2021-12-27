@@ -9,6 +9,7 @@
 
 #include "windows.h"
 #include "shellapi.h"
+#include "stdio.h"
 
 #include <ProUICmd.h>
 #include <ProUtil.h>
@@ -21,5 +22,18 @@
 #include <ProArray.h>
 #include <ProWindows.h>
 #include <ProUI.h>
+#include <ProNotify.h>
+#include <ProSurface.h>
+#include <ProFeature.h>
+#include <ProFeatType.h>
+#include <ProSolid.h>
+#include <ProAsmcomp.h>
 
+extern char *LastRibbonTab;
+typedef enum _hint
+{
+    paintColor = 0,
+    About = 1,
+} HINT;
+extern enum hint;
 #endif

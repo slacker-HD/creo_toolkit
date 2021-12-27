@@ -4,10 +4,24 @@
 #include "./includes/CommonFuns.h"
 #include "./includes/CleanWorkDirectory.h"
 #include "./includes/TimeSave.h"
+#include "./includes/PaintColor.h"
+
+char *LastRibbonTab = NULL;
+
+HINT hint;
 
 void ShowAboutDialog()
 {
-    ShowMessageDialog(1, L"仅供测试，请勿用于商业用途,更不要放到CSDN等处收费下载。\n访问我的博客获得更多信息：\nhttp://www.hudi.site");
+
+    if (hint == paintColor)
+    {
+        PaintColor_AfterMacro();
+    }
+    else
+    {
+        ShowMessageDialog(1, L"仅供测试，请勿用于商业用途,更不要放到CSDN等处收费下载。\n访问我的博客获得更多信息：\nhttp://www.hudi.site");
+    }
+    hint = About;
 }
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
@@ -23,6 +37,14 @@ static uiCmdAccessState AccessPRTorASM(uiCmdAccessMode access_mode)
         return ACCESS_INVISIBLE;
 }
 
+static uiCmdAccessState AccessASM(uiCmdAccessMode access_mode)
+{
+    if (CurrentMdlType() == PRO_ASSEMBLY)
+        return ACCESS_AVAILABLE;
+    else
+        return ACCESS_INVISIBLE;
+}
+
 int user_initialize()
 {
     ProError status;
@@ -30,8 +52,10 @@ int user_initialize()
     uiCmdCmdId IMI_ShowWorkDirmenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
     uiCmdCmdId IMI_PurgeWorkDirmenuID;
-    uiCmdCmdId IMI_TimeSaveSettingmenuID;
+    uiCmdCmdId IMI_TimeSavemenuID;
     uiCmdCmdId IMI_AboutID;
+    uiCmdCmdId IMI_PaintColormenuID;
+    uiCmdCmdId IMI_ClearColormenuID;
 
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
@@ -54,15 +78,31 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_PurgeWorkDir_Act", (uiCmdCmdActFn)ProMdlPurgeAll, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_AboutID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_TimeSaveSetting_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSaveSettingmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSaveSettingmenu", "IMI_TimeSaveSettingmenu", "IMI_TimeSaveSettingmenuTips", NULL, PRO_B_TRUE, IMI_TimeSaveSettingmenuID, MSGFILE);
+    status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenuTips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowDirectoryID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_AboutmenuTips", NULL, PRO_B_TRUE, IMI_ShowDirectoryID, MSGFILE);
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_PaintColormenu", "IMI_PaintColormenu", "IMI_PaintColormenuTips", NULL, PRO_B_TRUE, IMI_AboutID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenuTips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_AboutmenuTips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+
+    status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
+
+    hint = About;
 
     return PRO_TK_NO_ERROR;
 }
 
 void user_terminate()
 {
+    ProError status;
+    if (LastRibbonTab != NULL)
+        status = ProStringFree(LastRibbonTab);
+    status = ProNotificationUnset(PRO_RIBBON_TAB_SWITCH);
 }

@@ -36,3 +36,14 @@ ProUIMessageButton ShowMessageDialog(int style, wchar_t *Message)
     ProArrayFree((ProArray *)&buttons);
     return user_choice;
 }
+
+ProError ProRibbonTabSwitchNotification(char *from_tab, char *to_tab)
+{
+    ProError status;
+    if (LastRibbonTab != NULL)
+    {
+        status = ProStringFree(LastRibbonTab);
+    }
+    status = ProStringCopy(to_tab, &LastRibbonTab);
+    return PRO_TK_NO_ERROR;
+}

@@ -4,7 +4,7 @@ int minute = 10;
 ProBoolean saveAll = PRO_B_FALSE;
 ProBoolean autoSave = PRO_B_FALSE;
 
-ProError ProCollect2ParamDBVisitAction(void *P_object, ProAppData AppData)
+ProError _proCollect2ParamDBVisitAction(void *P_object, ProAppData AppData)
 {
 	ProError status;
 	ProArray *p_array;
@@ -13,12 +13,12 @@ ProError ProCollect2ParamDBVisitAction(void *P_object, ProAppData AppData)
 	return (status);
 }
 
-ProError ProCollect2ParamIdVisitAction(int id, ProAppData AppData)
+ProError _proCollect2ParamIdVisitAction(int id, ProAppData AppData)
 {
-	return (ProCollect2ParamDBVisitAction((void *)&id, AppData));
+	return (_proCollect2ParamDBVisitAction((void *)&id, AppData));
 }
 
-ProError ProCollectWindowIds(int **p_winid)
+ProError _proCollectWindowIds(int **p_winid)
 {
 	ProError status;
 	if (p_winid != NULL)
@@ -26,7 +26,7 @@ ProError ProCollectWindowIds(int **p_winid)
 		status = ProArrayAlloc(0, sizeof(int), 1, (ProArray *)p_winid);
 		if (status == PRO_TK_NO_ERROR)
 		{
-			status = ProWindowsVisit((ProWindowVisitAction)ProCollect2ParamIdVisitAction, (ProAppData)&p_winid);
+			status = ProWindowsVisit((ProWindowVisitAction)_proCollect2ParamIdVisitAction, (ProAppData)&p_winid);
 			if (status != PRO_TK_NO_ERROR)
 			{
 				ProArrayFree((ProArray *)p_winid);
@@ -39,7 +39,7 @@ ProError ProCollectWindowIds(int **p_winid)
 	return status;
 }
 
-void SaveMdl(BOOL saveall)
+void _saveMdl(BOOL saveall)
 {
 	ProError status;
 	int *p_array = NULL;
@@ -50,7 +50,7 @@ void SaveMdl(BOOL saveall)
 	status = ProWindowCurrentGet(&CurrentWid);
 	if (saveall)
 	{
-		status = ProCollectWindowIds(&p_array);
+		status = _proCollectWindowIds(&p_array);
 		status = ProArraySizeGet(p_array, &ArraySize);
 		for (i = 0; i < ArraySize; i++)
 		{
@@ -75,11 +75,11 @@ void SaveMdl(BOOL saveall)
 	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_AutoSaved");
 }
 
-static VOID CALLBACK SaveProc(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static VOID CALLBACK _saveProc(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
 	if (autoSave)
 	{
-		SaveMdl(saveAll);
+		_saveMdl(saveAll);
 	}
 }
 
@@ -103,14 +103,14 @@ void _commitOK()
 		return;
 	}
 	status = ProWstringFree(value);
-	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)SaveProc);
+	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)_saveProc);
 	status = ProUIDialogExit("TimeSave", 1);
 }
 
 void _commitCancel()
 {
 	ProError status;
-	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)SaveProc);
+	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)_saveProc);
 	status = ProUIDialogExit("TimeSave", 0);
 }
 
