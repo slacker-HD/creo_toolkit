@@ -28,6 +28,9 @@
 #include <ProFeatType.h>
 #include <ProSolid.h>
 #include <ProAsmcomp.h>
+#include <ProGraphic.h>
+#include <ProDtlsyminst.h>
+#include <ProDrawing.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

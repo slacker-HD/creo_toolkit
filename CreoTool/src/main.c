@@ -5,6 +5,7 @@
 #include "./includes/CleanWorkDirectory.h"
 #include "./includes/TimeSave.h"
 #include "./includes/PaintColor.h"
+#include "./includes/AlignSymDim.h"
 
 char *LastRibbonTab = NULL;
 
@@ -45,12 +46,22 @@ static uiCmdAccessState AccessASM(uiCmdAccessMode access_mode)
         return ACCESS_INVISIBLE;
 }
 
+static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
+{
+    if (CurrentMdlType() == PRO_DRAWING)
+        return ACCESS_AVAILABLE;
+    else
+        return ACCESS_INVISIBLE;
+}
+
 int user_initialize()
 {
     ProError status;
     uiCmdCmdId IMI_ShowDirectoryID;
     uiCmdCmdId IMI_ShowWorkDirmenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
+    uiCmdCmdId IMI_VerticalAlignmenuID;
+    uiCmdCmdId IMI_HorizonAlignmenuID;
     uiCmdCmdId IMI_PurgeWorkDirmenuID;
     uiCmdCmdId IMI_TimeSavemenuID;
     uiCmdCmdId IMI_AboutID;
@@ -72,6 +83,12 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenuTips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalAlignmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenuTips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HorizonAlign_Act", (uiCmdCmdActFn)HorizonAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizonAlignmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenuTips", NULL, PRO_B_TRUE, IMI_HorizonAlignmenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

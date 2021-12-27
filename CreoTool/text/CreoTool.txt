@@ -43,6 +43,26 @@ IMI_OpenSamenameDrwmenuTips
 打开同名工程图
 #
 
+IMI_VerticalAlignmenu
+垂直对齐所有选中尺寸标注
+垂直对齐所有选中尺寸标注
+#
+
+IMI_VerticalAlignmenutips
+垂直对齐所有选中尺寸标注
+垂直对齐所有选中尺寸标注
+#
+
+IMI_HorizonAlignmenu
+水平对齐所有选中尺寸标注
+水平对齐所有选中尺寸标注
+#
+
+IMI_HorizonAlignmenutips
+水平对齐所有选中尺寸标注
+水平对齐所有选中尺寸标注
+#
+
 IMI_Filesubmenu
 文件快捷操作
 文件快捷操作
@@ -78,11 +98,6 @@ IMI_AboutmenuTips
 关于
 #
 
-IMI_MESSAGE_AutoSaved
-已自动保存
-已自动保存
-#
-
 IMI_PaintColorsubmenu
 装配体着色
 装配体着色
@@ -116,4 +131,14 @@ About
 Abouttips
 关于
 关于
+#
+
+IMI_MESSAGE_AutoSaved
+已自动保存
+已自动保存
+#
+
+IMI_MESSAGE_LeftMouseSelectPosition
+鼠标左键点击摆放参考点
+鼠标左键点击摆放参考点
 #
