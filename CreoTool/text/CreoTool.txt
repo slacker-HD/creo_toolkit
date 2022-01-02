@@ -78,6 +78,16 @@ IMI_PurgeWorkDirmenuTips
 一键清除工作目录下旧版本(prt、asm、drw)
 #
 
+IMI_MdlRenamemenu
+重命名模型并同时重命名同名drw
+重命名模型并同时重命名同名drw
+#
+
+IMI_MdlRenamemenuTips
+重命名模型并同时重命名同名drw
+重命名模型并同时重命名同名drw
+#
+
 IMI_TimeSavemenu
 定时保存
 定时保存
@@ -142,3 +152,9 @@ IMI_MESSAGE_LeftMouseSelectPosition
 鼠标左键点击摆放参考点
 鼠标左键点击摆放参考点
 #
+
+IMI_Enter_New_Name
+输入新名称
+输入新名称
+#
+

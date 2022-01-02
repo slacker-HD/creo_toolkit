@@ -6,6 +6,7 @@
 #include "./includes/TimeSave.h"
 #include "./includes/PaintColor.h"
 #include "./includes/AlignSymDim.h"
+#include "./includes/RenameMdl.h"
 
 char *LastRibbonTab = NULL;
 
@@ -67,7 +68,7 @@ int user_initialize()
     uiCmdCmdId IMI_AboutID;
     uiCmdCmdId IMI_PaintColormenuID;
     uiCmdCmdId IMI_ClearColormenuID;
-
+    uiCmdCmdId IMI_MdlRenamemenuID;
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -92,8 +93,11 @@ int user_initialize()
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_PurgeWorkDir_Act", (uiCmdCmdActFn)ProMdlPurgeAll, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_AboutID, MSGFILE);
+    status = ProCmdActionAdd("IMI_PurgeWorkDir_Act", (uiCmdCmdActFn)ProMdlPurgeAll, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PurgeWorkDirmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_PurgeWorkDirmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_MdlRenamemenu_Act", (uiCmdCmdActFn)RenamePrtandDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_MdlRenamemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_MdlRenamemenu", "IMI_MdlRenamemenu", "IMI_MdlRenamemenuTips", NULL, PRO_B_TRUE, IMI_MdlRenamemenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenuTips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
