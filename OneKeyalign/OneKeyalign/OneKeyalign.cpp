@@ -104,7 +104,6 @@ void Align(ALIGNMENT alignment)
 						status = ProDtlsyminstDataGet(&Modelitem, PRODISPMODE_SYMBOLIC, &SymData);
 						status = ProDtlsyminstdataAttachmentGet(SymData, &SymAttachOld);
 						status = ProDtlattachGet(SymAttachOld, &SymType, &SymView, location, &attach_point);
-						status = ProDtlattachGet(SymAttachOld, &SymType, &SymView, location, &attach_point);
 						if (status == PRO_TK_NO_ERROR)
 						{
 							if (alignment == Vertical)
