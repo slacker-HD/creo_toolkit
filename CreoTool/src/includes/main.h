@@ -31,6 +31,7 @@
 #include <ProGraphic.h>
 #include <ProDtlsyminst.h>
 #include <ProDrawing.h>
+#include <ProUIList.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

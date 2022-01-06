@@ -28,6 +28,16 @@ IMI_ShowWorkDirmenuTips
 打开工作目录
 #
 
+IMI_ChangeWorkDirectorymenu
+快速切换工作目录
+快速切换工作目录
+#
+
+IMI_ChangeWorkDirectorymenuTips
+快速切换工作目录
+快速切换工作目录
+#
+
 IMI_DirDRWsubmenu
 工程图快捷操作
 工程图快捷操作

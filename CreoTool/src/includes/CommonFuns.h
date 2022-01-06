@@ -5,6 +5,8 @@
 int CurrentMdlType();
 ProError ShowMessageDialog(int style, wchar_t *Message);
 ProError ProRibbonTabSwitchNotification(char *from_tab, char *to_tab);
-extern char *LastRibbonTab;
+ProError ProDirectoryChangeNotification(ProPath new_path);
 
+extern char *LastRibbonTab;
+extern ProPath *CurrentWorkDirectoryList;
 #endif

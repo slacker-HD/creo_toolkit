@@ -7,9 +7,11 @@
 #include "./includes/PaintColor.h"
 #include "./includes/AlignSymDim.h"
 #include "./includes/RenameMdl.h"
+#include "./includes/ChangeWorkDirectory.h"
 
 char *LastRibbonTab = NULL;
 
+ProPath *CurrentWorkDirectoryList;
 HINT hint;
 
 void ShowAboutDialog()
@@ -21,7 +23,7 @@ void ShowAboutDialog()
     }
     else
     {
-        ShowMessageDialog(1, L"仅供测试，请勿用于商业用途,更不要放到CSDN等处收费下载。\n访问我的博客获得更多信息：\nhttp://www.hudi.site");
+        ShowMessageDialog(1, L"仅供测试，请勿用于商业用途，更不要放到CSDN等处收费下载。\n访问我的博客获得更多信息：\nhttp://www.hudi.site");
     }
     hint = About;
 }
@@ -60,6 +62,7 @@ int user_initialize()
     ProError status;
     uiCmdCmdId IMI_ShowDirectoryID;
     uiCmdCmdId IMI_ShowWorkDirmenuID;
+    uiCmdCmdId IMI_ChangeWorkDirectorymenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
     uiCmdCmdId IMI_VerticalAlignmenuID;
     uiCmdCmdId IMI_HorizonAlignmenuID;
@@ -69,6 +72,8 @@ int user_initialize()
     uiCmdCmdId IMI_PaintColormenuID;
     uiCmdCmdId IMI_ClearColormenuID;
     uiCmdCmdId IMI_MdlRenamemenuID;
+    ProPath CurrentPath;
+    int n_size;
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -79,6 +84,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ShowWorkDirectory_Act", (uiCmdCmdActFn)ShowWorkDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowWorkDirmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenuTips", NULL, PRO_B_TRUE, IMI_ShowWorkDirmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_ChangeWorkDirectory_Act", (uiCmdCmdActFn)ShowChangeWorkDirectoryDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_MdlRenamemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenuTips", NULL, PRO_B_TRUE, IMI_MdlRenamemenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -115,6 +123,13 @@ int user_initialize()
 
     status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
 
+    status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
+
+    status = ProDirectoryCurrentGet(CurrentPath);
+    status = ProWstringLengthGet(CurrentPath, &n_size);
+    CurrentPath[n_size - 1] = '\0';
+    status = ProArrayAlloc(1, sizeof(ProPath), 1, (ProArray *)&CurrentWorkDirectoryList);
+    status = ProWstringCopy(CurrentPath, CurrentWorkDirectoryList[0], PRO_VALUE_UNUSED);
     hint = About;
 
     return PRO_TK_NO_ERROR;
@@ -126,4 +141,6 @@ void user_terminate()
     if (LastRibbonTab != NULL)
         status = ProStringFree(LastRibbonTab);
     status = ProNotificationUnset(PRO_RIBBON_TAB_SWITCH);
+    status = ProNotificationUnset(PRO_DIRECTORY_CHANGE_POST);
+    status = ProArrayFree((ProArray *)&CurrentWorkDirectoryList);
 }

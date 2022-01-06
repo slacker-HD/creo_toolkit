@@ -47,3 +47,21 @@ ProError ProRibbonTabSwitchNotification(char *from_tab, char *to_tab)
     status = ProStringCopy(to_tab, &LastRibbonTab);
     return PRO_TK_NO_ERROR;
 }
+
+ProError ProDirectoryChangeNotification(ProPath new_path)
+{
+    ProError status;
+    int i, pathLength, cmpResult;
+
+    status = ProArraySizeGet(CurrentWorkDirectoryList, &pathLength);
+
+    for (i = 0; i < pathLength; i++)
+    {
+        status = ProWstringCompare(new_path, CurrentWorkDirectoryList[i], PRO_VALUE_UNUSED, &cmpResult);
+        if (cmpResult == 0)
+            return PRO_TK_NO_ERROR;
+    }
+
+    status = ProArrayObjectAdd((ProArray)&CurrentWorkDirectoryList, PRO_VALUE_UNUSED, 1, new_path);
+    return PRO_TK_NO_ERROR;
+}
