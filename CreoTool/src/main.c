@@ -23,7 +23,7 @@ void ShowAboutDialog()
     }
     else
     {
-        ShowMessageDialog(1, L"仅供测试，请勿用于商业用途，更不要放到CSDN等处收费下载。\n访问我的博客获得更多信息：\nhttp://www.hudi.site");
+        ShowMessageDialog(1, L"本项目遵循BSD 3-clause许可证发布。\n请不要放到CSDN等处收费下载。\n访问项目主页获得更多信息：\nhttps://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool");
     }
     hint = About;
 }

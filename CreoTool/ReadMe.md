@@ -1,0 +1,40 @@
+# Creo辅助小工具
+
+## 1. 说明
+
+项目使用Creo Toolkit进行二次开发，旨在为广大Creo爱好者开发提供便利。
+
+## 2.功能
+
+### 2.1 目录操作
+
+- 打开当前模型目录
+- 打开工作目录
+- 快速切换工作目录
+
+### 2.2 工程图快捷操作
+
+- 打开同名工程图
+- 垂直对齐所有选中尺寸标注
+- 水平对齐所有选中尺寸标注
+
+### 2.3 文件快捷操作
+
+- 一键清除工作目录下旧版本(prt、asm、drw)
+- 同时重命名模型和同名绘图文件
+- 定时保存
+
+### 2.4 装配体着色
+
+- 随机着色
+- 清除外观
+
+## 3.联系方式
+
+@slacker-HD
+[https://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool](https://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool)
+
+
+## 4.版权
+
+本项目遵循BSD 3-clause许可证发布。有关详细信息，请参阅项目根文件夹中标题为 LICENSE 的文件。
