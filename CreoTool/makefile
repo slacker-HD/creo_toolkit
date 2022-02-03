@@ -7,7 +7,6 @@ MAKEFILENAME = CreoTool
 PRO_MACHINE_TYPE = x86e_win64
 
 # Executable names
-EXE = CreoTool.exe
 EXE_DLL = CreoTool.dll
 
 # Pro/Toolkit Source & Machine Loadpoint  (EXTERNAL USE - DEFAULT)
@@ -34,15 +33,7 @@ OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDi
 # Linker
 LINK = link
 
-$(EXE) :  $(OBJS) $(PTCLIBS)
-#Executable applications compiled using WinMain() instead of main() should set the subsystem to windows instead of console.
-	$(LINK) /subsystem:console -out:$(EXE) /debug /machine:amd64 @<<longline.list
-$(OBJS) $(PTCLIBS) $(LIBS)
-<<
-
 # Dll target
-dll: $(EXE_DLL)
-
 $(EXE_DLL) :  $(OBJS) $(PTCLIBS_DLL)
 	$(LINK) /subsystem:console -out:$(EXE_DLL) /debug /machine:amd64 /dll @<<longline.list
 $(OBJS) $(PTCLIBS_DLL) $(LIBS)
@@ -81,10 +72,8 @@ ChangeWorkDirectory.obj:  $(PROTOOL_SRC)/ChangeWorkDirectory.c
 
 clean :
 	del $(OBJS)
-	del $(EXE)
-	nmake -f $(MAKEFILENAME)
-
-clean_dll :
-	del $(OBJS)
 	del $(EXE_DLL)
-	nmake -f $(MAKEFILENAME) dll
+	del $(MAKEFILENAME).pdb
+	del $(MAKEFILENAME).ilk
+	del $(MAKEFILENAME).exp
+	del $(MAKEFILENAME).lib
