@@ -60,4 +60,7 @@ clean :
 clean_dll :
 	del $(OBJS)
 	del $(EXE_DLL)
-	nmake -f $(MAKEFILENAME) dll
+	del $(MAKEFILENAME).pdb
+	del $(MAKEFILENAME).ilk
+	del $(MAKEFILENAME).exp
+	del $(MAKEFILENAME).lib
