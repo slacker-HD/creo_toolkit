@@ -47,6 +47,8 @@ Test.obj:  $(PROTOOL_SRC)/Test.c
 clean :
 	del $(OBJS)
 	del $(EXE)
-	nmake -f $(MAKEFILENAME)
-
+	del $(MAKEFILENAME).pdb
+	del $(MAKEFILENAME).ilk
+	del $(MAKEFILENAME).exp
+	del $(MAKEFILENAME).lib
 
