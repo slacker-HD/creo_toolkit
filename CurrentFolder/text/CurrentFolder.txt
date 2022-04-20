@@ -1,0 +1,14 @@
+﻿CurrentFolder
+当前目录
+当前目录
+#
+
+CurrentFoldermenu
+打开当前目录
+打开当前目录
+#
+
+CurrentFoldermenutips
+打开当前目录
+打开当前目录
+#

@@ -183,3 +183,8 @@
 ## SyncProjectNOVS
 
 + 使用makefile而非visual studio同步开发
+
+
+## CurrentFolder
+
++ 打开当前目录

@@ -1,0 +1,7 @@
+name CurrentFolder
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\CurrentFolder\x64\Debug\CurrentFolder.dll
+text_dir D:\mydoc\creo_toolkit\CurrentFolder\text
+revision   18.0
+end
