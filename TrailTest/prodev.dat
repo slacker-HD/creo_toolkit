@@ -1,0 +1,7 @@
+name TrailTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\TrailTest\x64\Debug\TrailTest.dll
+text_dir D:\mydoc\creo_toolkit\TrailTest\text
+revision   18.0
+end

@@ -188,3 +188,7 @@
 ## CurrentFolder
 
 + 打开当前目录
+
+## TrailTest
+
++ 向Trail文件添加内容
