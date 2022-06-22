@@ -1,170 +1,179 @@
 ﻿IMI_Mainmenu
-小工具
+gadget
 小工具
 #
 
 IMI_DirToolsubmenu
-目录操作
+Directory operations
 目录操作
 #
 
 IMI_ShowDirmenu
-打开当前模型目录
+Open the directory of current model
 打开当前模型目录
 #
 
 IMI_ShowDirmenuTips
-打开当前模型目录
+Open the directory of current model
 打开当前模型目录
 #
 
 IMI_ShowWorkDirmenu
-打开工作目录
+Open the working directory
 打开工作目录
 #
 
 IMI_ShowWorkDirmenuTips
-打开工作目录
+Open the working directory
 打开工作目录
 #
 
 IMI_ChangeWorkDirectorymenu
-快速切换工作目录
+Fast switch working directories
 快速切换工作目录
 #
 
 IMI_ChangeWorkDirectorymenuTips
-快速切换工作目录
+Fast switch working directories
 快速切换工作目录
 #
 
 IMI_DirDRWsubmenu
-工程图快捷操作
+Drawing shortcuts
 工程图快捷操作
 #
 
 IMI_OpenSamenameDrwmenu
-打开同名工程图
+Open the drawing with same name
 打开同名工程图
 #
 
 IMI_OpenSamenameDrwmenuTips
-打开同名工程图
+Open the drawing with same name
 打开同名工程图
 #
 
 IMI_VerticalAlignmenu
-垂直对齐所有选中尺寸标注
+Align all selected dimensions vertically
 垂直对齐所有选中尺寸标注
 #
 
 IMI_VerticalAlignmenutips
-垂直对齐所有选中尺寸标注
+Align all selected dimensions vertically
 垂直对齐所有选中尺寸标注
 #
 
 IMI_HorizonAlignmenu
-水平对齐所有选中尺寸标注
+Align all selected dimensions horizontally
 水平对齐所有选中尺寸标注
 #
 
 IMI_HorizonAlignmenutips
-水平对齐所有选中尺寸标注
+Align all selected dimensions horizontally
 水平对齐所有选中尺寸标注
 #
 
 IMI_Filesubmenu
-文件快捷操作
+File shortcuts
 文件快捷操作
 #
 
 IMI_PurgeWorkDirmenu
-一键清除工作目录下旧版本(prt、asm、drw)
+One-click clear old version under the working directory(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
 #
 
 IMI_PurgeWorkDirmenuTips
-一键清除工作目录下旧版本(prt、asm、drw)
+One-click clear old version under the working directory(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
 #
 
 IMI_MdlRenamemenu
-重命名模型并同时重命名同名drw
+Rename model and drawing with the same name
 重命名模型并同时重命名同名drw
 #
 
 IMI_MdlRenamemenuTips
-重命名模型并同时重命名同名drw
+Rename model and drawing with the same name
 重命名模型并同时重命名同名drw
 #
 
 IMI_TimeSavemenu
-定时保存
+Save at regular intervals
 定时保存
 #
 
 IMI_TimeSavemenuTips
-定时保存
+Save at regular intervals
 定时保存
 #
 
 IMI_Aboutmenu
-关于
+About
 关于
 #
 
 IMI_AboutmenuTips
-关于
+About
 关于
 #
 
 IMI_PaintColorsubmenu
-装配体着色
+Assembly apperance
 装配体着色
 #
 
 IMI_PaintColormenu
-随机着色
+Random apperance
 随机着色
 #
 
 IMI_PaintColormenutips
-随机着色
+Random apperance
 随机着色
 #
 
 IMI_ClearColormenu
-清除外观
+Clear appearance
 清除外观
 #
 
 IMI_ClearColormenutips
-清除外观
+Clear appearance
 清除外观
 #
 
 About
-关于
+About
 关于
 #
 
 Abouttips
-关于
+About
 关于
 #
 
+IMI_RenamePrtinAsm
+Rename
+重命名
+#
+
+IMI_RenamePrtinAsmtips
+Rename
+重命名
+#
+
 IMI_MESSAGE_AutoSaved
-已自动保存
+File is saved automatically.
 已自动保存
 #
 
 IMI_MESSAGE_LeftMouseSelectPosition
-鼠标左键点击摆放参考点
+Click the left mouse button to place the reference point
 鼠标左键点击摆放参考点
 #
 
 IMI_Enter_New_Name
-输入新名称
+Enter a new name
 输入新名称
 #
-

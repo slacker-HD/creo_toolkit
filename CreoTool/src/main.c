@@ -8,6 +8,7 @@
 #include "./includes/AlignSymDim.h"
 #include "./includes/RenameMdl.h"
 #include "./includes/ChangeWorkDirectory.h"
+#include "./includes/PrtinAsmRename.h"
 
 char *LastRibbonTab = NULL;
 
@@ -121,8 +122,9 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_AboutmenuTips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
 
-    status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
+    status = AsmTreePrtinAsmRenamePopupmenusSetup();
 
+    status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
     status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
 
     status = ProDirectoryCurrentGet(CurrentPath);
