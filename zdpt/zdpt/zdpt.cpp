@@ -88,17 +88,15 @@ void zdpt()
 	ProError status;
 	ProPath *file_list, *dir_list;
 	int n_files;
-	ProPath currentpath;
 	CString filename;
 	CString macro;
-	status = ProDirectoryCurrentGet(currentpath);
 
 	CString Cfilter = _T("*.drw");
 	wchar_t *filter = NULL;
 	filter = Cfilter.AllocSysString();
 	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&file_list);
 	status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dir_list);
-	status = ProFilesList(currentpath, filter, PRO_FILE_LIST_LATEST, &file_list, &dir_list);
+	status = ProFilesList(NULL, filter, PRO_FILE_LIST_LATEST, &file_list, &dir_list);
 
 	if (filter != NULL)
 		SysFreeString(filter);

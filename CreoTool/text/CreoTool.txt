@@ -13,7 +13,7 @@ Open the directory of current model
 打开当前模型目录
 #
 
-IMI_ShowDirmenuTips
+IMI_ShowDirmenutips
 Open the directory of current model
 打开当前模型目录
 #
@@ -23,7 +23,7 @@ Open the working directory
 打开工作目录
 #
 
-IMI_ShowWorkDirmenuTips
+IMI_ShowWorkDirmenutips
 Open the working directory
 打开工作目录
 #
@@ -33,7 +33,7 @@ Fast switch working directories
 快速切换工作目录
 #
 
-IMI_ChangeWorkDirectorymenuTips
+IMI_ChangeWorkDirectorymenutips
 Fast switch working directories
 快速切换工作目录
 #
@@ -48,7 +48,7 @@ Open the drawing with same name
 打开同名工程图
 #
 
-IMI_OpenSamenameDrwmenuTips
+IMI_OpenSamenameDrwmenutips
 Open the drawing with same name
 打开同名工程图
 #
@@ -83,7 +83,7 @@ One-click clear old version under the working directory(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
 #
 
-IMI_PurgeWorkDirmenuTips
+IMI_PurgeWorkDirmenutips
 One-click clear old version under the working directory(prt、asm、drw)
 一键清除工作目录下旧版本(prt、asm、drw)
 #
@@ -93,7 +93,7 @@ Rename model and drawing with the same name
 重命名模型并同时重命名同名drw
 #
 
-IMI_MdlRenamemenuTips
+IMI_MdlRenamemenutips
 Rename model and drawing with the same name
 重命名模型并同时重命名同名drw
 #
@@ -103,7 +103,7 @@ Save at regular intervals
 定时保存
 #
 
-IMI_TimeSavemenuTips
+IMI_TimeSavemenutips
 Save at regular intervals
 定时保存
 #
@@ -113,7 +113,7 @@ About
 关于
 #
 
-IMI_AboutmenuTips
+IMI_Aboutmenutips
 About
 关于
 #
@@ -177,3 +177,29 @@ IMI_Enter_New_Name
 Enter a new name
 输入新名称
 #
+
+IMI_BatOPensubmenu
+Batch open files
+批量打开文件
+#
+
+IMI_BatOPenPrtmenu
+Batch open all prt files in  working directory
+批量打开工作目录下所有Prt
+#
+
+IMI_BatOPenPrtmenutips
+Batch open all prt files in  working directory
+批量打开工作目录下所有Prt
+#
+
+IMI_BatOPenDrwmenu
+Batch open all drw files in working directory
+批量打开工作目录下所有Drw
+#
+
+IMI_BatOPenDrwmenutips
+Batch open all drw files in  working directory
+批量打开工作目录下所有Drw
+#
+
