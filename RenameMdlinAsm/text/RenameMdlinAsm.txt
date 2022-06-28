@@ -1,0 +1,14 @@
+﻿IMI_RenameMdlinAsm
+重命名（选中零件）
+重命名（选中零件）
+#
+
+IMI_RenameMdlinAsmtips
+重命名（选中零件）
+重命名（选中零件）
+#
+
+IMI_Enter_New_Name
+输入新名称
+输入新名称
+#

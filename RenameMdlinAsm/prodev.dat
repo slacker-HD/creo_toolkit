@@ -1,0 +1,7 @@
+name RenameMdlinAsm
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\RenameMdlinAsm\RenameMdlinAsm.dll
+text_dir D:\mydoc\creo_toolkit\RenameMdlinAsm\text
+revision   18.0
+end

@@ -184,7 +184,6 @@
 
 + 使用makefile而非visual studio同步开发
 
-
 ## CurrentFolder
 
 + 打开当前目录
@@ -192,3 +191,7 @@
 ## TrailTest
 
 + 向Trail文件添加内容
+
+## RenameMdlinAsm
+
++ 右键快速重命名装配体中组件（重命名组件的同时默认同时重命名组件所在目录下同名工程图（如果存在）,其余的情况不考虑）
