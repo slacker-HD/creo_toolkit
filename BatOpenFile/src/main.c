@@ -1,4 +1,9 @@
-#include "./includes/BatOpenFiles.h"
+#include "./includes/main.h"
+
+static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
+{
+    return ACCESS_AVAILABLE;
+}
 
 void _openFilesByType(wchar_t *filter, ProMdlType mdltype)
 {
@@ -43,4 +48,25 @@ void OpenPrts()
 void OpenDrws()
 {
     _openFilesByType(L"*.drw", PRO_DRAWING);
+}
+
+int user_initialize()
+{
+    ProError status;
+    uiCmdCmdId IMI_BatOPenPrtmenuID;
+    uiCmdCmdId IMI_BatOPenDrwmenuID;
+
+    status = ProMenubarMenuAdd("IMI_BatOPenmenu", "IMI_BatOPenmenu", "About", PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BatOPenPrt_Act", (uiCmdCmdActFn)OpenPrts, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatOPenPrtmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatOPenmenu", "IMI_BatOPenPrtmenu", "IMI_BatOPenPrtmenu", "IMI_BatOPenPrtmenutips", NULL, PRO_B_TRUE, IMI_BatOPenPrtmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BatOPenDrw_Act", (uiCmdCmdActFn)OpenDrws, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatOPenDrwmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatOPenmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenutips", NULL, PRO_B_TRUE, IMI_BatOPenDrwmenuID, MSGFILE);
+
+    return PRO_TK_NO_ERROR;
+}
+
+void user_terminate()
+{
 }
