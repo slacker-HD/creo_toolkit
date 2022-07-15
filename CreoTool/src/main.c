@@ -10,6 +10,7 @@
 #include "./includes/ChangeWorkDirectory.h"
 #include "./includes/PrtinAsmRename.h"
 #include "./includes/BatOpenFiles.h"
+#include "./includes/BatSnapshot.h"
 
 char *LastRibbonTab = NULL;
 
@@ -78,6 +79,8 @@ int user_initialize()
     uiCmdCmdId IMI_BatOPenPrtmenuID;
     uiCmdCmdId IMI_BatOPenDrwmenuID;
 
+    uiCmdCmdId IMI_BatSnapShotmenuID;
+
     ProPath CurrentPath;
     int n_size;
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
@@ -134,6 +137,12 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_BatOPenDrw_Act", (uiCmdCmdActFn)OpenDrws, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatOPenDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatOPensubmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenutips", NULL, PRO_B_TRUE, IMI_BatOPenDrwmenuID, MSGFILE);
+
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatExportmenu", "IMI_BatExportmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BatSnapShot_Act", (uiCmdCmdActFn)TakeSnapShot, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatSnapShotmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenutips", NULL, PRO_B_TRUE, IMI_BatSnapShotmenuID, MSGFILE);
+
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 

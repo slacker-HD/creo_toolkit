@@ -199,7 +199,21 @@ Batch open all drw files in working directory
 #
 
 IMI_BatOPenDrwmenutips
-Batch open all drw files in  working directory
+Batch open all drw files in working directory
 批量打开工作目录下所有Drw
 #
 
+IMI_BatExportmenu
+Batch export files
+批量导出文件
+#
+
+IMI_BatSnapShotmenu
+Batch export all prt files in working directory to jpg
+批量导出工作目录Prt为图片
+#
+
+IMI_BatSnapShotmenutips
+Batch export all prt files in working directory to jpg
+批量导出工作目录Prt为图片
+#
