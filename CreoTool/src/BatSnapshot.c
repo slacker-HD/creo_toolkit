@@ -22,7 +22,7 @@ void _snapshot(int wid, ProName name)
 	status = ProRasterFileWrite(wid, PRORASTERDEPTH_24, width * 10, height * 10, PRORASTERDPI_600, PRORASTERTYPE_JPEG, currentpath);
 }
 
-void TakeSnapShot()
+void BatSnapShot()
 {
 	ProError status;
 	ProPath *file_list, *dir_list, r_path;

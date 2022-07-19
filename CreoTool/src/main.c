@@ -11,6 +11,7 @@
 #include "./includes/PrtinAsmRename.h"
 #include "./includes/BatOpenFiles.h"
 #include "./includes/BatSnapshot.h"
+#include "./includes/BattoPdf.h"
 
 char *LastRibbonTab = NULL;
 
@@ -140,7 +141,7 @@ int user_initialize()
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatExportmenu", "IMI_BatExportmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_BatSnapShot_Act", (uiCmdCmdActFn)TakeSnapShot, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatSnapShotmenuID);
+    status = ProCmdActionAdd("IMI_BatSnapShot_Act", (uiCmdCmdActFn)BatSnapShot, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatSnapShotmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenutips", NULL, PRO_B_TRUE, IMI_BatSnapShotmenuID, MSGFILE);
 
 

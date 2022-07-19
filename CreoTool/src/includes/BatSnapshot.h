@@ -3,5 +3,5 @@
 #include "main.h"
 #include "CommonFuns.h"
 
-void TakeSnapShot();
+void BatSnapShot();
 #endif
