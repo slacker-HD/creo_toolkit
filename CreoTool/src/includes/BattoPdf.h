@@ -3,4 +3,6 @@
 #include "main.h"
 #include "CommonFuns.h"
 
+void BatToPdf();
+
 #endif

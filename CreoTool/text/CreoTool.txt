@@ -217,3 +217,13 @@ IMI_BatSnapShotmenutips
 Batch export all prt files in working directory to jpg
 批量导出工作目录Prt为图片
 #
+
+IMI_BatExportPdfmenu
+Batch export all drw files in working directory to pdf
+批量导出工作目录Drw为Pdf
+#
+
+IMI_BatExportPdfmenutips
+Batch export all drw files in working directory to pdf
+批量导出工作目录Drw为Pdf
+#

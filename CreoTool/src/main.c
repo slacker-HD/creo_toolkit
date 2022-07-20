@@ -81,6 +81,7 @@ int user_initialize()
     uiCmdCmdId IMI_BatOPenDrwmenuID;
 
     uiCmdCmdId IMI_BatSnapShotmenuID;
+    uiCmdCmdId IMI_BatExportPdfmenuID;
 
     ProPath CurrentPath;
     int n_size;
@@ -144,6 +145,8 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_BatSnapShot_Act", (uiCmdCmdActFn)BatSnapShot, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatSnapShotmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenutips", NULL, PRO_B_TRUE, IMI_BatSnapShotmenuID, MSGFILE);
 
+    status = ProCmdActionAdd("IMI_BatExportPdf_Act", (uiCmdCmdActFn)BatToPdf, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportPdfmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenutips", NULL, PRO_B_TRUE, IMI_BatExportPdfmenuID, MSGFILE);
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 

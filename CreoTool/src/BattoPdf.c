@@ -1,32 +1,21 @@
 #include "./includes/BattoPdf.h"
 
-void _toPdf(ProDrawing Drawing)
+void _toPdf(ProDrawing Drawing, ProName name)
 {
-	ProName w_name;
 	ProError status;
+	ProName pdfName = L"";
 	ProPath currentpath;
-	int wid;
-	status = ProMdlNameGet(Drawing, w_name);
-	status = ProDirectoryCurrentGet(currentpath);
-	if (!PathFileExists(Cpath + _T("pdf\\")))
-	{
-		if (!CreateDirectory(Cpath + _T("pdf\\"), NULL))
-		{
-			AfxMessageBox(_T("无法创建目录!"));
-			return;
-		}
-	}
-	CString a;
-	a = Cpath + _T("pdf\\") + CString(w_name) + _T(".pdf");
-	FreeP(p);
-	p = a.AllocSysString();
 	ProPDFOptions options;
+
+	status = ProDirectoryCurrentGet(currentpath);
+	status = ProWstringConcatenate(name, pdfName, PRO_VALUE_UNUSED);
+	status = ProWstringConcatenate(L".pdf", pdfName, PRO_VALUE_UNUSED);
+	status = ProWstringConcatenate(pdfName, currentpath, PRO_VALUE_UNUSED);
+
 	status = ProPDFoptionsAlloc(&options);
 	status = ProPDFoptionsIntpropertySet(options, PRO_PDFOPT_EXPORT_MODE, PRO_PDF_2D_DRAWING);
-	status = ProPDFExport(Drawing, p, options);
+	status = ProPDFExport(Drawing, pdfName, options);
 	status = ProPDFoptionsFree(options);
-	status = ProMdlEraseNotDisplayed();
-	status = ProDirectoryChange(currentpath);
 }
 void BatToPdf()
 {
@@ -48,11 +37,12 @@ void BatToPdf()
 			for (i = 0; i < n_files; i++)
 			{
 				status = ProFilenameParse(file_list[i], r_path, r_file_name, r_extension, &r_version);
-				status = ProMdlRetrieve(r_file_name, PRO_PART, &mdl);
+				status = ProMdlRetrieve(r_file_name, PRO_DRAWING, &mdl);
 				status = ProWindowCurrentGet(&winid);
 				status = ProMdlDisplay(mdl);
 				status = ProWindowActivate(winid);
-				_toPdf(mdl);
+				_toPdf((ProDrawing)mdl, r_file_name);
+				status = ProMdlErase(mdl);
 			}
 		}
 	}
