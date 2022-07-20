@@ -227,3 +227,13 @@ IMI_BatExportPdfmenutips
 Batch export all drw files in working directory to pdf
 批量导出工作目录Drw为Pdf
 #
+
+IMI_BatExportDwgmenu
+Batch export all drw files in working directory to dwg
+批量导出工作目录Drw为Dwg
+#
+
+IMI_BatExportDwgmenutips
+Batch export all drw files in working directory to dwg
+批量导出工作目录Drw为Dwg
+#

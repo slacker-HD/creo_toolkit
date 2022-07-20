@@ -12,6 +12,7 @@
 #include "./includes/BatOpenFiles.h"
 #include "./includes/BatSnapshot.h"
 #include "./includes/BattoPdf.h"
+#include "./includes/BattoDwg.h"
 
 char *LastRibbonTab = NULL;
 
@@ -82,6 +83,7 @@ int user_initialize()
 
     uiCmdCmdId IMI_BatSnapShotmenuID;
     uiCmdCmdId IMI_BatExportPdfmenuID;
+    uiCmdCmdId IMI_BatExportDwgmenuID;
 
     ProPath CurrentPath;
     int n_size;
@@ -147,6 +149,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_BatExportPdf_Act", (uiCmdCmdActFn)BatToPdf, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportPdfmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenutips", NULL, PRO_B_TRUE, IMI_BatExportPdfmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BatExportDwg_Act", (uiCmdCmdActFn)BatToDwg, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportDwgmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenutips", NULL, PRO_B_TRUE, IMI_BatExportDwgmenuID, MSGFILE);
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 
