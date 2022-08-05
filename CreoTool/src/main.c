@@ -13,11 +13,14 @@
 #include "./includes/BatSnapshot.h"
 #include "./includes/BattoPdf.h"
 #include "./includes/BattoDwg.h"
+#include "./includes/AutoDirSetting.h"
+#include "./includes/cfg.h"
 
 char *LastRibbonTab = NULL;
-
 ProPath *CurrentWorkDirectoryList;
 HINT hint;
+
+UserCheckBut check_but[1];
 
 void ShowAboutDialog()
 {
@@ -85,8 +88,16 @@ int user_initialize()
     uiCmdCmdId IMI_BatExportPdfmenuID;
     uiCmdCmdId IMI_BatExportDwgmenuID;
 
-    ProPath CurrentPath;
+    ProPath currentPath;
+    ProPath exePath;
+    ProPath cfgPath;
     int n_size;
+
+    wchar_t ifMemPath[256] = L"True";
+    wchar_t lastPath[256] = L"True";
+    int valueLength;
+    int compResult;
+
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -123,6 +134,9 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenutips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
 
+    status = ProCmdOptionAdd("IMI_AutoDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[0].command));
+    status = ProMenubarmenuChkbuttonAdd("IMI_Filesubmenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_TimeSave_Act", PRO_B_TRUE, check_but[0].command, MSGFILE);
+
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
@@ -158,11 +172,38 @@ int user_initialize()
     status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
     status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
 
-    status = ProDirectoryCurrentGet(CurrentPath);
-    status = ProWstringLengthGet(CurrentPath, &n_size);
-    CurrentPath[n_size - 1] = '\0';
+    status = ProToolkitApplTextPathGet(exePath);
+    status = ProWstringCopy(exePath, cfgPath, PRO_VALUE_UNUSED);
+    status = ProWstringConcatenate(L"\\CreoTool.ini", cfgPath, PRO_VALUE_UNUSED);
+
+    status = ProDirectoryCurrentGet(currentPath);
+
+    if (ReadConfig(cfgPath, L"LastPath", currentPath, &valueLength) != 0)
+    {
+        WriteOrUpdateConfig(cfgPath, L"LastPath", currentPath);
+    }
+
+    if (ReadConfig(cfgPath, L"AutoChangePath", ifMemPath, &valueLength) != 0)
+    {
+        WriteOrUpdateConfig(cfgPath, L"AutoChangePath", L"False");
+    }
+
+    status = ProWstringCompare(L"True", ifMemPath, PRO_VALUE_UNUSED, &compResult);
+    if (compResult == 0)
+    {
+        check_but[0].state = PRO_B_TRUE;
+        status = ProDirectoryChange(currentPath);
+    }
+    else
+    {
+        check_but[0].state = PRO_B_FALSE;
+    }
+
+    status = ProDirectoryCurrentGet(currentPath);
+    status = ProWstringLengthGet(currentPath, &n_size);
+    currentPath[n_size - 1] = '\0';
     status = ProArrayAlloc(1, sizeof(ProPath), 1, (ProArray *)&CurrentWorkDirectoryList);
-    status = ProWstringCopy(CurrentPath, CurrentWorkDirectoryList[0], PRO_VALUE_UNUSED);
+    status = ProWstringCopy(currentPath, CurrentWorkDirectoryList[0], PRO_VALUE_UNUSED);
     hint = About;
 
     return PRO_TK_NO_ERROR;
@@ -171,9 +212,21 @@ int user_initialize()
 void user_terminate()
 {
     ProError status;
+    ProPath currentPath;
+    ProPath exePath;
+    ProPath cfgPath;
     if (LastRibbonTab != NULL)
         status = ProStringFree(LastRibbonTab);
     status = ProNotificationUnset(PRO_RIBBON_TAB_SWITCH);
     status = ProNotificationUnset(PRO_DIRECTORY_CHANGE_POST);
     status = ProArrayFree((ProArray *)&CurrentWorkDirectoryList);
+
+    status = ProToolkitApplTextPathGet(exePath);
+    status = ProWstringCopy(exePath, cfgPath, PRO_VALUE_UNUSED);
+    status = ProWstringConcatenate(L"\\CreoTool.ini", cfgPath, PRO_VALUE_UNUSED);
+    status = ProDirectoryCurrentGet(currentPath);
+    if (status == PRO_TK_NO_ERROR)
+    {
+        WriteOrUpdateConfig(cfgPath, L"LastPath", currentPath);
+    }
 }

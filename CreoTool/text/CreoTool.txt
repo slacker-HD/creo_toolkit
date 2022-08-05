@@ -237,3 +237,8 @@ IMI_BatExportDwgmenutips
 Batch export all drw files in working directory to dwg
 批量导出工作目录Drw为Dwg
 #
+
+IMI_AutoDirSettingChkMenu
+Automatically set the working directory to the last directory
+自动设置工作目录为上次目录
+#

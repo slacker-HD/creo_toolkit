@@ -7,9 +7,11 @@
 #define MSGFILE L"CreoTool.txt"
 #define TRUEPATHSIZE PRO_PATH_SIZE + 20 + 1
 
-#include "windows.h"
-#include "shellapi.h"
-#include "stdio.h"
+#include <windows.h>
+#include <shellapi.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <ProUICmd.h>
 #include <ProUtil.h>
@@ -42,4 +44,12 @@ typedef enum _hint
     About = 1,
 } HINT;
 extern enum hint;
+
+typedef struct _user_check_but
+{
+	uiCmdCmdId command;
+	ProBoolean state;
+} UserCheckBut;
+extern UserCheckBut check_but[1];
+
 #endif
