@@ -1,7 +1,6 @@
 #include "./includes/FamInstExport.h"
 
 ProError famtableInstanceAction(ProFaminstance *instance, ProError status, ProAppData app_data)
-
 {
     ProMdl mdl, newMdl;
     ProName name;
@@ -15,6 +14,7 @@ ProError famtableInstanceAction(ProFaminstance *instance, ProError status, ProAp
     status = ProMdlErase(mdl);
     return PRO_TK_NO_ERROR;
 }
+
 void ExportFamInsts()
 {
     ProError status;
@@ -34,12 +34,10 @@ void ExportFamInsts()
         status = ProFamtableInit(mdl, &famtab);
         if (status == PRO_TK_NO_ERROR)
         {
-            status = ProFamtableInit(mdl, &famtab);
             status = ProFamtableInstanceVisit(&famtab, (ProFamtableInstanceAction)famtableInstanceAction, NULL, NULL);
-
             status = ProFamtableErase(&famtab);
-            status = ProWstringConcatenate(L"_orig", name, PRO_VALUE_UNUSED);
 
+            status = ProWstringConcatenate(L"_orig", name, PRO_VALUE_UNUSED);
             status = ProMdlCopy(mdl, name, &newMdl);
             status = ProMdlErase(mdl);
         }
