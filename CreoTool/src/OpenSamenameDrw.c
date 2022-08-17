@@ -18,6 +18,6 @@ void OpenSamenameDrw()
     }
     else
     {
-        ShowMessageDialog(1, L"µ±Ç°¹¤×÷Ä¿Â¼ÏÂÎ´·¢ÏÖÍ¬Ãû¹¤³ÌÍ¼");
+        ShowMessageDialog(1, L"å½“å‰å·¥ä½œç›®å½•ä¸‹æœªå‘ç°åŒåå·¥ç¨‹å›¾");
     }
 }

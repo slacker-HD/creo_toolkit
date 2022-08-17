@@ -36,6 +36,8 @@
 #include <ProUIList.h>
 #include <ProWstring.h>
 #include <ProPDF.h>
+#include <ProFaminstance.h>
+#include <ProFamtable.h> 
 
 extern char *LastRibbonTab;
 typedef enum _hint

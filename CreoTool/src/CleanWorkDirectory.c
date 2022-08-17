@@ -100,5 +100,5 @@ void ProMdlPurgeAll()
 	_proMdlPurgeFileType(L"*.drw");
 	_proMdlPurgeFileType(L"*.prt");
 	_proMdlPurgeFileType(L"*.asm");
-	ShowMessageDialog(1, L"µ±Ç°¹¤×÷Ä¿Â¼ÒÑÇåÀí¡£");
+	ShowMessageDialog(1, L"å½“å‰å·¥ä½œç›®å½•å·²æ¸…ç†ã€‚");
 }

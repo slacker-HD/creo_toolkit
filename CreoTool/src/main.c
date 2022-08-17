@@ -15,6 +15,7 @@
 #include "./includes/BattoDwg.h"
 #include "./includes/AutoDirSetting.h"
 #include "./includes/cfg.h"
+#include "./includes/FamInstExport.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -31,7 +32,7 @@ void ShowAboutDialog()
     }
     else
     {
-        ShowMessageDialog(1, L"本项目遵循BSD 3-clause许可证发布。\n请不要放到CSDN等处收费下载。\n访问项目主页获得更多信息：\nhttps://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool");
+        ShowMessageDialog(1, L"鏈」鐩伒寰狟SD 3-clause璁稿彲璇佸彂甯冦�俓n璇蜂笉瑕佹斁鍒癈SDN绛夊鏀惰垂涓嬭浇銆俓n璁块棶椤圭洰涓婚〉鑾峰緱鏇村淇℃伅锛歕nhttps://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool");
     }
     hint = About;
 }
@@ -87,6 +88,8 @@ int user_initialize()
     uiCmdCmdId IMI_BatSnapShotmenuID;
     uiCmdCmdId IMI_BatExportPdfmenuID;
     uiCmdCmdId IMI_BatExportDwgmenuID;
+
+    uiCmdCmdId IMI_ExportFamInstsID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -166,6 +169,11 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_BatExportDwg_Act", (uiCmdCmdActFn)BatToDwg, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportDwgmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenutips", NULL, PRO_B_TRUE, IMI_BatExportDwgmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
+
+
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 

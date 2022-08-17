@@ -242,3 +242,13 @@ IMI_AutoDirSettingChkMenu
 Automatically set the working directory to the last directory
 自动设置工作目录为上次目录
 #
+
+IMI_ExportFamInstsmenu
+Export all family instances to files
+导出族表文件到实例
+#
+
+IMI_ExportFamInstsmenutips
+Export all family instances to files
+导出族表文件到实例
+#
