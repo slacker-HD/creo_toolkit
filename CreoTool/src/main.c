@@ -32,7 +32,7 @@ void ShowAboutDialog()
     }
     else
     {
-        ShowMessageDialog(1, L"鏈」鐩伒寰狟SD 3-clause璁稿彲璇佸彂甯冦�俓n璇蜂笉瑕佹斁鍒癈SDN绛夊鏀惰垂涓嬭浇銆俓n璁块棶椤圭洰涓婚〉鑾峰緱鏇村淇℃伅锛歕nhttps://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool");
+        ShowMessageDialog(1, L"本项目遵循BSD 3-clause许可证发布。\n请不要放到CSDN等处收费下载。\n访问项目主页获得更多信息：\nhttps://github.com/slacker-HD/creo_toolkit/tree/master/CreoTool");
     }
     hint = About;
 }

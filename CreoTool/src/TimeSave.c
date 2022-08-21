@@ -99,7 +99,7 @@ void _commitOK()
 	}
 	else
 	{
-		ShowMessageDialog(1,L"æ—¶é—´èŒƒå›´å¿…é¡»è®¾å®šåœ¨5~60åˆ†é’Ÿä»¥å†…ã€‚");
+		ShowMessageDialog(1,L"Ê±¼ä·¶Î§±ØĞëÉè¶¨ÔÚ5~60·ÖÖÓÒÔÄÚ¡£");
 		return;
 	}
 	status = ProWstringFree(value);

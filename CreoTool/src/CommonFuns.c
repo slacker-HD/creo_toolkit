@@ -32,7 +32,7 @@ ProUIMessageButton ShowMessageDialog(int style, wchar_t *Message)
         buttons[1] = PRO_UI_MESSAGE_NO;
     }
 
-    status = ProUIMessageDialogDisplay(PROUIMESSAGE_QUESTION, L"ÌáÊ¾", Message, buttons, buttons[0], &user_choice);
+    status = ProUIMessageDialogDisplay(PROUIMESSAGE_QUESTION, L"��ʾ", Message, buttons, buttons[0], &user_choice);
     ProArrayFree((ProArray *)&buttons);
     return user_choice;
 }

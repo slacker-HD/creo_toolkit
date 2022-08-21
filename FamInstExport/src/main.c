@@ -1,14 +1,33 @@
-#include "./includes/FamInstExport.h"
+#include "./includes/main.h"
+
+int CurrentMdlType()
+{
+    ProMdl mdl;
+    ProMdlType mdlType;
+    ProError status;
+    status = ProMdlCurrentGet(&mdl);
+    if (status != PRO_TK_NO_ERROR)
+        return -1;
+    status = ProMdlTypeGet(mdl, &mdlType);
+    if (status != PRO_TK_NO_ERROR)
+        return -1;
+    else
+        return mdlType;
+}
+
+static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
+{
+    if (CurrentMdlType() == PRO_PART)
+        return ACCESS_AVAILABLE;
+    else
+        return ACCESS_INVISIBLE;
+}
 
 ProError famtableInstanceAction(ProFaminstance *instance, ProError status, ProAppData app_data)
 {
     ProMdl mdl, newMdl;
     ProName name;
     status = ProFaminstanceRetrieve(instance, &mdl);
-    if (status != PRO_TK_NO_ERROR)
-    {
-        ShowMessageDialog(1, L"当前族表有错，请确认。");
-    }
     status = ProMdlNameGet(mdl, name);
     status = ProMdlCopy(mdl, name, &newMdl);
     status = ProMdlErase(mdl);
@@ -42,4 +61,20 @@ void ExportFamInsts()
             status = ProMdlErase(mdl);
         }
     }
+}
+
+int user_initialize()
+{
+    ProError status;
+    uiCmdCmdId IMI_ExportFamInstsID;
+
+    status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
+    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
+
+    return PRO_TK_NO_ERROR;
+}
+
+void user_terminate()
+{
 }
