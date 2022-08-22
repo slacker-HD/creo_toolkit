@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "showdirectory.h": "c",
+        "opensamenamedrw.h": "c",
+        "cleanworkdirectory.h": "c",
+        "timesave.h": "c",
+        "paintcolor.h": "c",
+        "commonfuns.h": "c",
+        "main.h": "c",
+        "prowindows.h": "c",
+        "proasmcomp.h": "c",
+        "prouicmd.h": "c",
+        "AlignSymDim.h": "c",
+        "qrencode.h": "c",
+        "renamemdl.h": "c",
+        "changeworkdirectory.h": "c",
+        "prouilist.h": "c",
+        "prtinasmrename.h": "c"
+    }
+}
