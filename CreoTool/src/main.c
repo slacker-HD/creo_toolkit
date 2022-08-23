@@ -66,6 +66,14 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
         return ACCESS_INVISIBLE;
 }
 
+static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
+{
+    if (CurrentMdlType() == PRO_PART)
+        return ACCESS_AVAILABLE;
+    else
+        return ACCESS_INVISIBLE;
+}
+
 int user_initialize()
 {
     ProError status;
@@ -170,10 +178,8 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_BatExportDwg_Act", (uiCmdCmdActFn)BatToDwg, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportDwgmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenutips", NULL, PRO_B_TRUE, IMI_BatExportDwgmenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
+    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
-
-
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 
