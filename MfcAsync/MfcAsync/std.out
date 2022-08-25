@@ -1,3 +1,0 @@
-外部程序"UNNAMED"没有正确初始化；
-可能出现了通信问题。
-exiting from prodev_init_one_app__low() due to communications failure during initialization of asynchronous Pro/TOOLKIT application that spawned this process
