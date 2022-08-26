@@ -27,18 +27,20 @@ void _hideSelectedPart()
 {
     ProError status;
     status = ProMacroLoad(L"~ Command `ProCmdViewExclude`");
+    status = ProMacroExecute();
 }
 
 void _hideUnselectedPart()
 {
     ProError status;
     status = ProMacroLoad(L"~ Command `ProCmdViewNormalMaster`");
+    status = ProMacroExecute();
 }
 
 void HidePart(ProBoolean SelectedPart)
 {
     ProError status;
-    ProSelections *sel_array;
+    ProSelection *sel_array;
     int n_size;
     ProBoolean isSelBuf = PRO_B_TRUE;
     if (CurrentMdlType() == PRO_ASSEMBLY)
@@ -49,26 +51,29 @@ void HidePart(ProBoolean SelectedPart)
         {
             status = ProSelectionarrayFree(sel_array);
             status = ProSelect((char *)"prt_or_asm", -1, NULL, NULL, NULL, NULL, &sel_array, &n_size);
-            if (status ! = PRO_TK_NO_ERROR)
+            if (status != PRO_TK_NO_ERROR)
             {
                 return;
             }
-            isSelBuf == PRO_B_FALSE;
+            isSelBuf = PRO_B_FALSE;
         }
+
+        SelectedPart == PRO_B_TRUE ? _hideSelectedPart() : _hideUnselectedPart();
         if (isSelBuf == PRO_B_TRUE)
         {
             status = ProSelectionarrayFree(sel_array);
         }
-        SelectedPar == PRO_B_TRUE ? _hideSelectedPart() : _hideUnselectedPart();
     }
 }
 
 void HideSelectedPart()
 {
+    HidePart(PRO_B_TRUE);
 }
 
 void HideUnselectedPart()
 {
+    HidePart(PRO_B_FALSE);
 }
 
 void Restore()
