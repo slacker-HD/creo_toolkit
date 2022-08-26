@@ -1,0 +1,34 @@
+﻿IMI_Mainmenu
+Show or hide Parts
+显示或隐藏零件
+#
+
+IMI_HideSelectedPartmenu
+Hide selected parts
+隐藏所选零件
+#
+
+IMI_HideSelectedPartmenutips
+Hide selected parts
+隐藏所选零件
+#
+
+IMI_HideUnselectedPartmenu
+Hide unselected parts
+隐藏未选中零件
+#
+
+IMI_HideUnselectedPartmenutips
+Hide unselected parts
+隐藏未选中零件
+#
+
+IMI_ShowAllPartmenu
+Show All parts
+显示所有零件
+#
+
+IMI_ShowAllPartmenutips
+Show All parts
+显示所有零件
+#

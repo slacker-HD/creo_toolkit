@@ -1,0 +1,7 @@
+name PartShow
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\PartShow\PartShow.dll
+text_dir D:\mydoc\creo_toolkit\PartShow\text
+revision   18.0
+end
