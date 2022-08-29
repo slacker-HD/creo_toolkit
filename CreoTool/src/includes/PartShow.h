@@ -9,4 +9,6 @@ void HideUnselectedPart();
 
 void RestoreSimpRep();
 
+ProError AsmTreePrtinAsmShowOrHidePopupmenusSetup();
+
 #endif

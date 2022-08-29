@@ -98,3 +98,18 @@ void RestoreSimpRep()
     status = ProSimprepDelete(&simp_rep);
     status = ProSolidDisplay(asmSolid);
 }
+
+
+
+ProError AsmTreePrtinAsmShowOrHidePopupmenusSetup()
+{
+    ProError status;
+    uiCmdCmdId hideSelectedPart_cmd_id,hideUnselectedPart_cmd_id;
+    status = ProCmdActionAdd("IMI_hideSelectedPart", (uiCmdCmdActFn)HideSelectedPart, uiProe2ndImmediate, ComponentInASMTreeAccess, PRO_B_FALSE, PRO_B_FALSE, &hideSelectedPart_cmd_id);
+    status = ProMenubarmenuPushbuttonAdd("ActionMenu", "IMI_HideSelectedPart_Act", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenutips", NULL, PRO_B_TRUE, hideSelectedPart_cmd_id, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_hideSelectedPart", (uiCmdCmdActFn)HideUnselectedPart, uiProe2ndImmediate, ComponentInASMTreeAccess, PRO_B_FALSE, PRO_B_FALSE, &hideUnselectedPart_cmd_id);
+    status = ProMenubarmenuPushbuttonAdd("ActionMenu", "IMI_HideUnselectedPart_Act", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenutips", NULL, PRO_B_TRUE, hideUnselectedPart_cmd_id, MSGFILE);
+
+    return PRO_TK_NO_ERROR;
+}

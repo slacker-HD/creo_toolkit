@@ -54,56 +54,12 @@ ProError renameMdlinAsm()
     }
     return PRO_TK_NO_ERROR;
 }
-uiCmdAccessState renameMdlAccess(uiCmdAccessMode mode)
-{
-    uiCmdAccessState access_result;
-    ProError status;
-    ProSelection *sels;
-    int size;
-
-    access_result = ACCESS_REMOVE;
-
-    status = ProSelbufferSelectionsGet(&sels);
-    if (status != PRO_TK_NO_ERROR)
-        return access_result;
-
-    status = ProArraySizeGet(sels, &size);
-    if (status != PRO_TK_NO_ERROR)
-        return access_result;
-
-    if (size == 1)
-    {
-        ProAsmcomp asmcomp;
-        status = ProSelectionModelitemGet(sels[0], &asmcomp);
-        if (asmcomp.type == PRO_FEATURE)
-        {
-            ProFeattype ftype;
-            status = ProFeatureTypeGet(&asmcomp, &ftype);
-            if (ftype == PRO_FEAT_COMPONENT)
-            {
-                access_result = ACCESS_AVAILABLE;
-            }
-        }
-
-        if (asmcomp.type == PRO_PART || asmcomp.type == PRO_ASSEMBLY)
-        {
-            ProAsmcomppath path;
-            status = ProSelectionAsmcomppathGet(sels[0], &path);
-            if (path.table_num > 0)
-            {
-                access_result = ACCESS_AVAILABLE;
-            }
-        }
-    }
-    ProSelectionarrayFree(sels);
-    return access_result;
-}
 
 ProError AsmTreePrtinAsmRenamePopupmenusSetup()
 {
     ProError status;
     uiCmdCmdId rename_cmd_id;
-    status = ProCmdActionAdd("IMI_PrtinAsmRename", (uiCmdCmdActFn)renameMdlinAsm, uiProe2ndImmediate, renameMdlAccess, PRO_B_FALSE, PRO_B_FALSE, &rename_cmd_id);
+    status = ProCmdActionAdd("IMI_PrtinAsmRename", (uiCmdCmdActFn)renameMdlinAsm, uiProe2ndImmediate, ComponentInASMTreeAccess, PRO_B_FALSE, PRO_B_FALSE, &rename_cmd_id);
     status = ProMenubarmenuPushbuttonAdd("ActionMenu", "IMI_PRTinAsmRename_Act", "IMI_RenamePrtinAsm", "IMI_RenamePrtinAsmtips", NULL, PRO_B_TRUE, rename_cmd_id, MSGFILE);
     return PRO_TK_NO_ERROR;
 }

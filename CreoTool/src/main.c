@@ -198,7 +198,8 @@ int user_initialize()
     status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenutips", NULL, PRO_B_TRUE, IMI_ShowAllPartID, MSGFILE);
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
-
+    status = AsmTreePrtinAsmShowOrHidePopupmenusSetup();
+    
     status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
     status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
 

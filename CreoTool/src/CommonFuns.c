@@ -65,3 +65,49 @@ ProError ProDirectoryChangeNotification(ProPath new_path)
     status = ProArrayObjectAdd((ProArray)&CurrentWorkDirectoryList, PRO_VALUE_UNUSED, 1, new_path);
     return PRO_TK_NO_ERROR;
 }
+
+
+uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
+{
+    uiCmdAccessState access_result;
+    ProError status;
+    ProSelection *sels;
+    int size;
+
+    access_result = ACCESS_REMOVE;
+
+    status = ProSelbufferSelectionsGet(&sels);
+    if (status != PRO_TK_NO_ERROR)
+        return access_result;
+
+    status = ProArraySizeGet(sels, &size);
+    if (status != PRO_TK_NO_ERROR)
+        return access_result;
+
+    if (size == 1)
+    {
+        ProAsmcomp asmcomp;
+        status = ProSelectionModelitemGet(sels[0], &asmcomp);
+        if (asmcomp.type == PRO_FEATURE)
+        {
+            ProFeattype ftype;
+            status = ProFeatureTypeGet(&asmcomp, &ftype);
+            if (ftype == PRO_FEAT_COMPONENT)
+            {
+                access_result = ACCESS_AVAILABLE;
+            }
+        }
+
+        if (asmcomp.type == PRO_PART || asmcomp.type == PRO_ASSEMBLY)
+        {
+            ProAsmcomppath path;
+            status = ProSelectionAsmcomppathGet(sels[0], &path);
+            if (path.table_num > 0)
+            {
+                access_result = ACCESS_AVAILABLE;
+            }
+        }
+    }
+    ProSelectionarrayFree(sels);
+    return access_result;
+}
