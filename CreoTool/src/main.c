@@ -16,6 +16,7 @@
 #include "./includes/AutoDirSetting.h"
 #include "./includes/cfg.h"
 #include "./includes/FamInstExport.h"
+#include "./includes/PartShow.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -99,6 +100,10 @@ int user_initialize()
 
     uiCmdCmdId IMI_ExportFamInstsID;
 
+    uiCmdCmdId IMI_HideSelectedPartID;
+    uiCmdCmdId IMI_HideUnselectedPartID;
+    uiCmdCmdId IMI_ShowAllPartID;
+
     ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
@@ -180,6 +185,17 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
+
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PartShowmenu", "IMI_PartShowmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HideSelectedPart_Act", (uiCmdCmdActFn)HideSelectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideSelectedPartID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideSelectedPartID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HideUnselectedPart_Act", (uiCmdCmdActFn)HideUnselectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideUnselectedPartID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideUnselectedPartID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_ShowAllPart_Act", (uiCmdCmdActFn)RestoreSimpRep, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowAllPartID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenutips", NULL, PRO_B_TRUE, IMI_ShowAllPartID, MSGFILE);
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
 

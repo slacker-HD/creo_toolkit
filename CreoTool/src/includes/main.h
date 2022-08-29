@@ -34,10 +34,12 @@
 #include <ProDtlsyminst.h>
 #include <ProDrawing.h>
 #include <ProUIList.h>
-#include <ProWstring.h>
 #include <ProPDF.h>
 #include <ProFaminstance.h>
 #include <ProFamtable.h> 
+#include <ProSimprep.h>
+#include <ProSelbuffer.h>
+#include <ProSimprepdata.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

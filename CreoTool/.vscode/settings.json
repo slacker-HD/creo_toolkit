@@ -18,6 +18,7 @@
         "prtinasmrename.h": "c",
         "batsnapshot.h": "c",
         "battopdf.h": "c",
-        "faminstexport.h": "c"
+        "faminstexport.h": "c",
+        "PartShow.h": "c"
     }
 }

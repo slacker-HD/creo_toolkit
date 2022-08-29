@@ -252,3 +252,38 @@ IMI_ExportFamInstsmenutips
 Export all family instances to files
 导出族表文件到实例
 #
+
+IMI_PartShowmenu
+Show or hide Parts
+显示或隐藏零件
+#
+
+IMI_HideSelectedPartmenu
+Hide selected parts
+隐藏所选零件
+#
+
+IMI_HideSelectedPartmenutips
+Hide selected parts
+隐藏所选零件
+#
+
+IMI_HideUnselectedPartmenu
+Hide unselected parts
+隐藏未选中零件
+#
+
+IMI_HideUnselectedPartmenutips
+Hide unselected parts
+隐藏未选中零件
+#
+
+IMI_ShowAllPartmenu
+Show default view
+恢复默认显示
+#
+
+IMI_ShowAllPartmenutips
+Show default view
+恢复默认显示
+#

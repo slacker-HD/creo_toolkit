@@ -19,6 +19,5 @@
 #include <ProSelbuffer.h>
 #include <ProSolid.h>
 #include <ProWindows.h>
-#include <ProSimprep.h>
 #include <ProSimprepdata.h>
 #endif
