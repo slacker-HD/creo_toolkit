@@ -24,11 +24,11 @@ Hide unselected parts
 #
 
 IMI_ShowAllPartmenu
-Show All parts
-显示所有零件
+Show default view
+恢复默认显示
 #
 
 IMI_ShowAllPartmenutips
-Show All parts
-显示所有零件
+Show default view
+恢复默认显示
 #

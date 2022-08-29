@@ -1,5 +1,7 @@
 #include "./includes/main.h"
 
+ProSimprep simp_rep, simp_rep_orig;
+ProBoolean simp_rep_Inited = PRO_B_FALSE;
 int CurrentMdlType()
 {
     ProMdl mdl;
@@ -23,28 +25,24 @@ static uiCmdAccessState AccessASM(uiCmdAccessMode access_mode)
         return ACCESS_INVISIBLE;
 }
 
-void _hideSelectedPart()
-{
-    ProError status;
-    status = ProMacroLoad(L"~ Command `ProCmdViewExclude`");
-    status = ProMacroExecute();
-}
-
-void _hideUnselectedPart()
-{
-    ProError status;
-    status = ProMacroLoad(L"~ Command `ProCmdViewNormalMaster`");
-    status = ProMacroExecute();
-}
-
 void HidePart(ProBoolean SelectedPart)
 {
     ProError status;
     ProSelection *sel_array;
-    int n_size;
-    ProBoolean isSelBuf = PRO_B_TRUE;
+    int i, n_size;
+    ProMdl mdl;
+    ProSolid asmSolid;
+    ProSimprepAction simprepaction;
+    ProSimprepdata *simprepdata;
+    ProAsmcomppath comppath;
+    ProModelitem modelitem;
+    ProSimprepitem simprepitem;
+    ProBoolean isselfrombuffer = PRO_B_TRUE;
     if (CurrentMdlType() == PRO_ASSEMBLY)
     {
+        status = ProMdlCurrentGet(&mdl);
+        asmSolid = ProMdlToSolid(mdl);
+
         status = ProSelbufferSelectionsGet(&sel_array);
         status = ProArraySizeGet((ProArray *)sel_array, &n_size);
         if (status != PRO_TK_NO_ERROR || n_size < 1)
@@ -55,14 +53,46 @@ void HidePart(ProBoolean SelectedPart)
             {
                 return;
             }
-            isSelBuf = PRO_B_FALSE;
+            else
+            {
+                isselfrombuffer = PRO_B_FALSE;
+            }
+        }
+        if (simp_rep_Inited == PRO_B_TRUE)
+        {
+            status = ProSimprepDelete(&simp_rep);
+        }
+        status = SelectedPart == PRO_B_TRUE ? ProSimprepdataAlloc(L"IMI_SIMPVIEW", PRO_B_FALSE, PRO_SIMPREP_INCLUDE, &simprepdata) : ProSimprepdataAlloc(L"IMI_SIMPVIEW", PRO_B_FALSE, PRO_SIMPREP_EXCLUDE, &simprepdata);
+        simp_rep_Inited = PRO_B_TRUE;
+        status = ProSimprepActiveGet(asmSolid, &simp_rep_orig);
+        status = ProSimprepActionInit(PRO_SIMPREP_REVERSE, NULL, &simprepaction);
+        if (status == PRO_TK_NO_ERROR)
+        {
+            for (i = 0; i < n_size; i++)
+            {
+                status = ProSelectionAsmcomppathGet(sel_array[i], &comppath);
+                status = ProSelectionModelitemGet(sel_array[i], &modelitem);
+                status = ProSimprepdataitemInit(comppath.comp_id_table, comppath.table_num, modelitem.id, &simprepaction, &simprepitem);
+                if (status == PRO_TK_NO_ERROR)
+                {
+                    status = ProSimprepdataitemAdd(simprepdata, &simprepitem);
+                }
+            }
+
+            status = ProSimprepCreate(asmSolid, simprepdata, &simp_rep);
         }
 
-        SelectedPart == PRO_B_TRUE ? _hideSelectedPart() : _hideUnselectedPart();
-        if (isSelBuf == PRO_B_TRUE)
+        if (status == PRO_TK_NO_ERROR)
         {
-            status = ProSelectionarrayFree(sel_array);
+            status = ProSimprepActivate(asmSolid, &simp_rep);
         }
+        status = ProSolidDisplay(asmSolid);
+    }
+
+    status = ProSimprepdataFree(&simprepdata);
+    if (isselfrombuffer == PRO_B_TRUE)
+    {
+        status = ProSelectionarrayFree(sel_array);
     }
 }
 
@@ -82,12 +112,13 @@ void Restore()
     ProSimprep simprep;
     ProMdl mdl;
     ProSolid asmSolid;
+    ProSimprepType type, active_type;
 
     status = ProMdlCurrentGet(&mdl);
     asmSolid = ProMdlToSolid(mdl);
-    status = ProSimprepActiveGet(asmSolid, &simprep);
-    status = ProSimprepDelete(&simprep);
-    status = ProMacroLoad(L"~ Command `ProCmdViewVisTool` ;~ Activate `visual_dlg0` `CloseBtn`;");
+    status = ProSimprepActivate(asmSolid, &simp_rep_orig);
+    status = ProSimprepDelete(&simp_rep);
+    status = ProSolidDisplay(asmSolid);
 }
 
 int user_initialize()

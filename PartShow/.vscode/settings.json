@@ -19,6 +19,8 @@
         "promdl.h": "c",
         "proselection.h": "c",
         "prowstring.h": "c",
-        "prosimprep.h": "c"
+        "prosimprep.h": "c",
+        "proselbuffer.h": "c",
+        "prosimprepdata.h": "c"
     }
 }
