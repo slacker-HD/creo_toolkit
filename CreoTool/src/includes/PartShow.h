@@ -1,4 +1,4 @@
-#ifndef __AIGINSYMDIM__
+#ifndef __PARTSHOW__
 #define __PARTSHOW__
 #include "main.h"
 #include "CommonFuns.h"

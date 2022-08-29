@@ -1,5 +1,8 @@
 #include "./includes/PartShow.h"
 
+ProSimprep simp_rep, simp_rep_orig;
+ProBoolean simp_rep_Inited = PRO_B_FALSE;
+
 void HidePart(ProBoolean SelectedPart)
 {
     ProError status;
