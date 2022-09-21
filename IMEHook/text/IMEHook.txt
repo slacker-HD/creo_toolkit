@@ -1,0 +1,14 @@
+﻿unicodechineseinput
+unicode非模态对话框中文输入
+unicode非模态对话框中文输入
+#
+
+showdialog
+显示对话框
+显示对话框
+#
+
+showdialogtips
+显示对话框
+显示对话框
+#

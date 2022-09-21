@@ -1,0 +1,7 @@
+name IMEHook
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\IMEHook\x64\Debug\IMEHook.dll
+text_dir  D:\mydoc\creo_toolkit\IMEHook\text
+revision   18.0
+end

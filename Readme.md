@@ -54,6 +54,7 @@
 
 + 非模式对话框中Edit Control和Combo Box输入中文
 + 使用.NET主题
++ (存在BUG，如果在输入后有弹出MessageBox等操作，会导致系统无法相应消息程序死掉)
 
 ## originview
 
@@ -206,3 +207,9 @@
 
 ## PartShow
 + 快速显示隐藏组件
+
+## IMEHook
+
++ 使用钩子的方式让非模式对话框中Edit Control和Combo Box及更多的高级控件输入中文
++ 使用.NET主题
++ (存在BUG，Combo Box会产生自动全选及输入位置错误)
