@@ -17,12 +17,7 @@ void RenamePrtandDrw()
 	if (status == PRO_TK_NO_ERROR)
 	{
 		status = ProMdlDataGet(mdl, &mdldata);
-
-		status = ProWstringCopy(mdldata.device, realPath, PRO_VALUE_UNUSED);
-		status = ProWstringConcatenate(L":", realPath, PRO_VALUE_UNUSED);
-		status = ProWstringConcatenate(mdldata.path, realPath, PRO_VALUE_UNUSED);
-
-
+		status = ProMdlPathGet(mdldata, realPath);
 		status = ProDirectoryChange(realPath);
 		status = ProMdlRename(mdl, newName);
 		status = ProMdlSave(mdl);

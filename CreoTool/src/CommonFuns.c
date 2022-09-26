@@ -66,6 +66,19 @@ ProError ProDirectoryChangeNotification(ProPath new_path)
     return PRO_TK_NO_ERROR;
 }
 
+ProError ProMdlPathGet(ProMdldata mdldata, ProPath mdlpath)
+{
+    ProError status;
+    memset(mdlpath, '\0', sizeof(ProPath));
+    status = ProWstringCopy(mdldata.device, mdlpath, PRO_VALUE_UNUSED);
+    if (status != PRO_TK_NO_ERROR)
+        return status;
+    status = ProWstringConcatenate(L":", mdlpath, PRO_VALUE_UNUSED);
+    if (status != PRO_TK_NO_ERROR)
+        return status;
+    status = ProWstringConcatenate(mdldata.path, mdlpath, PRO_VALUE_UNUSED);
+    return status;
+}
 
 uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
 {
@@ -111,3 +124,23 @@ uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
     ProSelectionarrayFree(sels);
     return access_result;
 }
+
+
+ProError ProUserWindowChangePost()
+{
+	ChangeDir();
+	return PRO_TK_NO_ERROR;
+}
+
+ProError ProUserMdlSavePost(ProMdldata *p_mdldata)
+{
+	ChangeDir();
+	return PRO_TK_NO_ERROR;
+}
+
+ProError ProUserMdlRetrievePost(ProModel *p_mdldata)
+{
+	ChangeDir();
+	return PRO_TK_NO_ERROR;
+}
+

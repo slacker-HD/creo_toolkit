@@ -6,7 +6,12 @@ int CurrentMdlType();
 ProError ShowMessageDialog(int style, wchar_t *Message);
 ProError ProRibbonTabSwitchNotification(char *from_tab, char *to_tab);
 ProError ProDirectoryChangeNotification(ProPath new_path);
+ProError ProMdlPathGet(ProMdldata mdldata, ProPath mdlPath);
 uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode);
+
+ProError ProUserWindowChangePost();
+ProError ProUserMdlSavePost(ProMdldata *p_mdldata);
+ProError ProUserMdlRetrievePost(ProModel *p_mdldata);
 
 extern char *LastRibbonTab;
 extern ProPath *CurrentWorkDirectoryList;

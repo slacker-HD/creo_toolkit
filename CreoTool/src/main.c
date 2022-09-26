@@ -17,12 +17,13 @@
 #include "./includes/cfg.h"
 #include "./includes/FamInstExport.h"
 #include "./includes/PartShow.h"
+#include "./includes/AutoWorkDirSetting.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
 HINT hint;
 
-UserCheckBut check_but[1];
+UserCheckBut check_but[2]; // 0.定时保存，1.自动切换工作目录为打开模型位置
 
 void ShowAboutDialog()
 {
@@ -110,7 +111,8 @@ int user_initialize()
     int n_size;
 
     wchar_t ifMemPath[256] = L"True";
-    wchar_t lastPath[256] = L"True";
+    wchar_t ifAutoChangeWorkDir = L"False";
+    wchar_t lastPath[256] = L"";
     int valueLength;
     int compResult;
 
@@ -127,6 +129,12 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ChangeWorkDirectory_Act", (uiCmdCmdActFn)ShowChangeWorkDirectoryDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_MdlRenamemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenutips", NULL, PRO_B_TRUE, IMI_MdlRenamemenuID, MSGFILE);
+
+    status = ProCmdOptionAdd("IMI_AutoDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[0].command));
+    status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_TimeSave_Act", PRO_B_TRUE, check_but[0].command, MSGFILE);
+
+    status = ProCmdOptionAdd("IMI_AutoWorkDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoWorkDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoWorkDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[1].command));
+    status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSetting_Act", PRO_B_TRUE, check_but[1].command, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -149,9 +157,6 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenutips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
-
-    status = ProCmdOptionAdd("IMI_AutoDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[0].command));
-    status = ProMenubarmenuChkbuttonAdd("IMI_Filesubmenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_TimeSave_Act", PRO_B_TRUE, check_but[0].command, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -199,7 +204,7 @@ int user_initialize()
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
     status = AsmTreePrtinAsmShowOrHidePopupmenusSetup();
-    
+
     status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
     status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
 
@@ -230,6 +235,24 @@ int user_initialize()
         check_but[0].state = PRO_B_FALSE;
     }
 
+    if (ReadConfig(cfgPath, L"AutoChangeWorkDir", ifAutoChangeWorkDir, &valueLength) != 0)
+    {
+        WriteOrUpdateConfig(cfgPath, L"AutoChangeWorkDir", L"False");
+    }
+
+    status = ProWstringCompare(L"True", ifAutoChangeWorkDir, PRO_VALUE_UNUSED, &compResult);
+    if (compResult == 0)
+    {
+        check_but[1].state = PRO_B_TRUE;
+        status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); //切换窗口导致的当前模型变化
+        status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);           //另存为导致的路径变化
+        status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);   //打开新模型导致的路径变化
+    }
+    else
+    {
+        check_but[1].state = PRO_B_FALSE;
+    }
+
     status = ProDirectoryCurrentGet(currentPath);
     status = ProWstringLengthGet(currentPath, &n_size);
     currentPath[n_size - 1] = '\0';
@@ -247,11 +270,19 @@ void user_terminate()
     ProPath exePath;
     ProPath cfgPath;
     if (LastRibbonTab != NULL)
+    {
         status = ProStringFree(LastRibbonTab);
+    }
     status = ProNotificationUnset(PRO_RIBBON_TAB_SWITCH);
     status = ProNotificationUnset(PRO_DIRECTORY_CHANGE_POST);
-    status = ProArrayFree((ProArray *)&CurrentWorkDirectoryList);
+    if (check_but[1].state == PRO_B_TRUE)
+    {
+        status = ProNotificationUnset(PRO_WINDOW_CHANGE_POST);
+        status = ProNotificationUnset(PRO_MDL_SAVE_POST);
+        status = ProNotificationUnset(PRO_MDL_RETRIEVE_POST);
+    }
 
+    status = ProArrayFree((ProArray *)&CurrentWorkDirectoryList);
     status = ProToolkitApplTextPathGet(exePath);
     status = ProWstringCopy(exePath, cfgPath, PRO_VALUE_UNUSED);
     status = ProWstringConcatenate(L"\\CreoTool.ini", cfgPath, PRO_VALUE_UNUSED);

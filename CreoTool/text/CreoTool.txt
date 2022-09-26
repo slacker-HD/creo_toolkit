@@ -38,6 +38,11 @@ Fast switch working directories
 快速切换工作目录
 #
 
+IMI_AutoWorkDirSettingChkMenu
+Automatically set current model to working directory
+自动设置工作目录为当前模型路径
+#
+
 IMI_DirDRWsubmenu
 Drawing shortcuts
 工程图快捷操作

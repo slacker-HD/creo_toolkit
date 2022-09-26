@@ -19,6 +19,7 @@
         "batsnapshot.h": "c",
         "battopdf.h": "c",
         "faminstexport.h": "c",
-        "PartShow.h": "c"
+        "PartShow.h": "c",
+        "autoworkdirsetting.h": "c"
     }
 }

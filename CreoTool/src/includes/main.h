@@ -54,6 +54,6 @@ typedef struct _user_check_but
 	uiCmdCmdId command;
 	ProBoolean state;
 } UserCheckBut;
-extern UserCheckBut check_but[1];
+extern UserCheckBut check_but[2];
 
 #endif
