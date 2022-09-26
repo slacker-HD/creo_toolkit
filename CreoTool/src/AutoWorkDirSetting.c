@@ -29,6 +29,7 @@ int AutoWorkDirSettingFn(uiCmdCmdId command, uiCmdValue *p_value, void *p_push_c
 			status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); //切换窗口导致的当前模型变化
 			status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);			  //另存为导致的路径变化
 			status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);	  //打开新模型导致的路径变化
+			WriteOrUpdateConfig(cfgPath, L"AutoChangeWorkDir", L"True");
 		}
 		else
 		{
@@ -36,6 +37,7 @@ int AutoWorkDirSettingFn(uiCmdCmdId command, uiCmdValue *p_value, void *p_push_c
 			status = ProNotificationUnset(PRO_WINDOW_CHANGE_POST);
 			status = ProNotificationUnset(PRO_MDL_SAVE_POST);
 			status = ProNotificationUnset(PRO_MDL_RETRIEVE_POST);
+			WriteOrUpdateConfig(cfgPath, L"AutoChangeWorkDir", L"False");
 		}
 	}
 	return 0;
