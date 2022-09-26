@@ -1,34 +1,21 @@
 #include "./includes/AutoWorkDirSetting.h"
 
-void ChangeDir()
-{
-	ProError status;
-	ProMdl mdl;
-	ProMdldata mdldata;
-	ProPath mdlpath;
-	status = ProMdlCurrentGet(&mdl);
-	if (status != PRO_TK_NO_ERROR)
-		return;
-	status = ProMdlDataGet(mdl, &mdldata);
-	if (status != PRO_TK_NO_ERROR)
-		return;
-
-	status = ProMdlPathGet(mdldata, mdlpath);
-	status = ProDirectoryChange(mdlpath);
-}
-
 int AutoWorkDirSettingFn(uiCmdCmdId command, uiCmdValue *p_value, void *p_push_command_data)
 {
 	ProError status;
-
+	ProPath exePath, cfgPath;
+	status = ProToolkitApplTextPathGet(exePath);
+	status = ProWstringCopy(exePath, cfgPath, PRO_VALUE_UNUSED);
+	status = ProWstringConcatenate(L"\\CreoTool.ini", cfgPath, PRO_VALUE_UNUSED);
+	
 	if (command == check_but[1].command)
 	{
 		if (check_but[1].state == PRO_B_FALSE)
 		{
 			check_but[1].state = PRO_B_TRUE;
-			status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); //åˆ‡æ¢çª—å£å¯¼è‡´çš„å½“å‰æ¨¡å‹å˜åŒ–
-			status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);			  //å¦å­˜ä¸ºå¯¼è‡´çš„è·¯å¾„å˜åŒ–
-			status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);	  //æ‰“å¼€æ–°æ¨¡å‹å¯¼è‡´çš„è·¯å¾„å˜åŒ–
+			status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); //ÇĞ»»´°¿Úµ¼ÖÂµÄµ±Ç°Ä£ĞÍ±ä»¯
+			status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);			  //Áí´æÎªµ¼ÖÂµÄÂ·¾¶±ä»¯
+			status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);	  //´ò¿ªĞÂÄ£ĞÍµ¼ÖÂµÄÂ·¾¶±ä»¯
 			WriteOrUpdateConfig(cfgPath, L"AutoChangeWorkDir", L"True");
 		}
 		else

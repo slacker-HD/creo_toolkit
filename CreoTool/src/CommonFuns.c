@@ -125,22 +125,38 @@ uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
     return access_result;
 }
 
+void ChangeDirToMdlPath()
+{
+	ProError status;
+	ProMdl mdl;
+	ProMdldata mdldata;
+	ProPath mdlpath;
+	status = ProMdlCurrentGet(&mdl);
+	if (status != PRO_TK_NO_ERROR)
+		return;
+	status = ProMdlDataGet(mdl, &mdldata);
+	if (status != PRO_TK_NO_ERROR)
+		return;
+
+	status = ProMdlPathGet(mdldata, mdlpath);
+	status = ProDirectoryChange(mdlpath);
+}
 
 ProError ProUserWindowChangePost()
 {
-	ChangeDir();
+	ChangeDirToMdlPath();
 	return PRO_TK_NO_ERROR;
 }
 
 ProError ProUserMdlSavePost(ProMdldata *p_mdldata)
 {
-	ChangeDir();
+	ChangeDirToMdlPath();
 	return PRO_TK_NO_ERROR;
 }
 
 ProError ProUserMdlRetrievePost(ProModel *p_mdldata)
 {
-	ChangeDir();
+	ChangeDirToMdlPath();
 	return PRO_TK_NO_ERROR;
 }
 
