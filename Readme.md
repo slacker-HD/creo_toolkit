@@ -54,7 +54,7 @@
 
 + 非模式对话框中Edit Control和Combo Box输入中文
 + 使用.NET主题
-+ (存在BUG，如果在输入后有弹出MessageBox等操作，会导致系统无法相应消息程序死掉)
++ (存在BUG，如果在输入后有弹出MessageBox等操作，会导致系统无法响应消息程序死掉)
 
 ## originview
 
