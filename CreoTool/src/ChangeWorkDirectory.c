@@ -4,7 +4,7 @@ void _commitChangeDir()
 {
 	ProError status;
 	int n_selection, i, pathLength;
-	char **selections, *stringTmp;
+	char **selections = NULL, *stringTmp = NULL;
 	status = ProUIListSelectednamesGet("ChangeWorkDirectory", "WorkDirList", &n_selection, &selections);
 	if (n_selection > 0)
 	{

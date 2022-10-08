@@ -22,9 +22,11 @@ void _repaintPart(ProModelitem modelitem)
 {
 	ProError status;
 	ProSurfaceAppearanceProps proprop_orig;
-	ProSurfaceAppearanceProps proprop = {0.8, 0.8, 0.7, 0.6, 0.0, {_myand(), _myand(), _myand()}, {0, 0, 1}, proprop_orig.reflection, *proprop_orig.name, *proprop_orig.label, *proprop_orig.description, *proprop_orig.keywords};
 	status = ProSurfaceAppearancepropsGet(&modelitem, &proprop_orig);
-	status = ProSurfaceAppearancepropsSet(&modelitem, &proprop);
+	{
+		ProSurfaceAppearanceProps proprop = {0.8, 0.8, 0.7, 0.6, 0.0, {_myand(), _myand(), _myand()}, {0, 0, 1}, proprop_orig.reflection, *proprop_orig.name, *proprop_orig.label, *proprop_orig.description, *proprop_orig.keywords};
+		status = ProSurfaceAppearancepropsSet(&modelitem, &proprop);
+	}
 }
 
 ProError _asmCompFilter(ProFeature *feature, ProAppData app_data)
@@ -77,7 +79,7 @@ void PaintColor()
 	ProError status;
 	wchar_t macro[2000];
 	wchar_t _lastRibbonTab[20];
-	
+
 	ProStringToWstring(_lastRibbonTab, LastRibbonTab);
 	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;~ Command `IMI_About_Act`;~ Activate `main_dlg_cur` `", macro, PRO_VALUE_UNUSED);
 	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);

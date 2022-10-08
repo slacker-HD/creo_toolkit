@@ -111,7 +111,7 @@ int user_initialize()
     int n_size;
 
     wchar_t ifMemPath[256] = L"True";
-    wchar_t ifAutoChangeWorkDir = L"False";
+    wchar_t ifAutoChangeWorkDir[256] = L"False";
     wchar_t lastPath[256] = L"";
     int valueLength;
     int compResult;
