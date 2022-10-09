@@ -1,0 +1,7 @@
+name LayerSet
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\LayerSet\LayerSet.dll
+text_dir D:\mydoc\creo_toolkit\LayerSet\text
+revision   18.0
+end

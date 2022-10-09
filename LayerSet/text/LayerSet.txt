@@ -1,0 +1,14 @@
+﻿IMI_Mainmenu
+Classify annotations to layers
+标注图层归类
+#
+
+IMI_LayerSetmenu
+Add Layers
+添加层
+#
+
+IMI_LayerSetmenutips
+Add Layers
+添加层
+#

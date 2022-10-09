@@ -214,3 +214,7 @@
 + 使用.NET主题
 + 存在BUG 1，Combo Box会产生自动全选及输入位置错误
 + 存在BUG 2，如果输入法选字采用的是鼠标点击一样会产生乱码
+
+## LayerSet
+
++ 将在绘图中添加名为TABLE、NOTE、SYMBOL和DIMENSION四个层，每个层添加对应的元素。如绘图已存在同名层，系统将清空图层后再加入对应元素。2.0的Toolkit有似乎有bug，必须在Config.pro中设置create_drawing_dims_only为yes后创建的尺寸，而weblink却完全没有限制。
