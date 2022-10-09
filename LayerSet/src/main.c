@@ -69,7 +69,7 @@ void CreateLayers()
     ProMdl mdl;
     ProError status;
     ProLayer *p_layer;
-    int n_size, i, item_size;
+    int n_size, i;
     ProDwgtable *tables;
     ProDtlsyminst *syminsts;
     ProDtlnote *notes;
@@ -87,7 +87,7 @@ void CreateLayers()
             status = DeleteLayerByName(p_layer[i], L"SYMBOL");
         }
 
-        status = ProDrawingTablesCollect(mdl, &tables);
+        status = ProDrawingTablesCollect((ProDrawing)mdl, &tables);
         status = AddLayerAndItem(mdl, L"TABLE", tables);
         status = ProArrayFree((ProArray *)&tables);
 
