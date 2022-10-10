@@ -20,6 +20,7 @@
         "battopdf.h": "c",
         "faminstexport.h": "c",
         "PartShow.h": "c",
-        "autoworkdirsetting.h": "c"
+        "autoworkdirsetting.h": "c",
+        "prodwgtable.h": "c"
     }
 }

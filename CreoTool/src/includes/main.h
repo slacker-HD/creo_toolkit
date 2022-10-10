@@ -40,6 +40,11 @@
 #include <ProSimprep.h>
 #include <ProSelbuffer.h>
 #include <ProSimprepdata.h>
+#include <ProLayer.h>
+#include <ProDwgtable.h>
+#include <ProDtlnote.h>
+#include <ProAnnotation.h>
+#include <ProSurfFinish.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

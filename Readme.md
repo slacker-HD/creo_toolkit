@@ -217,4 +217,4 @@
 
 ## LayerSet
 
-+ 将在绘图中添加名为TABLE、NOTE、SYMBOL和DIMENSION四个层，每个层添加对应的元素。如绘图已存在同名层，系统将清空图层后再加入对应元素。2.0的Toolkit有似乎有bug，必须在Config.pro中设置create_drawing_dims_only为yes后创建的尺寸，而weblink却完全没有限制。
++ 将在绘图中添加名为TABLE、NOTE、SYMBOL、SURFFIN、GTOL和DIMENSION六个层，每个层添加对应的元素。如绘图已存在同名层，系统将清空图层后再加入对应元素。

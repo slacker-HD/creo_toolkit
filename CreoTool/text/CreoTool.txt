@@ -292,3 +292,13 @@ IMI_ShowAllPartmenutips
 Show default view
 恢复默认显示
 #
+
+IMI_LayerSetmenu
+Classify annotations to layers
+图层归类
+#
+
+IMI_LayerSetmenutips
+Classify annotations to layers
+图层归类
+#
