@@ -22,6 +22,8 @@
         "prosimprep.h": "c",
         "proselbuffer.h": "c",
         "prosimprepdata.h": "c",
-        "promodelitem.h": "c"
+        "promodelitem.h": "c",
+        "promenubar.h": "c",
+        "prosurffinish.h": "c"
     }
 }

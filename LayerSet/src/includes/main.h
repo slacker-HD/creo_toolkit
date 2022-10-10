@@ -20,4 +20,7 @@
 #include <ProDtlsyminst.h>
 #include <ProDtlnote.h>
 #include <ProDrawing.h>
+#include <ProAnnotation.h>
+#include <ProSurfFinish.h>
+
 #endif
