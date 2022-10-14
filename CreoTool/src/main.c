@@ -19,6 +19,7 @@
 #include "./includes/PartShow.h"
 #include "./includes/AutoWorkDirSetting.h"
 #include "./includes/LayerSetting.h"
+#include "./includes/qrcodegen.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -118,6 +119,35 @@ int user_initialize()
     wchar_t lastPath[256] = L"";
     int valueLength;
     int compResult;
+    wchar_t ms[65530];
+    int i = 0;
+
+    int x, y, size;
+    uint8_t qr0[qrcodegen_BUFFER_LEN_MAX];
+    uint8_t tempBuffer[qrcodegen_BUFFER_LEN_MAX];
+    bool ok = qrcodegen_encodeText("r",
+                                   tempBuffer, qr0, qrcodegen_Ecc_MEDIUM,
+                                   qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX,
+                                   qrcodegen_Mask_AUTO, true);
+    size = qrcodegen_getSize(qr0);
+    for (y = 0; y < size; y++)
+    {
+        for (x = 0; x < size; x++)
+        {
+            if (qrcodegen_getModule(qr0, x, y))
+            {
+                ms[i] = '\254';
+            }
+            else
+            {
+                ms[i] = ' ';
+            }
+            i++;
+        }
+        ms[i] = '\n';
+        i++;
+    }
+    ShowMessageDialog(1, ms);
 
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
