@@ -36,7 +36,7 @@
 #include <ProUIList.h>
 #include <ProPDF.h>
 #include <ProFaminstance.h>
-#include <ProFamtable.h> 
+#include <ProFamtable.h>
 #include <ProSimprep.h>
 #include <ProSelbuffer.h>
 #include <ProSimprepdata.h>
@@ -45,6 +45,7 @@
 #include <ProDtlnote.h>
 #include <ProAnnotation.h>
 #include <ProSurfFinish.h>
+#include <ProUITextarea.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint
@@ -56,8 +57,8 @@ extern enum hint;
 
 typedef struct _user_check_but
 {
-	uiCmdCmdId command;
-	ProBoolean state;
+    uiCmdCmdId command;
+    ProBoolean state;
 } UserCheckBut;
 extern UserCheckBut check_but[2];
 

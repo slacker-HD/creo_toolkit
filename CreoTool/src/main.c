@@ -20,6 +20,7 @@
 #include "./includes/AutoWorkDirSetting.h"
 #include "./includes/LayerSetting.h"
 #include "./includes/qrcodegen.h"
+#include "./includes/InsertQRCode.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -108,6 +109,7 @@ int user_initialize()
     uiCmdCmdId IMI_ShowAllPartID;
 
     uiCmdCmdId IMI_LayerSetID;
+    uiCmdCmdId IMI_InsertQRCodeID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -119,36 +121,7 @@ int user_initialize()
     wchar_t lastPath[256] = L"";
     int valueLength;
     int compResult;
-    wchar_t ms[65530];
-    int i = 0;
-
-    int x, y, size;
-    uint8_t qr0[qrcodegen_BUFFER_LEN_MAX];
-    uint8_t tempBuffer[qrcodegen_BUFFER_LEN_MAX];
-    bool ok = qrcodegen_encodeText("r",
-                                   tempBuffer, qr0, qrcodegen_Ecc_MEDIUM,
-                                   qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX,
-                                   qrcodegen_Mask_AUTO, true);
-    size = qrcodegen_getSize(qr0);
-    for (y = 0; y < size; y++)
-    {
-        for (x = 0; x < size; x++)
-        {
-            if (qrcodegen_getModule(qr0, x, y))
-            {
-                ms[i] = '\254';
-            }
-            else
-            {
-                ms[i] = ' ';
-            }
-            i++;
-        }
-        ms[i] = '\n';
-        i++;
-    }
-    ShowMessageDialog(1, ms);
-
+   
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -182,6 +155,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_LayerSet_Act", (uiCmdCmdActFn)CreateLayers, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_LayerSetID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenutips", NULL, PRO_B_TRUE, IMI_LayerSetID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_InsertQRCode_Act", (uiCmdCmdActFn)ShowQRCodeDialog, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_InsertQRCodeID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodeID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

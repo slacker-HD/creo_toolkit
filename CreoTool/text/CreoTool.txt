@@ -302,3 +302,18 @@ IMI_LayerSetmenutips
 Classify annotations to layers
 图层归类
 #
+
+IMI_InsertQRCodemenu
+Insert QRCode
+插入二维码
+#
+
+IMI_InsertQRCodemenutips
+Insert QRCode
+插入二维码
+#
+
+IMI_ENTER_QRCODETEXT
+Input Contents of QRCode(less then 127 charactors)
+输入二维码包含内容(少于127个字符)
+#

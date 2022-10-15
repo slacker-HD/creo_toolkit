@@ -83,7 +83,7 @@ static VOID CALLBACK _saveProc(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 	}
 }
 
-void _commitOK()
+void _timeSavecommitOK()
 {
 	ProError status;
 	wchar_t *value;
@@ -107,7 +107,7 @@ void _commitOK()
 	status = ProUIDialogExit("TimeSave", 1);
 }
 
-void _commitCancel()
+void _timeSavecommitCancel()
 {
 	ProError status;
 	SetTimer(NULL, TIMERID, minute * 60000, (TIMERPROC)_saveProc);
@@ -129,8 +129,8 @@ void ShowTimeSaveDialog()
 	_itow_s(minute, text, 5, 10);
 	status = ProUIInputpanelValueSet("TimeSave", "InputTime", text);
 
-	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitOK", (ProUIAction)_commitOK, NULL);
-	status = ProUIPushbuttonActivateActionSet("TimeSave", "CommitCancel", (ProUIAction)_commitCancel, NULL);
+	status = ProUIPushbuttonActivateActionSet("TimeSave", "TimeSaveCommitOK", (ProUIAction)_timeSavecommitOK, NULL);
+	status = ProUIPushbuttonActivateActionSet("TimeSave", "TimeSaveCommitCancel", (ProUIAction)_timeSavecommitCancel, NULL);
 
 	status = ProUIDialogActivate("TimeSave", NULL);
 	status = ProUIDialogDestroy("TimeSave");
