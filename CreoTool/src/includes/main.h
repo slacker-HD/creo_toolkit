@@ -46,6 +46,7 @@
 #include <ProAnnotation.h>
 #include <ProSurfFinish.h>
 #include <ProUITextarea.h>
+#include <ProRelSet.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint
@@ -61,5 +62,10 @@ typedef struct _user_check_but
     ProBoolean state;
 } UserCheckBut;
 extern UserCheckBut check_but[2];
+
+extern ProRelfuncArg* Args_StrToDouble;
+extern ProRelfuncArg* Args_DoubleToStr;
+extern ProRelfuncArg* Args_IntToStr;
+extern ProRelfuncArg* Args_StrToInt;
 
 #endif

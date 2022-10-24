@@ -755,7 +755,6 @@ static long getPenaltyScore(const uint8_t qrcode[])
         bool runColor = false;
         int runY = 0;
         int runHistory[7] = {0};
-        int y, x;
         for (y = 0; y < qrsize; y++)
         {
             if (getModuleBounded(qrcode, x, y) == runColor)

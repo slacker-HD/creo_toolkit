@@ -21,12 +21,18 @@
 #include "./includes/LayerSetting.h"
 #include "./includes/qrcodegen.h"
 #include "./includes/InsertQRCode.h"
+#include "./includes/RelFunctions.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
 HINT hint;
 
 UserCheckBut check_but[2]; // 0.定时保存，1.自动切换工作目录为打开模型位置
+
+ProRelfuncArg* Args_StrToDouble = NULL;
+ProRelfuncArg* Args_DoubleToStr = NULL;
+ProRelfuncArg* Args_StrToInt = NULL;
+ProRelfuncArg* Args_IntToStr = NULL;
 
 void ShowAboutDialog()
 {
@@ -121,7 +127,7 @@ int user_initialize()
     wchar_t lastPath[256] = L"";
     int valueLength;
     int compResult;
-   
+
     status = ProMenubarMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "About", PRO_B_TRUE, MSGFILE);
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Mainmenu", "IMI_Mainmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -272,6 +278,27 @@ int user_initialize()
     status = ProWstringCopy(currentPath, CurrentWorkDirectoryList[0], PRO_VALUE_UNUSED);
     hint = About;
 
+	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_StrToDouble);
+	Args_StrToDouble [0].type = PRO_PARAM_STRING;
+	Args_StrToDouble [0].attributes = PRO_RELF_ATTR_NONE;
+
+	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_DoubleToStr);
+	Args_DoubleToStr [0].type = PRO_PARAM_DOUBLE;
+	Args_DoubleToStr [0].attributes = PRO_RELF_ATTR_NONE;
+
+	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_StrToInt);
+	Args_StrToInt [0].type = PRO_PARAM_STRING;
+	Args_StrToInt [0].attributes = PRO_RELF_ATTR_NONE;
+
+	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_IntToStr);
+	Args_IntToStr [0].type = PRO_PARAM_INTEGER;
+	Args_IntToStr [0].attributes = PRO_RELF_ATTR_NONE;
+
+    status = ProRelationFunctionRegister("IMI_StrToDouble", Args_StrToDouble, StrToDouble, NULL, NULL, PRO_B_FALSE, NULL);
+    status = ProRelationFunctionRegister("IMI_DoubleToStr", Args_DoubleToStr, DoubleToStr, NULL, NULL, PRO_B_FALSE, NULL);
+    status = ProRelationFunctionRegister("IMI_StrToInt", Args_StrToInt, StrToInt, NULL, NULL, PRO_B_FALSE, NULL);
+    status = ProRelationFunctionRegister("IMI_IntToStr", Args_IntToStr, IntToStr, NULL, NULL, PRO_B_FALSE, NULL);
+
     return PRO_TK_NO_ERROR;
 }
 
@@ -303,4 +330,13 @@ void user_terminate()
     {
         WriteOrUpdateConfig(cfgPath, L"LastPath", currentPath);
     }
+
+    status = ProArrayFree((ProArray *)&Args_StrToDouble);
+    Args_StrToDouble = NULL;
+    status = ProArrayFree((ProArray *)&Args_DoubleToStr);
+    Args_DoubleToStr = NULL;
+    status = ProArrayFree((ProArray *)&Args_StrToInt);
+    Args_StrToInt = NULL;
+    status = ProArrayFree((ProArray *)&Args_IntToStr);
+    Args_IntToStr = NULL;
 }

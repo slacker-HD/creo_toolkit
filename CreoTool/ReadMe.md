@@ -47,6 +47,13 @@
 - 隐藏未选中零件
 - 恢复默认显示
 
+### 2.7 自定义关系
+
+- 浮点型数据转字符串（IMI_DoubleToStr）
+- 字符串转浮点型数据（IMI_StrToDouble）
+- 整型数据转字符串（IMI_IntToStr）
+- 字符串转整型数据（IMI_StrToInt）
+
 ## 3.联系方式
 
 @slacker-HD
