@@ -47,6 +47,7 @@ void _saveMdl(BOOL saveall)
 	ProMdl mdl;
 	int CurrentWid;
 	ProBoolean save_allowed;
+	ProBoolean is_modified;
 	status = ProWindowCurrentGet(&CurrentWid);
 	if (saveall)
 	{
@@ -66,12 +67,26 @@ void _saveMdl(BOOL saveall)
 					return;
 				}
 				if (save_allowed == PRO_B_TRUE)
-					status = ProMdlSave(mdl);
+				{
+					status = ProMdlModificationVerify(mdl, &is_modified);
+					if (is_modified == PRO_B_TRUE)
+					{
+						status = ProMdlSave(mdl);
+					}
+				}
 			}
 		}
 		status = ProArrayFree((ProArray *)&p_array);
 	}
-	ProMacroLoad(L"~ Command `ProCmdModelSave` ;~ Activate `file_saveas` `OK`;");
+	status = ProMdlCurrentGet(&mdl);
+	if (status == PRO_TK_NO_ERROR)
+	{
+		status = ProMdlModificationVerify(mdl, &is_modified);
+		if (is_modified == PRO_B_TRUE)
+		{
+			ProMacroLoad(L"~ Command `ProCmdModelSave` ;~ Activate `file_saveas` `OK`;");
+		}
+	}
 	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_AutoSaved");
 }
 
@@ -99,7 +114,7 @@ void _timeSavecommitOK()
 	}
 	else
 	{
-		ShowMessageDialog(1,L"时间范围必须设定在5~60分钟以内。");
+		ShowMessageDialog(1, L"时间范围必须设定在5~60分钟以内。");
 		return;
 	}
 	status = ProWstringFree(value);
@@ -119,7 +134,7 @@ void ShowTimeSaveDialog()
 	ProError status;
 	wchar_t text[5];
 	KillTimer(NULL, TIMERID);
-	
+
 	status = ProUIDialogCreate("TimeSave", "TimeSave");
 	status = ProUIInputpanelInputtypeSet("TimeSave", "InputTime", PROUIINPUTTYPE_INTEGER);
 	if (autoSave)
