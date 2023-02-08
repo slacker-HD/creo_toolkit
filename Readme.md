@@ -218,3 +218,9 @@
 ## LayerSet
 
 + 将在绘图中添加名为TABLE、NOTE、SYMBOL、SURFFIN、GTOL和DIMENSION六个层，每个层添加对应的元素。如绘图已存在同名层，系统将清空图层后再加入对应元素。
+
+## UnitConvert
+
++ 一键转换单位系统为mmNs，解释尺寸。
++ 一键转换单位系统为mmNs，转换尺寸。
+
