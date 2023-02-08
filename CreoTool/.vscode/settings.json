@@ -21,6 +21,7 @@
         "faminstexport.h": "c",
         "PartShow.h": "c",
         "autoworkdirsetting.h": "c",
-        "prodwgtable.h": "c"
+        "prodwgtable.h": "c",
+        "opensamenamefile.h": "c"
     }
 }

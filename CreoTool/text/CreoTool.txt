@@ -113,6 +113,16 @@ Save at regular intervals
 定时保存
 #
 
+IMI_OpenSamenameFilemenu
+Open Model(Prt or Asm) and drw with same name (if present)
+打开模型（Prt或Asm）同时打开同名工程图（如果存在）
+#
+
+IMI_OpenSamenameFilemenutips
+Open Model(Prt or Asm) and drw with same name (if present)
+打开模型（Prt或Asm）同时打开同名工程图（如果存在）
+#
+
 IMI_Aboutmenu
 About
 关于

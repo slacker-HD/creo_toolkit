@@ -22,6 +22,7 @@
 #include "./includes/qrcodegen.h"
 #include "./includes/InsertQRCode.h"
 #include "./includes/RelFunctions.h"
+#include "./includes/OpenSamenameFile.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -29,10 +30,10 @@ HINT hint;
 
 UserCheckBut check_but[2]; // 0.定时保存，1.自动切换工作目录为打开模型位置
 
-ProRelfuncArg* Args_StrToDouble = NULL;
-ProRelfuncArg* Args_DoubleToStr = NULL;
-ProRelfuncArg* Args_StrToInt = NULL;
-ProRelfuncArg* Args_IntToStr = NULL;
+ProRelfuncArg *Args_StrToDouble = NULL;
+ProRelfuncArg *Args_DoubleToStr = NULL;
+ProRelfuncArg *Args_StrToInt = NULL;
+ProRelfuncArg *Args_IntToStr = NULL;
 
 void ShowAboutDialog()
 {
@@ -100,14 +101,13 @@ int user_initialize()
     uiCmdCmdId IMI_PaintColormenuID;
     uiCmdCmdId IMI_ClearColormenuID;
     uiCmdCmdId IMI_MdlRenamemenuID;
+    uiCmdCmdId OpenSamenameFileID;
 
     uiCmdCmdId IMI_BatOPenPrtmenuID;
     uiCmdCmdId IMI_BatOPenDrwmenuID;
-
     uiCmdCmdId IMI_BatSnapShotmenuID;
     uiCmdCmdId IMI_BatExportPdfmenuID;
     uiCmdCmdId IMI_BatExportDwgmenuID;
-
     uiCmdCmdId IMI_ExportFamInstsID;
 
     uiCmdCmdId IMI_HideSelectedPartID;
@@ -176,6 +176,9 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenutips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
 
+    status = ProCmdActionAdd("IMI_OpenSamenameFile_Act", (uiCmdCmdActFn)OpenSamenameFile, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &OpenSamenameFileID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenutips", NULL, PRO_B_TRUE, OpenSamenameFileID, MSGFILE);
+
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
@@ -183,6 +186,7 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatOPensubmenu", "IMI_BatOPensubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -262,9 +266,9 @@ int user_initialize()
     if (compResult == 0)
     {
         check_but[1].state = PRO_B_TRUE;
-        status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); //切换窗口导致的当前模型变化
-        status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);           //另存为导致的路径变化
-        status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);   //打开新模型导致的路径变化
+        status = ProNotificationSet(PRO_WINDOW_CHANGE_POST, ProUserWindowChangePost); // 切换窗口导致的当前模型变化
+        status = ProNotificationSet(PRO_MDL_SAVE_POST, ProUserMdlSavePost);           // 另存为导致的路径变化
+        status = ProNotificationSet(PRO_MDL_RETRIEVE_POST, ProUserMdlRetrievePost);   // 打开新模型导致的路径变化
     }
     else
     {
@@ -278,21 +282,21 @@ int user_initialize()
     status = ProWstringCopy(currentPath, CurrentWorkDirectoryList[0], PRO_VALUE_UNUSED);
     hint = About;
 
-	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_StrToDouble);
-	Args_StrToDouble [0].type = PRO_PARAM_STRING;
-	Args_StrToDouble [0].attributes = PRO_RELF_ATTR_NONE;
+    status = ProArrayAlloc(1, sizeof(ProRelfuncArg), 1, (ProArray *)&Args_StrToDouble);
+    Args_StrToDouble[0].type = PRO_PARAM_STRING;
+    Args_StrToDouble[0].attributes = PRO_RELF_ATTR_NONE;
 
-	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_DoubleToStr);
-	Args_DoubleToStr [0].type = PRO_PARAM_DOUBLE;
-	Args_DoubleToStr [0].attributes = PRO_RELF_ATTR_NONE;
+    status = ProArrayAlloc(1, sizeof(ProRelfuncArg), 1, (ProArray *)&Args_DoubleToStr);
+    Args_DoubleToStr[0].type = PRO_PARAM_DOUBLE;
+    Args_DoubleToStr[0].attributes = PRO_RELF_ATTR_NONE;
 
-	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_StrToInt);
-	Args_StrToInt [0].type = PRO_PARAM_STRING;
-	Args_StrToInt [0].attributes = PRO_RELF_ATTR_NONE;
+    status = ProArrayAlloc(1, sizeof(ProRelfuncArg), 1, (ProArray *)&Args_StrToInt);
+    Args_StrToInt[0].type = PRO_PARAM_STRING;
+    Args_StrToInt[0].attributes = PRO_RELF_ATTR_NONE;
 
-	status = ProArrayAlloc (1, sizeof (ProRelfuncArg), 1, (ProArray*)&Args_IntToStr);
-	Args_IntToStr [0].type = PRO_PARAM_INTEGER;
-	Args_IntToStr [0].attributes = PRO_RELF_ATTR_NONE;
+    status = ProArrayAlloc(1, sizeof(ProRelfuncArg), 1, (ProArray *)&Args_IntToStr);
+    Args_IntToStr[0].type = PRO_PARAM_INTEGER;
+    Args_IntToStr[0].attributes = PRO_RELF_ATTR_NONE;
 
     status = ProRelationFunctionRegister("IMI_StrToDouble", Args_StrToDouble, StrToDouble, NULL, NULL, PRO_B_FALSE, NULL);
     status = ProRelationFunctionRegister("IMI_DoubleToStr", Args_DoubleToStr, DoubleToStr, NULL, NULL, PRO_B_FALSE, NULL);
