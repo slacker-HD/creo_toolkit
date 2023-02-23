@@ -99,6 +99,8 @@
         (OptionMenu1.BottomOffset 0)
         (OptionMenu1.LeftOffset 0)
         (OptionMenu1.RightOffset 0)
+        (OptionMenu1.Names "3" "2" "1")
+        (OptionMenu1.Labels "ddd" "aaa" "222")
         (InputPanel1.TopOffset 0)
         (InputPanel1.BottomOffset 0)
         (InputPanel1.LeftOffset 0)

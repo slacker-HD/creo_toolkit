@@ -3,9 +3,14 @@
 #define DIALOGNAME (char *)"ParamsMod"
 #define TABLENAME (char *)"TableParams"
 #define INPUTPANENAME (char *)"InputPanel1"
+#define OPTIONMENUNAME (char *)"OptionMenu1"
+#define CHECKBUTTONNAME (char *)"CheckButton1"
 
-static char *ip_row;
-static char *ip_col;
+static char *_ipRow;
+static char *_ipCol;
+int column_size = 3;
+char *column_names[] = {"name", "material", "unit"};
+wchar_t *column_labels[] = {L"模型名称", L"材料", L"单位"};
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
@@ -24,26 +29,41 @@ void _commitCancel()
     status = ProUIDialogExit(DIALOGNAME, 0);
 }
 
-void _uiTableEditLoseIPfocus(char *dialog, char *component, ProAppData data)
+void _uiTableInputPanelEditLoseIPfocus(char *dialog, char *component, ProAppData data)
 {
     ProError status;
     wchar_t *label;
-    char input_panel[20];
+    char inputPanel[20];
 
-    ProTKSprintf(input_panel, "%s_%s", ip_row, ip_col);
+    ProTKSprintf(inputPanel, "%s_%s", _ipRow, _ipCol);
 
-    status = ProUIInputpanelValueGet(DIALOGNAME, input_panel, &label);
+    status = ProUIInputpanelValueGet(DIALOGNAME, inputPanel, &label);
 
     if ((status == PRO_TK_NO_ERROR) && (label != NULL))
     {
-        status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, ip_row, ip_col, label);
+        status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, _ipRow, _ipCol, label);
     }
 
-    status = ProUITableCellComponentDelete(DIALOGNAME, TABLENAME, ip_row, ip_col);
+    status = ProUITableCellComponentDelete(DIALOGNAME, TABLENAME, _ipRow, _ipCol);
 
     status = ProWstringFree(label);
-    status = ProStringFree(ip_row);
-    status = ProStringFree(ip_col);
+    status = ProStringFree(_ipRow);
+    status = ProStringFree(_ipCol);
+}
+
+void _addUIInputPanel(char *InputPanelName, int Width, wchar_t *Label)
+{
+    ProError status;
+
+    status = ProUIInputpanelColumnsSet(DIALOGNAME, InputPanelName, Width);
+    status = ProUIInputpanelEnable(DIALOGNAME, InputPanelName);
+    status = ProUIInputpanelShow(DIALOGNAME, InputPanelName);
+    status = ProUIInputpanelValueSet(DIALOGNAME, InputPanelName, Label);
+
+    status = ProUIInputpanelFocusoutActionSet(DIALOGNAME, InputPanelName, (ProUIAction)_uiTableInputPanelEditLoseIPfocus, NULL);
+    status = ProUIInputpanelActivateActionSet(DIALOGNAME, InputPanelName, (ProUIAction)_uiTableInputPanelEditLoseIPfocus, NULL);
+
+    status = ProUIDialogFocusSet(DIALOGNAME, InputPanelName);
 }
 
 void _uiTableEditActivateCell(char *dialog, char *component, ProAppData data)
@@ -53,37 +73,48 @@ void _uiTableEditActivateCell(char *dialog, char *component, ProAppData data)
     char **values;
     char *row;
     wchar_t *label;
-    char input_panel[20];
+    char inputPanel[20];
+    char optionMenu[20];
 
-    status = ProUITableFocusCellGet(DIALOGNAME, TABLENAME, &ip_row, &ip_col);
+    status = ProUITableFocusCellGet(DIALOGNAME, TABLENAME, &_ipRow, &_ipCol);
 
     if (status == PRO_TK_NO_ERROR)
     {
-        status = ProUITableCellLabelGet(DIALOGNAME, TABLENAME, ip_row, ip_col, &label);
+        status = ProUITableCellLabelGet(DIALOGNAME, TABLENAME, _ipRow, _ipCol, &label);
+        status = ProUITableColumnWidthGet(DIALOGNAME, TABLENAME, _ipCol, &width);
 
-        status = ProTKSprintf(input_panel, "%s_%s", ip_row, ip_col);
-
-        status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, ip_row, ip_col, DIALOGNAME, INPUTPANENAME, input_panel);
-
-        if (status == PRO_TK_NO_ERROR)
+        if (strcmp(column_names[0], _ipCol) == 0)
         {
-
-            status = ProUITableColumnWidthGet(DIALOGNAME, TABLENAME, ip_col, &width);
-            status = ProUIInputpanelColumnsSet(DIALOGNAME, input_panel, width);
-            status = ProUIInputpanelEnable(DIALOGNAME, input_panel);
-            status = ProUIInputpanelShow(DIALOGNAME, input_panel);
-            status = ProUIInputpanelValueSet(DIALOGNAME, input_panel, label);
-
-            status = ProUIInputpanelFocusoutActionSet(DIALOGNAME, input_panel, (ProUIAction)_uiTableEditLoseIPfocus, NULL);
-            status = ProUIInputpanelActivateActionSet(DIALOGNAME, input_panel, (ProUIAction)_uiTableEditLoseIPfocus, NULL);
-
-            status = ProUIDialogFocusSet(DIALOGNAME, input_panel);
+            ProTKSprintf(inputPanel, "%s_%s", _ipRow, _ipCol);
+            status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, _ipRow, _ipCol, DIALOGNAME, INPUTPANENAME, inputPanel);
+            if (status == PRO_TK_NO_ERROR)
+            {
+                _addUIInputPanel(inputPanel, width, label);
+            }
+            else
+            {
+                status = ProStringFree(_ipRow);
+                status = ProStringFree(_ipCol);
+            }
+        }
+        else if (strcmp(column_names[1], _ipCol) == 0)
+        {
+            // status = ProTKSprintf(optionMenu, "%s_%s", _ipRow, _ipCol);
+            // status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, _ipRow, _ipCol, DIALOGNAME, OPTIONMENUNAME, optionMenu);
+            // if (status == PRO_TK_NO_ERROR)
+            // {
+            //     _addUIOptionMenu(optionMenu, width, label);
+            // }
+            // else
+            // {
+            //     status = ProStringFree(_ipRow);
+            //     status = ProStringFree(_ipCol);
+            // }
         }
         else
         {
-            status = ProStringFree(ip_row);
-            status = ProStringFree(ip_col);
         }
+
         status = ProWstringFree(label);
     }
 }
@@ -91,21 +122,20 @@ void _uiTableEditActivateCell(char *dialog, char *component, ProAppData data)
 void ShowParamsModDialog()
 {
     ProError status;
-    int i, n_files;
-    ProPath *file_list, *dir_list, r_path;
-    ProName r_file_name, r_extension, mdl_name;
-    ProFileName f_file_name;
-    int r_version;
+    int i, nFiles;
+    ProPath *fileList, *dirList, rPath;
+    ProName rFileName, rExtension, mdlName;
+    ProFileName fFileName;
+    int nRversion;
     ProMdl mdl;
     ProMaterial material;
     ProUnitsystem unitSystem;
 
-    int column_size = 3;
-    char *column_names[] = {"name", "material", "unit"};
-    wchar_t *column_labels[] = {L"模型名称", L"材料", L"单位"};
-
     char **row_names;
     wchar_t **row_labels;
+
+    char checkbutton[20];
+    char optionMenu[20];
 
     status = ProUIDialogCreate(DIALOGNAME, DIALOGNAME);
 
@@ -115,50 +145,55 @@ void ShowParamsModDialog()
     status = ProUITableColumnnamesSet(DIALOGNAME, TABLENAME, column_size, column_names);
     status = ProUITableColumnlabelsSet(DIALOGNAME, TABLENAME, column_size, column_labels);
 
-    status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&file_list);
-    status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dir_list);
-    status = ProFilesList(NULL, L"*.prt", PRO_FILE_LIST_LATEST, &file_list, &dir_list);
+    status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&fileList);
+    status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dirList);
+    status = ProFilesList(NULL, L"*.prt", PRO_FILE_LIST_LATEST, &fileList, &dirList);
 
     if (status == PRO_TK_NO_ERROR)
     {
-        status = ProArraySizeGet((ProArray)file_list, &n_files);
-        row_names = (char **)calloc(n_files, sizeof(char *));
-        row_labels = (wchar_t **)calloc(n_files, sizeof(wchar_t *));
+        status = ProArraySizeGet((ProArray)fileList, &nFiles);
+        row_names = (char **)calloc(nFiles, sizeof(char *));
+        row_labels = (wchar_t **)calloc(nFiles, sizeof(wchar_t *));
 
-        if (n_files > 0)
+        if (nFiles > 0)
         {
-            for (i = 0; i < n_files; i++)
+            for (i = 0; i < nFiles; i++)
             {
                 row_names[i] = (char *)calloc(10, sizeof(char));
                 row_labels[i] = (wchar_t *)calloc(10, sizeof(wchar_t));
                 sprintf(row_names[i], "%d", i + 1);
                 wsprintfW(row_labels[i], L"%d", i + 1);
             }
-            status = ProUITableRownamesSet(DIALOGNAME, TABLENAME, n_files, row_names);
-            status = ProUITableRowlabelsSet(DIALOGNAME, TABLENAME, n_files, row_labels);
+            status = ProUITableRownamesSet(DIALOGNAME, TABLENAME, nFiles, row_names);
+            status = ProUITableRowlabelsSet(DIALOGNAME, TABLENAME, nFiles, row_labels);
 
-            for (i = 0; i < n_files; i++)
+            for (i = 0; i < nFiles; i++)
             {
-                memset(f_file_name, '\0', sizeof(ProFileName));
-                status = ProFilenameParse(file_list[i], r_path, r_file_name, r_extension, &r_version);
-                status = ProWstringConcatenate(r_file_name, f_file_name, PRO_VALUE_UNUSED);
-                status = ProWstringConcatenate(L".", f_file_name, PRO_VALUE_UNUSED);
-                status = ProWstringConcatenate(r_extension, f_file_name, PRO_VALUE_UNUSED);
-                status = ProMdlLoad(f_file_name, PRO_MDL_UNUSED, PRO_B_FALSE, &mdl);
-                status = ProMdlNameGet(mdl, mdl_name);
-                status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "name", mdl_name);
+                memset(fFileName, '\0', sizeof(ProFileName));
+                status = ProFilenameParse(fileList[i], rPath, rFileName, rExtension, &nRversion);
+                status = ProWstringConcatenate(rFileName, fFileName, PRO_VALUE_UNUSED);
+                status = ProWstringConcatenate(L".", fFileName, PRO_VALUE_UNUSED);
+                status = ProWstringConcatenate(rExtension, fFileName, PRO_VALUE_UNUSED);
+                status = ProMdlLoad(fFileName, PRO_MDL_UNUSED, PRO_B_FALSE, &mdl);
+                status = ProMdlNameGet(mdl, mdlName);
+                status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "name", mdlName);
 
-                status = ProMaterialCurrentGet(ProMdlToSolid(mdl), &material);
-                if (status == PRO_TK_NO_ERROR)
-                    status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", material.matl_name);
-                else
-                    status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", L"未设置");
+                // status = ProMaterialCurrentGet(ProMdlToSolid(mdl), &material);
+                // if (status == PRO_TK_NO_ERROR)
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", material.matl_name);
+                // else
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", L"未设置");
 
-                status = ProMdlPrincipalunitsystemGet(mdl, &unitSystem);
-                if (status == PRO_TK_NO_ERROR)
-                    status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", unitSystem.name);
-                else
-                    status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", L"未知");
+                ProTKSprintf(optionMenu, "%s_%s", row_names[i], "material");
+                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], "material", DIALOGNAME, OPTIONMENUNAME, optionMenu);
+
+                // status = ProMdlPrincipalunitsystemGet(mdl, &unitSystem);
+                // if (status == PRO_TK_NO_ERROR)
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", unitSystem.name);
+                // else
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", L"未知");
+                ProTKSprintf(checkbutton, "%s_%s", row_names[i], "unit");
+                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], "unit", DIALOGNAME, CHECKBUTTONNAME, checkbutton);
 
                 free(row_names[i]);
                 free(row_labels[i]);
@@ -170,8 +205,8 @@ void ShowParamsModDialog()
 
     status = ProUITableSelectActionSet(DIALOGNAME, TABLENAME, (ProUIAction)_uiTableEditActivateCell, NULL);
 
-    status = ProArrayFree((ProArray *)&file_list);
-    status = ProArrayFree((ProArray *)&dir_list);
+    status = ProArrayFree((ProArray *)&fileList);
+    status = ProArrayFree((ProArray *)&dirList);
 
     status = ProUIDialogActivate(DIALOGNAME, NULL);
     status = ProUIDialogDestroy(DIALOGNAME);

@@ -18,5 +18,6 @@
 #include <ProUITable.h>
 #include <ProMaterial.h>
 #include <ProMdlUnits.h>
+#include <ProUIOptionmenu.h>
 
 #endif

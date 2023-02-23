@@ -9,6 +9,7 @@
         "protoolkitdll.h": "c",
         "promdlunits.h": "c",
         "prouimessage.h": "c",
-        "promenubar.h": "c"
+        "promenubar.h": "c",
+        "promenu.h": "c"
     }
 }
