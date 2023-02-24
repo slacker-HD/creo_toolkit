@@ -11,7 +11,7 @@ void _commitChangeDir()
 		status = ProArraySizeGet(CurrentWorkDirectoryList, &pathLength);
 		for (i = 0; i < pathLength; i++)
 		{
-			stringTmp = (char *)calloc(stringTmp, sizeof(char));
+			stringTmp = (char *)calloc(PRO_PATH_SIZE * 2 + 1, sizeof(char));
 			ProWstringToString(stringTmp, CurrentWorkDirectoryList[i]);
 			if (strcmp(selections[0], stringTmp) == 0)
 			{
@@ -46,7 +46,7 @@ void ShowChangeWorkDirectoryDialog()
 
 	for (i = 0; i < pathLength; i++)
 	{
-		charNameList[i] = (char *)calloc(charNameList, sizeof(char));
+		charNameList[i] = (char *)calloc(PRO_PATH_SIZE * 2 + 1, sizeof(char));
 		ProWstringToString(charNameList[i], CurrentWorkDirectoryList[i]);
 	}
 

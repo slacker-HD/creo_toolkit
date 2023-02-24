@@ -152,7 +152,7 @@ void ShowQRCodeDialog()
 {
 	ProError status;
 	wchar_t wcontent[127];
-	char *content[255];
+	char content[255];
 	ProDrawing drawing;
 	ProMouseButton Mousebutton;
 	ProVector Mousepos;
