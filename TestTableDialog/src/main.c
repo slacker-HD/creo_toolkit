@@ -1,6 +1,6 @@
 #include "./includes/main.h"
 
-#define DIALOGNAME (char *)"ParamsMod"
+#define DIALOGNAME (char *)"TestTableDialog"
 #define TABLENAME (char *)"TableParams"
 #define INPUTPANENAME (char *)"InputPanel1"
 #define OPTIONMENUNAME (char *)"OptionMenu1"
@@ -119,7 +119,7 @@ void _uiTableEditActivateCell(char *dialog, char *component, ProAppData data)
     }
 }
 
-void ShowParamsModDialog()
+void ShowTestTableDialogDialog()
 {
     ProError status;
     int i, nFiles;
@@ -215,12 +215,12 @@ void ShowParamsModDialog()
 int user_initialize()
 {
     ProError status;
-    uiCmdCmdId IMI_ParamModmenuID;
+    uiCmdCmdId IMI_TestTableDialogmenuID;
 
     status = ProMenubarMenuAdd("IMI_Paramsmenu", "IMI_Paramsmenu", "About", PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_UnitInterPret_Act", (uiCmdCmdActFn)ShowParamsModDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ParamModmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Paramsmenu", "IMI_ParamModmenu", "IMI_ParamModmenu", "IMI_ParamModmenutips", NULL, PRO_B_TRUE, IMI_ParamModmenuID, MSGFILE);
+    status = ProCmdActionAdd("IMI_UnitInterPret_Act", (uiCmdCmdActFn)ShowTestTableDialogDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TestTableDialogmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Paramsmenu", "IMI_TestTableDialogmenu", "IMI_TestTableDialogmenu", "IMI_TestTableDialogmenutips", NULL, PRO_B_TRUE, IMI_TestTableDialogmenuID, MSGFILE);
 
     return PRO_TK_NO_ERROR;
 }

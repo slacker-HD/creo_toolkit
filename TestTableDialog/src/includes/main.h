@@ -4,7 +4,7 @@
 #define UNICODE
 #define _UNICODE
 
-#define MSGFILE L"ParamMod.txt"
+#define MSGFILE L"TestTableDialog.txt"
 
 #include "stdio.h"
 

@@ -1,4 +1,4 @@
-﻿(Dialog ParamsMod
+﻿(Dialog TestTableDialog
     (Components
         (SubLayout Content)
         (Separator CommitSeparator)

@@ -1,13 +1,13 @@
 #             PTC             File
 # -----------------------------------------------------------------------------
 # File Name
-MAKEFILENAME = ParamMod
+MAKEFILENAME = TestTableDialog
 
 # Machine Type
 PRO_MACHINE_TYPE = x86e_win64
 
 # Executable names
-EXE_DLL = ParamMod.dll
+EXE_DLL = TestTableDialog.dll
 
 # Pro/Toolkit Source & Machine Loadpoint  (EXTERNAL USE - DEFAULT)
 PROTOOL_SRC = ./src
