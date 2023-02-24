@@ -9,8 +9,8 @@
 static char *_ipRow;
 static char *_ipCol;
 int column_size = 3;
-char *column_names[] = {"name", "material", "unit"};
-wchar_t *column_labels[] = {L"模型名称", L"材料", L"单位"};
+char *column_names[] = {"name", "OpMenu", "unit"};
+wchar_t *column_labels[] = {L"工作目录下模型", L"测试OptionMenu", L"测试CheckButton"};
 
 static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 {
@@ -176,24 +176,24 @@ void ShowParamsModDialog()
                 status = ProWstringConcatenate(rExtension, fFileName, PRO_VALUE_UNUSED);
                 status = ProMdlLoad(fFileName, PRO_MDL_UNUSED, PRO_B_FALSE, &mdl);
                 status = ProMdlNameGet(mdl, mdlName);
-                status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "name", mdlName);
+                status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], column_names[0], mdlName);
 
                 // status = ProMaterialCurrentGet(ProMdlToSolid(mdl), &material);
                 // if (status == PRO_TK_NO_ERROR)
-                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", material.matl_name);
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], column_names[1], material.matl_name);
                 // else
-                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "material", L"未设置");
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], column_names[1], L"未设置");
 
-                ProTKSprintf(optionMenu, "%s_%s", row_names[i], "material");
-                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], "material", DIALOGNAME, OPTIONMENUNAME, optionMenu);
+                ProTKSprintf(optionMenu, "%s_%s", row_names[i], column_names[1]);
+                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], column_names[1], DIALOGNAME, OPTIONMENUNAME, optionMenu);
 
                 // status = ProMdlPrincipalunitsystemGet(mdl, &unitSystem);
                 // if (status == PRO_TK_NO_ERROR)
-                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", unitSystem.name);
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], column_names[2], unitSystem.name);
                 // else
-                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], "unit", L"未知");
-                ProTKSprintf(checkbutton, "%s_%s", row_names[i], "unit");
-                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], "unit", DIALOGNAME, CHECKBUTTONNAME, checkbutton);
+                //     status = ProUITableCellLabelSet(DIALOGNAME, TABLENAME, row_names[i], column_names[2], L"未知");
+                ProTKSprintf(checkbutton, "%s_%s", row_names[i], column_names[2]);
+                status = ProUITableCellComponentCopy(DIALOGNAME, TABLENAME, row_names[i], column_names[2], DIALOGNAME, CHECKBUTTONNAME, checkbutton);
 
                 free(row_names[i]);
                 free(row_labels[i]);
