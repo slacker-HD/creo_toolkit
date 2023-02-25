@@ -13,11 +13,14 @@ static char *_ipCol;
 int column_size = 3;
 char *column_names[] = {"name", "unit", "method"};
 wchar_t *column_labels[] = {L"零件", L"当前单位", L"转换方式"};
-wchar_t *convert_methods——labels[] = {L"不转换", L"解释尺寸", L"转换尺寸"};
 
-void _convertUnit(ProMdl Mdl, ProUnitConvertType ConVertType)
+wchar_t *convert_methods_labels[] = {L"不转换", L"解释尺寸", L"转换尺寸"};
+char *convert_methods_names[] = {"1", "2", "3"};
+int convert_size = 3;
+
+ProError _convUnit(ProMdl Mdl, ProUnitConvertType ConVertType)
 {
-    ProError status;
+    ProError status, ret = PRO_TK_E_NOT_FOUND;
     ProUnitsystem unitSystem;
     ProUnitsystemType type;
     wchar_t *p = NULL;
@@ -30,31 +33,33 @@ void _convertUnit(ProMdl Mdl, ProUnitConvertType ConVertType)
     {
         status = ProMdlUnitsystemsCollect(Mdl, &unitSystem_array);
         if (status != PRO_TK_NO_ERROR)
-            return;
+            return status;
         status = ProArraySizeGet(unitSystem_array, &num_unitSystem);
         for (i = 0; i < num_unitSystem; i++)
         {
             p = wcsstr(unitSystem_array[i].name, L"mmNs");
             if (p)
             {
-                status = ProMdlPrincipalunitsystemSet(Mdl, &unitSystem_array[i], ConVertType, PRO_B_TRUE, PRO_VALUE_UNUSED);
+                ret = ProMdlPrincipalunitsystemSet(Mdl, &unitSystem_array[i], ConVertType, PRO_B_TRUE, PRO_VALUE_UNUSED);
+                status = ProMdlSave(mdl);
                 status = ProArrayFree((ProArray *)&unitSystem_array);
-                return;
+                return ret;
             }
         }
-        ShowMessageDialog(1, L"模型中未包含mmNs单位。\n请检查模型设置。");
         status = ProArrayFree((ProArray *)&unitSystem_array);
+        return ret;
     }
+    return PRO_TK_NO_CHANGE;
 }
 
-void InterPretUnit(ProMdl Mdl)
+ProError _interPretUnit(ProMdl Mdl)
 {
-    _convertUnit(Mdl, PRO_UNITCONVERT_SAME_DIMS);
+    return _convUnit(Mdl, PRO_UNITCONVERT_SAME_DIMS);
 }
 
-void ConvertUnit(ProMdl Mdl)
+ProError _convertUnit(ProMdl Mdl)
 {
-    _convertUnit(Mdl, PRO_UNITCONVERT_SAME_SIZE);
+    return _convUnit(Mdl, PRO_UNITCONVERT_SAME_SIZE);
 }
 
 void _commitOK()
@@ -76,9 +81,12 @@ void _commitApply()
     int length;
     char **rows;
     wchar_t *mdlName;
-    char *opmenuName;
+    char *optionMenu;
     wchar_t *method;
     ProBoolean enabled;
+    ProMdl mdl;
+    ProUnitsystem unitSystem;
+
     status = ProUITableRownamesGet(BATCONVERTUNITDIALOG, TABLEUNIT, &length, &rows);
 
     status = ProUIProgressbarMinintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
@@ -88,28 +96,50 @@ void _commitApply()
     for (i = 0; i < length; i++)
     {
         status = ProUITableCellLabelGet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[0], &mdlName);
-        status = ProUITableCellComponentNameGet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[2], &opmenuName);
-        status = ProUIOptionmenuIsEnabled(BATCONVERTUNITDIALOG, opmenuName, &enabled);
+        status = ProUITableCellComponentNameGet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[2], &optionMenu);
+        status = ProUIOptionmenuIsEnabled(BATCONVERTUNITDIALOG, optionMenu, &enabled);
         if (enabled == PRO_B_TRUE)
         {
-            status = ProUIOptionmenuValueGet(BATCONVERTUNITDIALOG, opmenuName, &method);
-            ShowMessageDialog(1, method);
-            // status = ProMdlLoad(mdl,)
-            // TODO：加载后调用再转化
-            status = ProWstringFree(method);
-        }
+            status = ProUIOptionmenuValueGet(BATCONVERTUNITDIALOG, optionMenu, &method);
+            status = ProMdlRetrieve(mdlName, PRO_MDL_PART, &mdl);
 
+            if (wcsstr(method, convert_methods_labels[2]))
+            {
+                status = _convertUnit(mdl);
+            }
+            else if (wcsstr(method, convert_methods_labels[1]))
+            {
+                status = _interPretUnit(mdl);
+            }
+            else
+            {
+                status = PRO_TK_NO_CHANGE;
+            }
+            if (status == PRO_TK_NO_ERROR)
+            {
+                status = ProMdlPrincipalunitsystemGet(mdl, &unitSystem);
+                status = ProUITableCellLabelSet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[1], unitSystem.name);
+                status = ProUIOptionmenuDisable(BATCONVERTUNITDIALOG, optionMenu);
+                status = ProUIOptionmenuSelectednamesSet(BATCONVERTUNITDIALOG, optionMenu, 0, &(convert_methods_names[0]));
+                status = ProWstringFree(method);
+            }
+        }
         status = ProWstringFree(mdlName);
-        status = ProStringFree(opmenuName);
+        status = ProStringFree(optionMenu);
 
         status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, i + 1);
     }
     status = ProStringarrayFree(rows, length);
-
-    // TODO：完成后要修改第二列重新加载！
 }
 
-void ShowBatConvertUnitDialogDialog()
+void _initOptionMenu()
+{
+    ProError status;
+    status = ProUIOptionmenuNamesSet(BATCONVERTUNITDIALOG, OPTIONMENUMETHOD, convert_size, convert_methods_names);
+    status = ProUIOptionmenuLabelsSet(BATCONVERTUNITDIALOG, OPTIONMENUMETHOD, convert_size, convert_methods_labels);
+}
+
+void _initTable()
 {
     ProError status;
     int i, nFiles;
@@ -123,17 +153,6 @@ void ShowBatConvertUnitDialogDialog()
     wchar_t **row_labels;
     char optionMenu[20];
     wchar_t *p = NULL;
-
-    status = ProUIDialogCreate(BATCONVERTUNITDIALOG, BATCONVERTUNITDIALOG);
-
-    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITOK, (ProUIAction)_commitOK, NULL);
-    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITCANCEL, (ProUIAction)_commitCancel, NULL);
-    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITAPPLY, (ProUIAction)_commitApply, NULL);
-
-    status = ProUIProgressbarMinintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
-    status = ProUIProgressbarMaxintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 100);
-    status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
-
     status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&fileList);
     status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dirList);
     status = ProFilesList(NULL, L"*.prt", PRO_FILE_LIST_LATEST, &fileList, &dirList);
@@ -190,8 +209,26 @@ void ShowBatConvertUnitDialogDialog()
         }
         status = ProArrayFree((ProArray *)&fileList);
         status = ProArrayFree((ProArray *)&dirList);
-
-        status = ProUIDialogActivate(BATCONVERTUNITDIALOG, NULL);
-        status = ProUIDialogDestroy(BATCONVERTUNITDIALOG);
     }
+}
+
+void ShowBatConvertUnitDialogDialog()
+{
+    ProError status;
+
+    status = ProUIDialogCreate(BATCONVERTUNITDIALOG, BATCONVERTUNITDIALOG);
+
+    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITOK, (ProUIAction)_commitOK, NULL);
+    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITCANCEL, (ProUIAction)_commitCancel, NULL);
+    status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITAPPLY, (ProUIAction)_commitApply, NULL);
+
+    status = ProUIProgressbarMinintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
+    status = ProUIProgressbarMaxintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 100);
+    status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
+
+    _initOptionMenu();
+    _initTable();
+
+    status = ProUIDialogActivate(BATCONVERTUNITDIALOG, NULL);
+    status = ProUIDialogDestroy(BATCONVERTUNITDIALOG);
 }

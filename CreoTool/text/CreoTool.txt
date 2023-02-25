@@ -330,7 +330,7 @@ Input Contents of QRCode(less then 127 charactors)
 
 IMI_BatConvertUnitmenu
 Batch convert Part's unit to mmNs
-批量单位转换为mmNsll
+批量单位转换为mmNs
 #
 
 IMI_BatConvertUnitmenutips
