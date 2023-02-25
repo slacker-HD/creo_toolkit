@@ -22,6 +22,8 @@
         "PartShow.h": "c",
         "autoworkdirsetting.h": "c",
         "prodwgtable.h": "c",
-        "opensamenamefile.h": "c"
+        "opensamenamefile.h": "c",
+        "BatConvertUnit.h": "c",
+        "prorelset.h": "c"
     }
 }

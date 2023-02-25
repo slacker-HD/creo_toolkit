@@ -327,3 +327,13 @@ IMI_ENTER_QRCODETEXT
 Input Contents of QRCode(less then 127 charactors)
 输入二维码包含内容(少于127个字符)
 #
+
+IMI_BatConvertUnitmenu
+Batch convert Part's unit to mmNs
+批量单位转换为mmNsll
+#
+
+IMI_BatConvertUnitmenutips
+Batch convert Part's unit to mmNs
+批量单位转换为mmNs
+#

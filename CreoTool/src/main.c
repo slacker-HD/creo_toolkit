@@ -23,6 +23,7 @@
 #include "./includes/InsertQRCode.h"
 #include "./includes/RelFunctions.h"
 #include "./includes/OpenSamenameFile.h"
+#include "./includes/BatConvertUnit.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -109,6 +110,7 @@ int user_initialize()
     uiCmdCmdId IMI_BatExportPdfmenuID;
     uiCmdCmdId IMI_BatExportDwgmenuID;
     uiCmdCmdId IMI_ExportFamInstsID;
+    uiCmdCmdId IMI_BatConvertUnitID;
 
     uiCmdCmdId IMI_HideSelectedPartID;
     uiCmdCmdId IMI_HideUnselectedPartID;
@@ -209,6 +211,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BatConvertUnit_Act", (uiCmdCmdActFn)ShowBatConvertUnitDialogDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatConvertUnitID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatConvertUnitmenu", "IMI_BatConvertUnitmenu", "IMI_BatConvertUnitmenutips", NULL, PRO_B_TRUE, IMI_BatConvertUnitID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PartShowmenu", "IMI_PartShowmenu", NULL, PRO_B_TRUE, MSGFILE);
 
