@@ -24,6 +24,7 @@
         "prodwgtable.h": "c",
         "opensamenamefile.h": "c",
         "BatConvertUnit.h": "c",
-        "prorelset.h": "c"
+        "prorelset.h": "c",
+        "prouiprogressbar.h": "c"
     }
 }

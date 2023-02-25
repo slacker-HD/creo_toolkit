@@ -49,7 +49,7 @@
 #include <ProRelSet.h>
 #include <ProUITable.h>
 #include <ProUIOptionmenu.h>
-
+#include <ProUIProgressbar.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

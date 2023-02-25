@@ -78,20 +78,35 @@ void _commitApply()
     wchar_t *mdlName;
     char *opmenuName;
     wchar_t *method;
+    ProBoolean enabled;
     status = ProUITableRownamesGet(BATCONVERTUNITDIALOG, TABLEUNIT, &length, &rows);
+
+    status = ProUIProgressbarMinintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
+    status = ProUIProgressbarMaxintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, length);
+    status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
+
     for (i = 0; i < length; i++)
     {
         status = ProUITableCellLabelGet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[0], &mdlName);
         status = ProUITableCellComponentNameGet(BATCONVERTUNITDIALOG, TABLEUNIT, rows[i], column_names[2], &opmenuName);
-        status = ProUIOptionmenuValueGet(BATCONVERTUNITDIALOG, opmenuName, &method);
-
-        // status = ProMdlLoad(mdl,)
+        status = ProUIOptionmenuIsEnabled(BATCONVERTUNITDIALOG, opmenuName, &enabled);
+        if (enabled == PRO_B_TRUE)
+        {
+            status = ProUIOptionmenuValueGet(BATCONVERTUNITDIALOG, opmenuName, &method);
+            ShowMessageDialog(1, method);
+            // status = ProMdlLoad(mdl,)
+            // TODO：加载后调用再转化
+            status = ProWstringFree(method);
+        }
 
         status = ProWstringFree(mdlName);
         status = ProStringFree(opmenuName);
-        status = ProWstringFree(method);
+
+        status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, i + 1);
     }
     status = ProStringarrayFree(rows, length);
+
+    // TODO：完成后要修改第二列重新加载！
 }
 
 void ShowBatConvertUnitDialogDialog()
@@ -114,6 +129,10 @@ void ShowBatConvertUnitDialogDialog()
     status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITOK, (ProUIAction)_commitOK, NULL);
     status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITCANCEL, (ProUIAction)_commitCancel, NULL);
     status = ProUIPushbuttonActivateActionSet(BATCONVERTUNITDIALOG, BATCONVERTUNITCOMMITAPPLY, (ProUIAction)_commitApply, NULL);
+
+    status = ProUIProgressbarMinintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
+    status = ProUIProgressbarMaxintegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 100);
+    status = ProUIProgressbarIntegerSet(BATCONVERTUNITDIALOG, PROGRESSBARUNIT, 0);
 
     status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&fileList);
     status = ProArrayAlloc(0, sizeof(ProPath), 1, (ProArray *)&dirList);
