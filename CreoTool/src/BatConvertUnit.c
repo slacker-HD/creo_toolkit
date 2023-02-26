@@ -41,9 +41,8 @@ ProError _convUnit(ProMdl Mdl, ProUnitConvertType ConVertType)
             if (p)
             {
                 ret = ProMdlPrincipalunitsystemSet(Mdl, &unitSystem_array[i], ConVertType, PRO_B_TRUE, PRO_VALUE_UNUSED);
-                status = ProMdlSave(mdl);
-                status = ProArrayFree((ProArray *)&unitSystem_array);
-                return ret;
+                status = ProMdlSave(Mdl);
+                break;
             }
         }
         status = ProArrayFree((ProArray *)&unitSystem_array);
