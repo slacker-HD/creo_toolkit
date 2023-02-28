@@ -25,6 +25,7 @@
         "opensamenamefile.h": "c",
         "BatConvertUnit.h": "c",
         "prorelset.h": "c",
-        "prouiprogressbar.h": "c"
+        "prouiprogressbar.h": "c",
+        "copyinfos.h": "c"
     }
 }

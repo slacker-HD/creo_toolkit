@@ -24,6 +24,7 @@
 #include "./includes/RelFunctions.h"
 #include "./includes/OpenSamenameFile.h"
 #include "./includes/BatConvertUnit.h"
+#include "./includes/CopyInfos.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -119,6 +120,10 @@ int user_initialize()
     uiCmdCmdId IMI_LayerSetID;
     uiCmdCmdId IMI_InsertQRCodeID;
 
+    uiCmdCmdId IMI_CopyNameID;
+    uiCmdCmdId IMI_CopyPathID;
+    uiCmdCmdId IMI_CopyFullNameID;
+
     ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
@@ -181,6 +186,15 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_OpenSamenameFile_Act", (uiCmdCmdActFn)OpenSamenameFile, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &OpenSamenameFileID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenutips", NULL, PRO_B_TRUE, OpenSamenameFileID, MSGFILE);
 
+    status = ProCmdActionAdd("IMI_CopyName_Act", (uiCmdCmdActFn)CopyCurrentFileName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyNameID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyNamemenu", "IMI_CopyNamemenu", "IMI_CopyNamemenutips", NULL, PRO_B_TRUE, IMI_CopyNameID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_CopyPath_Act", (uiCmdCmdActFn)CopyCurrentFilePath, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyPathID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenutips", NULL, PRO_B_TRUE, IMI_CopyPathID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_CopyFullName_Act", (uiCmdCmdActFn)CopyCurrentFileFullName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyFullNameID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenutips", NULL, PRO_B_TRUE, IMI_CopyFullNameID, MSGFILE);
+
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
@@ -188,7 +202,6 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
-
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatOPensubmenu", "IMI_BatOPensubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

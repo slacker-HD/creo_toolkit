@@ -337,3 +337,33 @@ IMI_BatConvertUnitmenutips
 Batch convert Part's unit to mmNs
 批量单位转换为mmNs
 #
+
+IMI_CopyNamemenu
+Copy current file name
+复制当前模型名称
+#
+
+IMI_CopyNamemenutips
+Copy current file name
+复制当前模型名称
+#
+
+IMI_CopyPathmenu
+Copy current file path
+复制当前模型所在路径
+#
+
+IMI_CopyPathmenutips
+Copy current file path
+复制当前模型所在路径
+#
+
+IMI_CopyFullNamemenu
+Copy current file full name
+复制当前模型长文件名
+#
+
+IMI_CopyFullNamemenutips
+Copy current file full name
+复制当前模型长文件名
+#
