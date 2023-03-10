@@ -86,8 +86,8 @@ void ShowTestTreeDialogDialog()
     status = ProUITreeActivateActionSet(DIALOGNAME, TreeNAME, OnNodeActivate, NULL);
     status = ProUITreeAllnodesDeselect(DIALOGNAME, TreeNAME);
 
-    status = ProUITreeColumnCreate(DIALOGNAME, TreeNAME, "column1", L"labe11", 20, PROUITREECOL_LEFT);
-    status = ProUITreeColumnCreate(DIALOGNAME, TreeNAME, "column2", L"labe1123232", 20, PROUITREECOL_LEFT);
+    status = ProUITreeColumnCreate(DIALOGNAME, TreeNAME, "column1", L"labe1", 10, PROUITREECOL_LEFT);
+    status = ProUITreeColumnCreate(DIALOGNAME, TreeNAME, "column2", L"labe2", 10, PROUITREECOL_LEFT);
 
     status = ProUITreeUseScrollbarswhenNeeded(DIALOGNAME, TreeNAME);
 
