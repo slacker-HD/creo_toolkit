@@ -11,16 +11,12 @@ static uiCmdAccessState AccessDefault(uiCmdAccessMode access_mode)
 void _commitOK()
 {
     ProError status;
-    // status = ProUITreeNodeTypeFree(_nodetypedata);
-
     status = ProUIDialogExit(DIALOGNAME, 1);
 }
 
 void _commitCancel()
 {
     ProError status;
-    // status = ProUITreeNodeTypeFree(_nodetypedata);
-
     status = ProUIDialogExit(DIALOGNAME, 0);
 }
 
