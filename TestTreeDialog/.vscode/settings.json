@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "prowindows.h": "c",
+        "proasmcomp.h": "c",
+        "prouicmd.h": "c",
+        "prouilist.h": "c",
+        "prtinasmrename.h": "c",
+        "protoolkitdll.h": "c",
+        "promdlunits.h": "c",
+        "prouimessage.h": "c",
+        "promenubar.h": "c",
+        "promenu.h": "c",
+        "promaterial.h": "c",
+        "prouitree.h": "c"
+    }
+}

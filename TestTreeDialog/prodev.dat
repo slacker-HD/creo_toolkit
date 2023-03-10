@@ -1,0 +1,7 @@
+name TestTreeDialog
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\TestTreeDialog\TestTreeDialog.dll
+text_dir D:\mydoc\creo_toolkit\TestTreeDialog\text
+revision   18.0
+end
