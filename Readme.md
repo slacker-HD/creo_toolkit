@@ -227,3 +227,7 @@
 ## TestTableDialog
 
 + 原生对话框表格控件功能测试
+
+#TestTreeDialog
+
++原生对话框树控件功能测试

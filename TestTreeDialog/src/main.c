@@ -41,7 +41,7 @@ void OnNodeActivate(char *dialog, char *component, ProAppData data)
         }
         else
         {
-            status = ProUITreeNodeExpand(DIALOGNAME, TreeNAME, selnames[0], PRO_B_TRUE);
+            status = ProUITreeNodeExpand(DIALOGNAME, TreeNAME, selnames[0], PRO_B_FALSE);
             status = ProUITreeAllnodesDeselect(DIALOGNAME, TreeNAME);
         }
 
@@ -77,6 +77,7 @@ void ShowTestTreeDialogDialog()
     status = ProUITreeNodeAdd(DIALOGNAME, TreeNAME, "Node2", L"Node2", "Node1", "Branch");
     status = ProUITreeNodeAdd(DIALOGNAME, TreeNAME, "Node3", L"Node3", "Node2", "Branch");
     status = ProUITreeNodeAdd(DIALOGNAME, TreeNAME, "Node4", L"Node4", "Node3", "Leaf");
+    status = ProUITreeNodeAdd(DIALOGNAME, TreeNAME, "Node5", L"Node5", "Node2", "Leaf");
 
     status = ProUITreeNodeExpand(DIALOGNAME, TreeNAME, "Node1", PRO_B_TRUE);
     status = ProUITreeActivateActionSet(DIALOGNAME, TreeNAME, OnNodeActivate, NULL);
