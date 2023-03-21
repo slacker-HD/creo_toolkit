@@ -51,7 +51,8 @@ void ShowChangeWorkDirectoryDialog()
 	}
 
 	status = ProUIListNamesSet("ChangeWorkDirectory", "WorkDirList", pathLength, charNameList);
-	status = ProUIListLabelsSet("ChangeWorkDirectory", "WorkDirList", pathLength, &CurrentWorkDirectoryList);
+	status = ProUIListLabelsSet("ChangeWorkDirectory", "WorkDirList", pathLength, (wchar_t **)(&CurrentWorkDirectoryList)
+	);
 
 	status = ProUIPushbuttonActivateActionSet("ChangeWorkDirectory", "CommitChangeDir", (ProUIAction)_commitChangeDir, NULL);
 	status = ProUIPushbuttonActivateActionSet("ChangeWorkDirectory", "CommitCancelChangeDir", (ProUIAction)_commitCancelChangeDir, NULL);
