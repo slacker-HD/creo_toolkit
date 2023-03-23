@@ -1,0 +1,7 @@
+name FltkTest
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\FltkTest\x64\Debug\FltkTest.dll
+text_dir  D:\mydoc\creo_toolkit\FltkTest\text
+revision   18.0
+end
