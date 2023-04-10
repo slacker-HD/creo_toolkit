@@ -24,23 +24,27 @@ CFLAGS = $(CCFLAGS) $(INCS) $(MACH)
 # Libraries
 PTCLIBS = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64/obj/protoolkit.lib"
 PTCLIBS_DLL = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64/obj/protk_dll.lib"
-LIBS = libcmt.lib kernel32.lib user32.lib wsock32.lib advapi32.lib mpr.lib winspool.lib netapi32.lib psapi.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib ws2_32.lib Comctl32.lib "D:/mydoc/creo_toolkit/FltkTest/libs/fltkd.lib"
+FLTKLIB_PATH = "D:/mydoc/creo_toolkit/FltkTest/libs/"
+LIBS = libcmt.lib kernel32.lib user32.lib wsock32.lib advapi32.lib mpr.lib winspool.lib netapi32.lib psapi.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib ws2_32.lib $(TARGET_LIB_DIR)fltkd.lib
 
 # Object files
-OBJS = main.obj
+OBJS = main.obj FLTKTest.obj
 
 # Linker
 LINK = link
 
 # Dll target
 $(EXE_DLL) :  $(OBJS) $(PTCLIBS_DLL)
-	$(LINK) /subsystem:console -out:$(EXE_DLL) /debug /machine:amd64 /dll @<<longline.list  /force:multiple
+	$(LINK) /subsystem:console -out:$(EXE_DLL) /debug /machine:amd64 /dll @<<longline.list /force:multiple
 $(OBJS) $(PTCLIBS_DLL) $(LIBS)
 <<
 
 # object dependencies
 main.obj:  $(PROTOOL_SRC)/main.cpp
 	$(CC) $(CFLAGS) $(PROTOOL_SRC)/main.cpp
+
+FLTKTest.obj:  $(PROTOOL_SRC)/FLTKTest.cpp
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/FLTKTest.cpp
 
 clean :
 	del $(OBJS)

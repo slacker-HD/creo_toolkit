@@ -115,7 +115,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>.\FltkTest.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>C:\PTC\Creo 2.0\Common Files\M060\protoolkit\x86e_win64\obj;D:\mydoc\creo_toolkit\FltkTest\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>protk_dllmd.lib;psapi.lib;mpr.lib;Netapi32.lib;Comctl32.lib;fltkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>protk_dllmd.lib;psapi.lib;mpr.lib;Netapi32.lib;fltkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
