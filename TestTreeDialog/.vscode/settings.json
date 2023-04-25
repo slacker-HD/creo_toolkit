@@ -12,6 +12,9 @@
         "promenubar.h": "c",
         "promenu.h": "c",
         "promaterial.h": "c",
-        "prouitree.h": "c"
+        "prouitree.h": "c",
+        "prouiinputpanel.h": "c",
+        "proutil.h": "c",
+        "proarray.h": "c"
     }
 }
