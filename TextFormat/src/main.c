@@ -32,7 +32,7 @@ void FormatText()
     ProTextStyle textStyle;
 
 	status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectSource");
-    status = ProSelect((char *)"any_note,dtl_symbol,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
+    status = ProSelect((char *)"any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
     if (status != PRO_TK_NO_ERROR || size < 1)
     {
         return;
@@ -42,8 +42,8 @@ void FormatText()
     status = ProNoteTextStyleGet(&srcItem, &textStyle);
 
 	status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectDest");
-    status = ProSelect((char *)"any_note,dtl_symbol,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
-    if (status == PRO_TK_NO_ERROR || size > 0)
+    status = ProSelect((char *)"any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
+    if (status == PRO_TK_NO_ERROR && size > 0)
     {
         status = ProSelectionModelitemGet(itemSels[0], &destItem);
         status = ProNoteTextStyleSet(&destItem, textStyle);
