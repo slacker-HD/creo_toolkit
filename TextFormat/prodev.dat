@@ -1,0 +1,7 @@
+name TextFormat
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\TextFormat\TextFormat.dll
+text_dir D:\mydoc\creo_toolkit\TextFormat\text
+revision   18.0
+end
