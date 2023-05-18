@@ -61,7 +61,7 @@ void FormatText()
     if (status == PRO_TK_NO_ERROR && size > 0)
     {
         status = ProSelectionModelitemGet(itemSels[0], &destItem);
-        switch (srcItem.type)
+        switch (destItem.type)
         {
         case PRO_DIMENSION:
         case PRO_REF_DIMENSION:
