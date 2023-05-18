@@ -15,5 +15,6 @@
 #include <ProMenubar.h>
 #include <ProMdl.h>
 #include <ProNote.h>
+#include <ProAnnotation.h>
 
 #endif

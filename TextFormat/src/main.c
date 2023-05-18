@@ -30,23 +30,50 @@ void FormatText()
     int size;
     ProNote srcItem, destItem;
     ProTextStyle textStyle;
-
-	status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectSource");
-    status = ProSelect((char *)"any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
+    ProMdl drawing;
+    status = ProMdlCurrentGet(&drawing);
+    status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectSource");
+    status = ProSelect((char *)"dimension,ref_dim,any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
     if (status != PRO_TK_NO_ERROR || size < 1)
     {
         return;
     }
     status = ProSelectionModelitemGet(itemSels[0], &srcItem);
-    status = ProTextStyleAlloc(&textStyle);
-    status = ProNoteTextStyleGet(&srcItem, &textStyle);
 
-	status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectDest");
-    status = ProSelect((char *)"any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
+    status = ProTextStyleAlloc(&textStyle);
+    switch (srcItem.type)
+    {
+    case PRO_DIMENSION:
+    case PRO_REF_DIMENSION:
+    case PRO_GTOL:
+        status = ProAnnotationTextstyleGet(&srcItem, drawing, NULL, NULL, &textStyle);
+        break;
+    case PRO_NOTE:
+        status = ProNoteTextStyleGet(&srcItem, &textStyle);
+        break;
+    default:
+        status = ProTextStyleFree(&textStyle);
+        return;
+    }
+
+    status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectDest");
+    status = ProSelect((char *)"dimension,ref_dim,any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
     if (status == PRO_TK_NO_ERROR && size > 0)
     {
         status = ProSelectionModelitemGet(itemSels[0], &destItem);
-        status = ProNoteTextStyleSet(&destItem, textStyle);
+        switch (srcItem.type)
+        {
+        case PRO_DIMENSION:
+        case PRO_REF_DIMENSION:
+        case PRO_GTOL:
+            status = ProAnnotationTextstyleSet(&destItem, drawing, NULL, NULL, textStyle);
+            break;
+        case PRO_NOTE:
+            status = ProNoteTextStyleSet(&destItem, textStyle);
+            break;
+        default:
+            break;
+        }
     }
     status = ProTextStyleFree(&textStyle);
 }

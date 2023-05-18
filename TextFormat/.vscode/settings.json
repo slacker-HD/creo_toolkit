@@ -8,6 +8,7 @@
         "prtinasmrename.h": "c",
         "protoolkitdll.h": "c",
         "promdlunits.h": "c",
-        "prouimessage.h": "c"
+        "prouimessage.h": "c",
+        "proannotation.h": "c"
     }
 }
