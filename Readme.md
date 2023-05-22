@@ -239,3 +239,7 @@
 ## TextFormat
 
 + 文本格式化
+
+## DrawingScale
+
++ 设置绘图默认比例

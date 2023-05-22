@@ -1,0 +1,7 @@
+name DrawingScale
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\DrawingScale\DrawingScale.dll
+text_dir D:\mydoc\creo_toolkit\DrawingScale\text
+revision   18.0
+end
