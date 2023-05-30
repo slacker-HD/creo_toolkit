@@ -25,6 +25,7 @@
 #include "./includes/OpenSamenameFile.h"
 #include "./includes/BatConvertUnit.h"
 #include "./includes/CopyInfos.h"
+#include "./includes/TextFormat.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -119,6 +120,7 @@ int user_initialize()
 
     uiCmdCmdId IMI_LayerSetID;
     uiCmdCmdId IMI_InsertQRCodeID;
+    uiCmdCmdId IMI_FormatTextmenuID;
 
     uiCmdCmdId IMI_CopyNameID;
     uiCmdCmdId IMI_CopyPathID;
@@ -171,6 +173,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_InsertQRCode_Act", (uiCmdCmdActFn)ShowQRCodeDialog, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_InsertQRCodeID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodeID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

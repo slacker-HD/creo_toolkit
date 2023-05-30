@@ -85,7 +85,7 @@ int user_initialize()
 
     status = ProMenubarMenuAdd("IMI_TextFormatmenu", "IMI_TextFormatmenu", "About", PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_UnitInterPret_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
+    status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_TextFormatmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
 
     return PRO_TK_NO_ERROR;

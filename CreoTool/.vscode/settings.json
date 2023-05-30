@@ -26,6 +26,7 @@
         "BatConvertUnit.h": "c",
         "prorelset.h": "c",
         "prouiprogressbar.h": "c",
-        "copyinfos.h": "c"
+        "copyinfos.h": "c",
+        "textformat.h": "c"
     }
 }
