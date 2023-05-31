@@ -49,6 +49,7 @@ void FormatText()
         break;
     default:
         status = ProTextStyleFree(&textStyle);
+        status = ProSelectionarrayFree(SelBuffer);
         return;
     }
 

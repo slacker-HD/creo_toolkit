@@ -44,6 +44,26 @@
             },
             "dependsOn": [],
             "problemMatcher": []
+        },
+        {
+            "label": "Unlock",
+            "type": "process",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmd",
+            "args": [
+                "/d",
+                "/c",
+                "C:\\PTC\\Creo 6.0.2.0\\Parametric\\bin\\protk_unlock.bat",
+                "CreoTool.dll"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [],
+            "problemMatcher": []
         }
     ]
 }
