@@ -29,13 +29,13 @@ void SetDrawingScale()
     ProMdl drawing;
     double scale = 0.5;
     status = ProMdlCurrentGet(&drawing);
-   	status = ProMessageDisplay(MSGFILE, "IMI_PrompSetScaling", &scale);
-	status = ProMessageDoubleRead(NULL, &scale);
-	if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
-	{
-		return;
-	}
-    status = ProDrawingScaleSet(drawing,NULL,-1,scale);
+    status = ProMessageDisplay(MSGFILE, "IMI_PrompSetScaling", &scale);
+    status = ProMessageDoubleRead(NULL, &scale);
+    if (status != PRO_TK_NO_ERROR && status != PRO_TK_GENERAL_ERROR)
+    {
+        return;
+    }
+    status = ProDrawingScaleSet(drawing, NULL, -1, scale);
     status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel`;");
 }
 
