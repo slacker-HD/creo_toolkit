@@ -1,0 +1,7 @@
+name InsertDxf
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\InsertDxf\InsertDxf.dll
+text_dir D:\mydoc\creo_toolkit\InsertDxf\text
+revision   18.0
+end
