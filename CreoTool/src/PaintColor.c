@@ -64,7 +64,7 @@ ProError _asmVisitAcFn(ProFeature *p_object, ProError status, void *app_data)
 	return PRO_TK_NO_ERROR;
 }
 
-void PaintColor_AfterMacro()
+void AsmPaintColor_AfterMacro()
 {
 	ProError status;
 	ProMdl mdl;
@@ -74,7 +74,7 @@ void PaintColor_AfterMacro()
 	status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }
 
-void PaintColor()
+void PaintColorAsm()
 {
 	ProError status;
 	wchar_t macro[2000];
@@ -85,6 +85,34 @@ void PaintColor()
 	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);
 	status = ProWstringConcatenate(L"_control_btn` 1;", macro, PRO_VALUE_UNUSED);
 
-	hint = paintColor;
+	hint = AsmPaintColor;
 	status = ProMacroLoad(macro);
+}
+
+void PaintColorPrt()
+{
+	ProError status;
+	wchar_t macro[2000];
+	wchar_t _lastRibbonTab[20];
+
+	ProStringToWstring(_lastRibbonTab, LastRibbonTab);
+	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;~ Command `IMI_About_Act`;~ Activate `main_dlg_cur` `", macro, PRO_VALUE_UNUSED);
+	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);
+	status = ProWstringConcatenate(L"_control_btn` 1;", macro, PRO_VALUE_UNUSED);
+
+	hint = PrtPaintColor;
+	status = ProMacroLoad(macro);
+}
+
+void PrtPaintColor_AfterMacro()
+{
+	ProError status;
+	ProMdl mdl;
+	ProModelitem modelitem;
+
+	status = ProMdlCurrentGet(&mdl);
+	status = ProMdlToModelitem(mdl, &modelitem);
+	srand((unsigned int)time(0));
+	_repaintPart(modelitem);
+	status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }

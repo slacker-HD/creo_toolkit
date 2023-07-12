@@ -5,8 +5,11 @@
 
 extern char *LastRibbonTab;
 extern HINT hint;
-void PaintColor();
-void PaintColor_AfterMacro();
+void PaintColorAsm();
+void AsmPaintColor_AfterMacro();
+void PaintColorPrt();
+void PrtPaintColor_AfterMacro();
+
 void ClearColor();
 
 #endif

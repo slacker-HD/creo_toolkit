@@ -40,10 +40,13 @@ ProRelfuncArg *Args_IntToStr = NULL;
 
 void ShowAboutDialog()
 {
-
-    if (hint == paintColor)
+    if (hint == AsmPaintColor)
     {
-        PaintColor_AfterMacro();
+        AsmPaintColor_AfterMacro();
+    }
+    else if (hint == PrtPaintColor)
+    {
+        PrtPaintColor_AfterMacro();
     }
     else
     {
@@ -126,6 +129,8 @@ int user_initialize()
     uiCmdCmdId IMI_CopyPathID;
     uiCmdCmdId IMI_CopyFullNameID;
 
+    uiCmdCmdId IMI_PrtPaintColorID;
+
     ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
@@ -202,7 +207,7 @@ int user_initialize()
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
+    status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColorAsm, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_PaintColormenu", "IMI_PaintColormenu", "IMI_PaintColormenutips", NULL, PRO_B_TRUE, IMI_AboutID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
@@ -243,6 +248,11 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_ShowAllPart_Act", (uiCmdCmdActFn)RestoreSimpRep, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowAllPartID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenutips", NULL, PRO_B_TRUE, IMI_ShowAllPartID, MSGFILE);
+
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PrtOrpsubmenu", "IMI_PrtOrpsubmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_PrtPaintColor_Act", (uiCmdCmdActFn)PaintColorPrt, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtPaintColorID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColorID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);

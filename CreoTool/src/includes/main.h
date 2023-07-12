@@ -54,8 +54,9 @@
 extern char *LastRibbonTab;
 typedef enum _hint
 {
-    paintColor = 0,
+    AsmPaintColor = 0,
     About = 1,
+    PrtPaintColor = 2,
 } HINT;
 extern enum hint;
 
@@ -66,9 +67,9 @@ typedef struct _user_check_but
 } UserCheckBut;
 extern UserCheckBut check_but[2];
 
-extern ProRelfuncArg* Args_StrToDouble;
-extern ProRelfuncArg* Args_DoubleToStr;
-extern ProRelfuncArg* Args_IntToStr;
-extern ProRelfuncArg* Args_StrToInt;
+extern ProRelfuncArg *Args_StrToDouble;
+extern ProRelfuncArg *Args_DoubleToStr;
+extern ProRelfuncArg *Args_IntToStr;
+extern ProRelfuncArg *Args_StrToInt;
 
 #endif
