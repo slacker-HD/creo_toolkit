@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
 
 	initialize();
-	mvprintw(LINES / 2, (COLS - (int)strlen("启动CREO会话")) / 2, "启动CREO会话");
+	mvprintw(LINES / 2, (COLS - (int)strlen("启动CREO会话\xE4\xB8\xad...")) / 2, "启动CREO会话\xE4\xB8\xad...");
 	refresh();
 	ProEngineerStart("C:\\PTC\\Creo 2.0\\Parametric\\bin\\parametric.exe", "");
 	mvprintw(LINES / 2 + 1, (COLS - (int)strlen("会话已启动，按任意键关闭会话")) / 2, "会话已启动，按任意键关闭会话");
