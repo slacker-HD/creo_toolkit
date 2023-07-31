@@ -27,6 +27,7 @@
         "prorelset.h": "c",
         "prouiprogressbar.h": "c",
         "copyinfos.h": "c",
-        "textformat.h": "c"
+        "textformat.h": "c",
+        "autodirsetting.h": "c"
     }
 }

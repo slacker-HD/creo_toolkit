@@ -42,11 +42,11 @@ void ShowAboutDialog()
 {
     if (hint == AsmPaintColor)
     {
-        AsmPaintColor_AfterMacro();
+       AsmPaintColor_AfterMacro();
     }
     else if (hint == PrtPaintColor)
     {
-        PrtPaintColor_AfterMacro();
+       PrtPaintColor_AfterMacro();
     }
     else
     {
@@ -95,7 +95,7 @@ static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
 int user_initialize()
 {
     ProError status;
-    uiCmdCmdId IMI_ShowDirectoryID;
+    uiCmdCmdId IMI_ShowDirectorymenuID;
     uiCmdCmdId IMI_ShowWorkDirmenuID;
     uiCmdCmdId IMI_ChangeWorkDirectorymenuID;
     uiCmdCmdId IMI_OpenSamenameDrwmenuID;
@@ -103,33 +103,33 @@ int user_initialize()
     uiCmdCmdId IMI_HorizonAlignmenuID;
     uiCmdCmdId IMI_PurgeWorkDirmenuID;
     uiCmdCmdId IMI_TimeSavemenuID;
-    uiCmdCmdId IMI_AboutID;
+    uiCmdCmdId IMI_AboutmenuID;
     uiCmdCmdId IMI_PaintColormenuID;
     uiCmdCmdId IMI_ClearColormenuID;
     uiCmdCmdId IMI_MdlRenamemenuID;
-    uiCmdCmdId OpenSamenameFileID;
+    uiCmdCmdId IMI_OpenSamenameFilemenuID;
 
     uiCmdCmdId IMI_BatOPenPrtmenuID;
     uiCmdCmdId IMI_BatOPenDrwmenuID;
     uiCmdCmdId IMI_BatSnapShotmenuID;
     uiCmdCmdId IMI_BatExportPdfmenuID;
     uiCmdCmdId IMI_BatExportDwgmenuID;
-    uiCmdCmdId IMI_ExportFamInstsID;
+    uiCmdCmdId IMI_ExportFamInstsmenuID;
     uiCmdCmdId IMI_BatConvertUnitID;
 
-    uiCmdCmdId IMI_HideSelectedPartID;
-    uiCmdCmdId IMI_HideUnselectedPartID;
-    uiCmdCmdId IMI_ShowAllPartID;
+    uiCmdCmdId IMI_HideSelectedPartmenuID;
+    uiCmdCmdId IMI_HideUnselectedPartmenuID;
+    uiCmdCmdId IMI_ShowAllPartmenuID;
 
-    uiCmdCmdId IMI_LayerSetID;
-    uiCmdCmdId IMI_InsertQRCodeID;
+    uiCmdCmdId IMI_LayerSetmenuID;
+    uiCmdCmdId IMI_InsertQRCodemenuID;
     uiCmdCmdId IMI_FormatTextmenuID;
 
-    uiCmdCmdId IMI_CopyNameID;
-    uiCmdCmdId IMI_CopyPathID;
-    uiCmdCmdId IMI_CopyFullNameID;
+    uiCmdCmdId IMI_CopyNamemenuID;
+    uiCmdCmdId IMI_CopyPathmenuID;
+    uiCmdCmdId IMI_CopyFullNamemenuID;
 
-    uiCmdCmdId IMI_PrtPaintColorID;
+    uiCmdCmdId IMI_PrtPaintColormenuID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -147,115 +147,146 @@ int user_initialize()
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirToolsubmenu", "IMI_DirToolsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_ShowDirectory_Act", (uiCmdCmdActFn)ShowDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowDirectoryID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenutips", NULL, PRO_B_TRUE, IMI_ShowDirectoryID, MSGFILE);
+    status = ProCmdActionAdd("IMI_ShowDirectory_Act", (uiCmdCmdActFn)ShowDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowDirectorymenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenu", "IMI_ShowDirmenutips", NULL, PRO_B_TRUE, IMI_ShowDirectorymenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ShowDirectorymenuID,"IMI_ShowDirectorymenuID.png");
 
     status = ProCmdActionAdd("IMI_ShowWorkDirectory_Act", (uiCmdCmdActFn)ShowWorkDirectory, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowWorkDirmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenu", "IMI_ShowWorkDirmenutips", NULL, PRO_B_TRUE, IMI_ShowWorkDirmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ShowWorkDirmenuID,"IMI_ShowWorkDirectoryID.png");
 
-    status = ProCmdActionAdd("IMI_ChangeWorkDirectory_Act", (uiCmdCmdActFn)ShowChangeWorkDirectoryDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_MdlRenamemenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenutips", NULL, PRO_B_TRUE, IMI_MdlRenamemenuID, MSGFILE);
+    status = ProCmdActionAdd("IMI_ChangeWorkDirectory_Act", (uiCmdCmdActFn)ShowChangeWorkDirectoryDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_ChangeWorkDirectorymenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirToolsubmenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenu", "IMI_ChangeWorkDirectorymenutips", NULL, PRO_B_TRUE, IMI_ChangeWorkDirectorymenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ChangeWorkDirectorymenuID,"IMI_ChangeWorkDirectorymenuID.png");
 
     status = ProCmdOptionAdd("IMI_AutoDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[0].command));
     status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_TimeSave_Act", PRO_B_TRUE, check_but[0].command, MSGFILE);
+	status = ProCmdIconSet(check_but[0].command,"IMI_ShowDirectorymenuID.png");
 
     status = ProCmdOptionAdd("IMI_AutoWorkDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoWorkDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoWorkDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[1].command));
     status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSetting_Act", PRO_B_TRUE, check_but[1].command, MSGFILE);
+	status = ProCmdIconSet(check_but[1].command,"IMI_ShowDirectorymenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID,"IMI_OpenSamenameDrwmenuID.png");
 
     status = ProCmdActionAdd("IMI_VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalAlignmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenutips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_VerticalAlignmenuID,"IMI_VerticalAlignmenuID.png");
 
     status = ProCmdActionAdd("IMI_HorizonAlign_Act", (uiCmdCmdActFn)HorizonAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizonAlignmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenutips", NULL, PRO_B_TRUE, IMI_HorizonAlignmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_HorizonAlignmenuID,"IMI_HorizonAlignmenuID.png");
 
-    status = ProCmdActionAdd("IMI_LayerSet_Act", (uiCmdCmdActFn)CreateLayers, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_LayerSetID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenutips", NULL, PRO_B_TRUE, IMI_LayerSetID, MSGFILE);
+    status = ProCmdActionAdd("IMI_LayerSet_Act", (uiCmdCmdActFn)CreateLayers, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_LayerSetmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenutips", NULL, PRO_B_TRUE, IMI_LayerSetmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_LayerSetmenuID,"IMI_LayerSetmenuID.png");
 
-    status = ProCmdActionAdd("IMI_InsertQRCode_Act", (uiCmdCmdActFn)ShowQRCodeDialog, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_InsertQRCodeID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodeID, MSGFILE);
+    status = ProCmdActionAdd("IMI_InsertQRCode_Act", (uiCmdCmdActFn)ShowQRCodeDialog, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_InsertQRCodemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_InsertQRCodemenuID,"IMI_InsertQRCodemenuID.png");
 
     status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_FormatTextmenuID,"IMI_FormatTextmenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_PurgeWorkDir_Act", (uiCmdCmdActFn)ProMdlPurgeAll, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PurgeWorkDirmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenu", "IMI_PurgeWorkDirmenutips", NULL, PRO_B_TRUE, IMI_PurgeWorkDirmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_PurgeWorkDirmenuID,"IMI_PurgeWorkDirmenuID.png");
 
     status = ProCmdActionAdd("IMI_MdlRenamemenu_Act", (uiCmdCmdActFn)RenamePrtandDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_MdlRenamemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_MdlRenamemenu", "IMI_MdlRenamemenu", "IMI_MdlRenamemenutips", NULL, PRO_B_TRUE, IMI_MdlRenamemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_MdlRenamemenuID,"IMI_MdlRenamemenuID.png");
 
     status = ProCmdActionAdd("IMI_TimeSave_Act", (uiCmdCmdActFn)ShowTimeSaveDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_TimeSavemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_TimeSavemenu", "IMI_TimeSavemenu", "IMI_TimeSavemenutips", NULL, PRO_B_TRUE, IMI_TimeSavemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_TimeSavemenuID,"IMI_TimeSavemenuID.png");
 
-    status = ProCmdActionAdd("IMI_OpenSamenameFile_Act", (uiCmdCmdActFn)OpenSamenameFile, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &OpenSamenameFileID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenutips", NULL, PRO_B_TRUE, OpenSamenameFileID, MSGFILE);
+    status = ProCmdActionAdd("IMI_OpenSamenameFile_Act", (uiCmdCmdActFn)OpenSamenameFile, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameFilemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenu", "IMI_OpenSamenameFilemenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameFilemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_OpenSamenameFilemenuID,"IMI_OpenSamenameFilemenuID.png");
 
-    status = ProCmdActionAdd("IMI_CopyName_Act", (uiCmdCmdActFn)CopyCurrentFileName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyNameID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyNamemenu", "IMI_CopyNamemenu", "IMI_CopyNamemenutips", NULL, PRO_B_TRUE, IMI_CopyNameID, MSGFILE);
+    status = ProCmdActionAdd("IMI_CopyName_Act", (uiCmdCmdActFn)CopyCurrentFileName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyNamemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyNamemenu", "IMI_CopyNamemenu", "IMI_CopyNamemenutips", NULL, PRO_B_TRUE, IMI_CopyNamemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_CopyNamemenuID,"IMI_CopyNamemenuID.png");
 
-    status = ProCmdActionAdd("IMI_CopyPath_Act", (uiCmdCmdActFn)CopyCurrentFilePath, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyPathID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenutips", NULL, PRO_B_TRUE, IMI_CopyPathID, MSGFILE);
+    status = ProCmdActionAdd("IMI_CopyPath_Act", (uiCmdCmdActFn)CopyCurrentFilePath, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyPathmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenu", "IMI_CopyPathmenutips", NULL, PRO_B_TRUE, IMI_CopyPathmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_CopyPathmenuID,"IMI_CopyPathmenuID.png");
 
-    status = ProCmdActionAdd("IMI_CopyFullName_Act", (uiCmdCmdActFn)CopyCurrentFileFullName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyFullNameID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenutips", NULL, PRO_B_TRUE, IMI_CopyFullNameID, MSGFILE);
+    status = ProCmdActionAdd("IMI_CopyFullName_Act", (uiCmdCmdActFn)CopyCurrentFileFullName, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_CopyFullNamemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Filesubmenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenu", "IMI_CopyFullNamemenutips", NULL, PRO_B_TRUE, IMI_CopyFullNamemenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_CopyFullNamemenuID,"IMI_CopyFullNamemenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PaintColorsubmenu", "IMI_PaintColorsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColorAsm, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_PaintColormenu", "IMI_PaintColormenu", "IMI_PaintColormenutips", NULL, PRO_B_TRUE, IMI_AboutID, MSGFILE);
+    status = ProCmdActionAdd("IMI_PaintColor_Act", (uiCmdCmdActFn)PaintColorAsm, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_PaintColormenu", "IMI_PaintColormenu", "IMI_PaintColormenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_PaintColormenuID,"IMI_PaintColormenuID.png");
 
-    status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+    status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ClearColormenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenutips", NULL, PRO_B_TRUE, IMI_ClearColormenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ClearColormenuID,"IMI_ClearColormenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatOPensubmenu", "IMI_BatOPensubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_BatOPenPrt_Act", (uiCmdCmdActFn)OpenPrts, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatOPenPrtmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatOPensubmenu", "IMI_BatOPenPrtmenu", "IMI_BatOPenPrtmenu", "IMI_BatOPenPrtmenutips", NULL, PRO_B_TRUE, IMI_BatOPenPrtmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_BatOPenPrtmenuID,"IMI_BatOPenPrtmenuID.png");
 
     status = ProCmdActionAdd("IMI_BatOPenDrw_Act", (uiCmdCmdActFn)OpenDrws, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatOPenDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatOPensubmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenu", "IMI_BatOPenDrwmenutips", NULL, PRO_B_TRUE, IMI_BatOPenDrwmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_BatOPenDrwmenuID,"IMI_BatOPenDrwmenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_BatExportmenu", "IMI_BatExportmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_BatSnapShot_Act", (uiCmdCmdActFn)BatSnapShot, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatSnapShotmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenu", "IMI_BatSnapShotmenutips", NULL, PRO_B_TRUE, IMI_BatSnapShotmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_BatSnapShotmenuID,"IMI_BatSnapShotmenuID.png");
 
     status = ProCmdActionAdd("IMI_BatExportPdf_Act", (uiCmdCmdActFn)BatToPdf, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportPdfmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenu", "IMI_BatExportPdfmenutips", NULL, PRO_B_TRUE, IMI_BatExportPdfmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_BatExportPdfmenuID,"IMI_BatExportPdfmenuID.png");
 
     status = ProCmdActionAdd("IMI_BatExportDwg_Act", (uiCmdCmdActFn)BatToDwg, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatExportDwgmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenu", "IMI_BatExportDwgmenutips", NULL, PRO_B_TRUE, IMI_BatExportDwgmenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsID, MSGFILE);
+    status = ProCmdActionAdd("IMI_ExportFamInsts_Act", (uiCmdCmdActFn)ExportFamInsts, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_ExportFamInstsmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenu", "IMI_ExportFamInstsmenutips", NULL, PRO_B_TRUE, IMI_ExportFamInstsmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ExportFamInstsmenuID,"IMI_ExportFamInstsmenuID.png");
 
     status = ProCmdActionAdd("IMI_BatConvertUnit_Act", (uiCmdCmdActFn)ShowBatConvertUnitDialogDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_BatConvertUnitID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BatExportmenu", "IMI_BatConvertUnitmenu", "IMI_BatConvertUnitmenu", "IMI_BatConvertUnitmenutips", NULL, PRO_B_TRUE, IMI_BatConvertUnitID, MSGFILE);
+	status = ProCmdIconSet(IMI_ExportFamInstsmenuID,"IMI_ExportFamInstsmenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PartShowmenu", "IMI_PartShowmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_HideSelectedPart_Act", (uiCmdCmdActFn)HideSelectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideSelectedPartID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideSelectedPartID, MSGFILE);
+    status = ProCmdActionAdd("IMI_HideSelectedPart_Act", (uiCmdCmdActFn)HideSelectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideSelectedPartmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenu", "IMI_HideSelectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideSelectedPartmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_HideSelectedPartmenuID,"IMI_HideSelectedPartmenuID.png");
 
-    status = ProCmdActionAdd("IMI_HideUnselectedPart_Act", (uiCmdCmdActFn)HideUnselectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideUnselectedPartID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideUnselectedPartID, MSGFILE);
+    status = ProCmdActionAdd("IMI_HideUnselectedPart_Act", (uiCmdCmdActFn)HideUnselectedPart, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_HideUnselectedPartmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenu", "IMI_HideUnselectedPartmenutips", NULL, PRO_B_TRUE, IMI_HideUnselectedPartmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_HideUnselectedPartmenuID,"IMI_HideUnselectedPartmenuID.png");
 
-    status = ProCmdActionAdd("IMI_ShowAllPart_Act", (uiCmdCmdActFn)RestoreSimpRep, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowAllPartID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenutips", NULL, PRO_B_TRUE, IMI_ShowAllPartID, MSGFILE);
+    status = ProCmdActionAdd("IMI_ShowAllPart_Act", (uiCmdCmdActFn)RestoreSimpRep, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ShowAllPartmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PartShowmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenu", "IMI_ShowAllPartmenutips", NULL, PRO_B_TRUE, IMI_ShowAllPartmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_ShowAllPartmenuID,"IMI_ShowAllPartmenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_PrtOrpsubmenu", "IMI_PrtOrpsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_PrtPaintColor_Act", (uiCmdCmdActFn)PaintColorPrt, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtPaintColorID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColorID, MSGFILE);
+    status = ProCmdActionAdd("IMI_PrtPaintColor_Act", (uiCmdCmdActFn)PaintColorPrt, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtPaintColormenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColormenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_PrtPaintColormenuID,"IMI_PrtPaintColormenuID.png");
 
-    status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_PaintColormenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
+    status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_AboutmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_AboutmenuID,"IMI_AboutmenuID.png");
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
     status = AsmTreePrtinAsmShowOrHidePopupmenusSetup();
