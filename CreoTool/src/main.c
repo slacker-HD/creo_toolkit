@@ -161,17 +161,11 @@ int user_initialize()
 
     status = ProCmdOptionAdd("IMI_AutoDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[0].command));
     status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_AutoDirSettingChkMenu", "IMI_TimeSave_Act", PRO_B_TRUE, check_but[0].command, MSGFILE);
-	status = ProCmdIconSet(check_but[0].command,"IMI_ShowDirectorymenuID.png");
 
     status = ProCmdOptionAdd("IMI_AutoWorkDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoWorkDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoWorkDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[1].command));
     status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSetting_Act", PRO_B_TRUE, check_but[1].command, MSGFILE);
-	status = ProCmdIconSet(check_but[1].command,"IMI_ShowDirectorymenuID.png");
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
-
-    status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
-	status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID,"IMI_OpenSamenameDrwmenuID.png");
 
     status = ProCmdActionAdd("IMI_VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalAlignmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenutips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
@@ -283,6 +277,10 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_PrtPaintColor_Act", (uiCmdCmdActFn)PaintColorPrt, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtPaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColormenuID, MSGFILE);
 	status = ProCmdIconSet(IMI_PrtPaintColormenuID,"IMI_PrtPaintColormenuID.png");
+
+    status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+	status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID,"IMI_OpenSamenameDrwmenuID.png");
 
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_AboutmenuID, MSGFILE);
