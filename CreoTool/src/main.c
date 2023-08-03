@@ -223,7 +223,7 @@ int user_initialize()
     status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_PaintColormenu", "IMI_PaintColormenu", "IMI_PaintColormenutips", NULL, PRO_B_TRUE, IMI_PaintColormenuID, MSGFILE);
 	status = ProCmdIconSet(IMI_PaintColormenuID,"IMI_PaintColormenuID.png");
 
-    status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ClearColormenuID);
+    status = ProCmdActionAdd("IMI_ClearColor_Act", (uiCmdCmdActFn)ClearColor, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_ClearColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PaintColorsubmenu", "IMI_ClearColormenu", "IMI_ClearColormenu", "IMI_ClearColormenutips", NULL, PRO_B_TRUE, IMI_ClearColormenuID, MSGFILE);
 	status = ProCmdIconSet(IMI_ClearColormenuID,"IMI_ClearColormenuID.png");
 
