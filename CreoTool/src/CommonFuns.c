@@ -169,4 +169,5 @@ ProError ProUserRefreshAll()
     solid = ProMdlToSolid(mdl);
     status = ProSolidRegenerate(solid, PRO_REGEN_NO_FLAGS);
     status = ProWindowRepaint(PRO_VALUE_UNUSED);
+    return PRO_TK_NO_ERROR;
 }
