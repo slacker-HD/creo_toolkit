@@ -168,6 +168,10 @@ int user_initialize()
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
+    status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+    status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID, "IMI_OpenSamenameDrwmenuID.png");
+
     status = ProCmdActionAdd("IMI_VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalAlignmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenutips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_VerticalAlignmenuID, "IMI_VerticalAlignmenuID.png");
@@ -282,10 +286,6 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_PrtSettransSurface_Act", (uiCmdCmdActFn)PrtSettransSurface, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtSettransSurfacemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenutips", NULL, PRO_B_TRUE, IMI_PrtSettransSurfacemenuID, MSGFILE);
     status = ProCmdIconSet(IMI_PrtSettransSurfacemenuID, "IMI_PrtSettransSurfacemenuID.png");
-
-    status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
-    status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID, "IMI_OpenSamenameDrwmenuID.png");
 
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_AboutmenuID, MSGFILE);

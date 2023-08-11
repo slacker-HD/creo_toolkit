@@ -109,7 +109,7 @@ void PrtSettransSurface()
 	int i, n_size;
 
 	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_SelectSurface");
-	status = ProSelect((char *)"surface", -1, NULL, NULL, NULL, NULL, &sel_array, &n_size);
+	status = ProSelect((char *)"sldsurface,surface", -1, NULL, NULL, NULL, NULL, &sel_array, &n_size);
 	status = ProArraySizeGet((ProArray *)sel_array, &n_size);
 	if (status != PRO_TK_NO_ERROR || n_size < 1)
 	{
@@ -119,7 +119,7 @@ void PrtSettransSurface()
 	{
 		status = ProSelectionModelitemGet(sel_array[i], &modelitem);
 		status = ProSurfaceAppearancepropsGet(&modelitem, &appearanceProperties);
-		appearanceProperties.transparency = 0.6;
+		appearanceProperties.transparency = 0.9;
 		status = ProSurfaceAppearancepropsSet(&modelitem, &appearanceProperties);
 	}
 	status = ProMacroLoad(L"~ Command `ProCmdRegenPart` ;~ Command `ProCmdWinActivate`;");
