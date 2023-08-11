@@ -11,5 +11,6 @@ void PaintColorPrt();
 void PrtPaintColor_AfterMacro();
 
 void ClearColor();
+void PrtSettransSurface();
 
 #endif

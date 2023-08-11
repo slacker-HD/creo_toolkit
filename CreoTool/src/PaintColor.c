@@ -99,3 +99,28 @@ void PrtPaintColor_AfterMacro()
 	_repaintPart(modelitem);
 	status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }
+
+void PrtSettransSurface()
+{
+	ProError status;
+	ProModelitem modelitem;
+	ProSurfaceAppearanceProps appearanceProperties;
+	ProSelection *sel_array;
+	int i, n_size;
+
+	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_SelectSurface");
+	status = ProSelect((char *)"surface", -1, NULL, NULL, NULL, NULL, &sel_array, &n_size);
+	status = ProArraySizeGet((ProArray *)sel_array, &n_size);
+	if (status != PRO_TK_NO_ERROR || n_size < 1)
+	{
+		return;
+	}
+	for (i = 0; i < n_size; i++)
+	{
+		status = ProSelectionModelitemGet(sel_array[i], &modelitem);
+		status = ProSurfaceAppearancepropsGet(&modelitem, &appearanceProperties);
+		appearanceProperties.transparency = 0.6;
+		status = ProSurfaceAppearancepropsSet(&modelitem, &appearanceProperties);
+	}
+	status = ProMacroLoad(L"~ Command `ProCmdRegenPart` ;~ Command `ProCmdWinActivate`;");
+}

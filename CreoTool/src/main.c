@@ -130,6 +130,7 @@ int user_initialize()
     uiCmdCmdId IMI_CopyFullNamemenuID;
 
     uiCmdCmdId IMI_PrtPaintColormenuID;
+    uiCmdCmdId IMI_PrtSettransSurfacemenuID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -277,6 +278,10 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_PrtPaintColor_Act", (uiCmdCmdActFn)PaintColorPrt, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtPaintColormenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColormenuID, MSGFILE);
     status = ProCmdIconSet(IMI_PrtPaintColormenuID, "IMI_PrtPaintColormenuID.png");
+
+    status = ProCmdActionAdd("IMI_PrtSettransSurface_Act", (uiCmdCmdActFn)PrtSettransSurface, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtSettransSurfacemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenutips", NULL, PRO_B_TRUE, IMI_PrtSettransSurfacemenuID, MSGFILE);
+    status = ProCmdIconSet(IMI_PrtSettransSurfacemenuID, "IMI_PrtSettransSurfacemenuID.png");
 
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
