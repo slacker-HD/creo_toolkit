@@ -127,36 +127,46 @@ uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
 
 void ChangeDirToMdlPath()
 {
-	ProError status;
-	ProMdl mdl;
-	ProMdldata mdldata;
-	ProPath mdlpath;
-	status = ProMdlCurrentGet(&mdl);
-	if (status != PRO_TK_NO_ERROR)
-		return;
-	status = ProMdlDataGet(mdl, &mdldata);
-	if (status != PRO_TK_NO_ERROR)
-		return;
+    ProError status;
+    ProMdl mdl;
+    ProMdldata mdldata;
+    ProPath mdlpath;
+    status = ProMdlCurrentGet(&mdl);
+    if (status != PRO_TK_NO_ERROR)
+        return;
+    status = ProMdlDataGet(mdl, &mdldata);
+    if (status != PRO_TK_NO_ERROR)
+        return;
 
-	status = ProMdlPathGet(mdldata, mdlpath);
-	status = ProDirectoryChange(mdlpath);
+    status = ProMdlPathGet(mdldata, mdlpath);
+    status = ProDirectoryChange(mdlpath);
 }
 
 ProError ProUserWindowChangePost()
 {
-	ChangeDirToMdlPath();
-	return PRO_TK_NO_ERROR;
+    ChangeDirToMdlPath();
+    return PRO_TK_NO_ERROR;
 }
 
 ProError ProUserMdlSavePost(ProMdldata *p_mdldata)
 {
-	ChangeDirToMdlPath();
-	return PRO_TK_NO_ERROR;
+    ChangeDirToMdlPath();
+    return PRO_TK_NO_ERROR;
 }
 
 ProError ProUserMdlRetrievePost(ProModel *p_mdldata)
 {
-	ChangeDirToMdlPath();
-	return PRO_TK_NO_ERROR;
+    ChangeDirToMdlPath();
+    return PRO_TK_NO_ERROR;
 }
 
+ProError ProUserRefreshAll()
+{
+    ProError status;
+    ProMdl mdl;
+    ProSolid solid;
+    status = ProMdlCurrentGet(&mdl);
+    solid = ProMdlToSolid(mdl);
+    status = ProSolidRegenerate(solid, PRO_REGEN_NO_FLAGS);
+    status = ProWindowRepaint(PRO_VALUE_UNUSED);
+}

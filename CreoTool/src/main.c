@@ -283,7 +283,7 @@ int user_initialize()
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenu", "IMI_PrtPaintColormenutips", NULL, PRO_B_TRUE, IMI_PrtPaintColormenuID, MSGFILE);
     status = ProCmdIconSet(IMI_PrtPaintColormenuID, "IMI_PrtPaintColormenuID.png");
 
-    status = ProCmdActionAdd("IMI_PrtSettransSurface_Act", (uiCmdCmdActFn)PrtSettransSurface, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtSettransSurfacemenuID);
+    status = ProCmdActionAdd("IMI_PrtSettransSurface_Act", (uiCmdCmdActFn)PrtSettransSurface, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtSettransSurfacemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenutips", NULL, PRO_B_TRUE, IMI_PrtSettransSurfacemenuID, MSGFILE);
     status = ProCmdIconSet(IMI_PrtSettransSurfacemenuID, "IMI_PrtSettransSurfacemenuID.png");
 

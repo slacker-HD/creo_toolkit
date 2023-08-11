@@ -119,8 +119,8 @@ void PrtSettransSurface()
 	{
 		status = ProSelectionModelitemGet(sel_array[i], &modelitem);
 		status = ProSurfaceAppearancepropsGet(&modelitem, &appearanceProperties);
-		appearanceProperties.transparency = 0.9;
+		appearanceProperties.transparency = 0.7;
 		status = ProSurfaceAppearancepropsSet(&modelitem, &appearanceProperties);
 	}
-	status = ProMacroLoad(L"~ Command `ProCmdRegenPart` ;~ Command `ProCmdWinActivate`;");
+	status = ProUserRefreshAll();
 }
