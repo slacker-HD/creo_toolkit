@@ -50,6 +50,7 @@
 #include <ProUITable.h>
 #include <ProUIOptionmenu.h>
 #include <ProUIProgressbar.h>
+#include <ProSurface.h>
 
 extern char *LastRibbonTab;
 typedef enum _hint

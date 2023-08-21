@@ -3,13 +3,8 @@
 void ClearColor()
 {
 	ProError status;
-	wchar_t _lastRibbonTab[20];
 	wchar_t macro[450];
-
-	ProStringToWstring(_lastRibbonTab, LastRibbonTab);
-	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;~ Activate `main_dlg_cur` `", macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(L"_control_btn` 1;", macro, PRO_VALUE_UNUSED);
+	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;", macro, PRO_VALUE_UNUSED);
 	status = ProMacroLoad(macro);
 }
 
@@ -77,14 +72,8 @@ void AsmPaintColor_AfterMacro()
 void PaintColorAsm()
 {
 	ProError status;
-	wchar_t macro[2000];
-	wchar_t _lastRibbonTab[20];
-
-	ProStringToWstring(_lastRibbonTab, LastRibbonTab);
-	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;~ Command `IMI_About_Act`;~ Activate `main_dlg_cur` `", macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(L"_control_btn` 1;", macro, PRO_VALUE_UNUSED);
-
+	wchar_t macro[100];
+	status = ProWstringCopy(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;", macro, PRO_VALUE_UNUSED);
 	hint = AsmPaintColor;
 	status = ProMacroLoad(macro);
 }
@@ -92,14 +81,8 @@ void PaintColorAsm()
 void PaintColorPrt()
 {
 	ProError status;
-	wchar_t macro[2000];
-	wchar_t _lastRibbonTab[20];
-
-	ProStringToWstring(_lastRibbonTab, LastRibbonTab);
-	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;~ Command `IMI_About_Act`;~ Activate `main_dlg_cur` `", macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(_lastRibbonTab, macro, PRO_VALUE_UNUSED);
-	status = ProWstringConcatenate(L"_control_btn` 1;", macro, PRO_VALUE_UNUSED);
-
+	wchar_t macro[100];
+	status = ProWstringCopy(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;", macro, PRO_VALUE_UNUSED);
 	hint = PrtPaintColor;
 	status = ProMacroLoad(macro);
 }
@@ -115,4 +98,29 @@ void PrtPaintColor_AfterMacro()
 	srand((unsigned int)time(0));
 	_repaintPart(modelitem);
 	status = ProWindowRepaint(PRO_VALUE_UNUSED);
+}
+
+void PrtSettransSurface()
+{
+	ProError status;
+	ProModelitem modelitem;
+	ProSurfaceAppearanceProps appearanceProperties;
+	ProSelection *sel_array;
+	int i, n_size;
+
+	status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_SelectSurface");
+	status = ProSelect((char *)"sldsurface,surface", -1, NULL, NULL, NULL, NULL, &sel_array, &n_size);
+	status = ProArraySizeGet((ProArray *)sel_array, &n_size);
+	if (status != PRO_TK_NO_ERROR || n_size < 1)
+	{
+		return;
+	}
+	for (i = 0; i < n_size; i++)
+	{
+		status = ProSelectionModelitemGet(sel_array[i], &modelitem);
+		status = ProSurfaceAppearancepropsGet(&modelitem, &appearanceProperties);
+		appearanceProperties.transparency = 0.7;
+		status = ProSurfaceAppearancepropsSet(&modelitem, &appearanceProperties);
+	}
+	status = ProUserRefreshAll();
 }

@@ -32,7 +32,7 @@ void SetInsertDxf()
     status = ProFileOpen(NULL, L"*.dxf", NULL, NULL, NULL, NULL, dxfFile);
     if (status == PRO_TK_NO_ERROR)
     {
-        status = Pro2dImportAppend(PRO_DXF_FILE, L"D:\\Test.dxf", mdl, PRO_B_TRUE, PRO_B_TRUE);
+        status = Pro2dImportAppend(PRO_DXF_FILE, dxfFile, mdl, PRO_B_TRUE, PRO_B_TRUE);
         status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel`;");
     }
 }

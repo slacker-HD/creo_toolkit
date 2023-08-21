@@ -407,3 +407,18 @@ IMI_PrtPaintColormenutips
 Random apperance
 随机着色
 #
+
+IMI_PrtSettransSurfacemenu
+Set surface transparent
+面透明
+#
+
+IMI_PrtSettransSurfacemenutips
+Set surface transparent
+面透明
+#
+
+IMI_MESSAGE_SelectSurface
+Choose the surface to be transparent
+选择要设置透明的表面
+#

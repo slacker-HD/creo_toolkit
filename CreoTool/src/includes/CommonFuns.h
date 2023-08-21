@@ -12,6 +12,7 @@ uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode);
 ProError ProUserWindowChangePost();
 ProError ProUserMdlSavePost(ProMdldata *p_mdldata);
 ProError ProUserMdlRetrievePost(ProModel *p_mdldata);
+ProError ProUserRefreshAll();
 
 extern char *LastRibbonTab;
 extern ProPath *CurrentWorkDirectoryList;
