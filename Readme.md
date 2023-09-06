@@ -255,3 +255,8 @@
 ## SurfaceTransparent
 
 + 设置面透明
+
+## InsertNote
+
++ 插入note
+

@@ -1,0 +1,14 @@
+﻿IMI_NoteInsertmenu
+插入Note
+插入Note
+#
+
+IMI_InsertNotemenu
+插入Note
+插入Note
+#
+
+IMI_InsertNotemenutips
+插入Note
+插入Note
+#
