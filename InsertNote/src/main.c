@@ -81,6 +81,7 @@ ProError ProUsrSetFreeAttatchment(ProDtlnotedata *notedata, ProDtlattach *attach
     ProError status;
     ProMouseButton mouse_button;
     ProPoint3d pos;
+   	status = ProMessageDisplay(MSGFILE, "IMI_PickmouseHint");
     status = ProMousePickGet(PRO_LEFT_BUTTON, &mouse_button, pos);
     if (status != PRO_TK_NO_ERROR)
         return status;
@@ -104,7 +105,7 @@ ProError ProUsrSetDefaultColor(ProDtlnotedata *notedata)
     return status;
 }
 
-ProError ProUsrNoteCreate()
+ProError ProUsrNoteCreate(wchar_t *wtext)
 {
     ProError status;
     ProMdl mdl;
@@ -112,16 +113,11 @@ ProError ProUsrNoteCreate()
     ProDtlnotedata notedata;
     ProDtlnoteline line;
     ProDtlnotetext text;
-    ProLine wtext;
     double height;
     ProColor color;
     ProDtlattach attachment;
 
     status = ProMdlCurrentGet(&mdl);
-    if (status != PRO_TK_NO_ERROR)
-        return status;
-
-    status = ProMessageStringRead(PRO_LINE_SIZE, wtext);
     if (status != PRO_TK_NO_ERROR)
         return status;
 
@@ -159,7 +155,7 @@ ProError ProUsrNoteCreate()
 void SetInsertNote()
 {
     ProError status;
-    status = ProUsrNoteCreate();
+    status = ProUsrNoteCreate(L"这是一个测试字符串");
 }
 
 int user_initialize()

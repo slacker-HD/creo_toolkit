@@ -12,3 +12,8 @@ IMI_InsertNotemenutips
 插入Note
 插入Note
 #
+
+IMI_PickmouseHint
+点击鼠标左键摆放注释
+点击鼠标左键摆放注释
+#
