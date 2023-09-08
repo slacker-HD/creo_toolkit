@@ -1,12 +1,12 @@
 
 # File Name
-MAKEFILENAME = AsyncProjectNOVS
+MAKEFILENAME = AsyncProjectWithPdcurses
 
 # Machine Type
 PRO_MACHINE_TYPE = x86e_win64
 
 # Executable names
-EXE = AsyncProjectNOVS.exe
+EXE = AsyncProjectWithPdcurses.exe
 
 # Pro/Toolkit Source & Machine Loadpoint  (EXTERNAL USE - DEFAULT)
 PROTOOL_SRC = ./src
