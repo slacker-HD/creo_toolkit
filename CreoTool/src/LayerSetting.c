@@ -66,14 +66,14 @@ ProError DimensionVisitAction(ProDimension *dimension, ProError status, ProAppDa
 
 ProError GtolVisitAction(ProGtol *gtol, ProError status, ProAppData data)
 {
-    ProDimension **p_gtols = (ProGtol **)data;
+    ProGtol **p_gtols = (ProGtol **)data;
     status = ProArrayObjectAdd((ProArray *)p_gtols, PRO_VALUE_UNUSED, 1, gtol);
     return status;
 }
 
 ProError SurffinVisitAction(ProSurfFinish *surffin, ProError status, ProAppData data)
 {
-    ProDimension **p_surffins = (ProGtol **)data;
+    ProSurfFinish **p_surffins = (ProSurfFinish **)data;
     status = ProArrayObjectAdd((ProArray *)p_surffins, PRO_VALUE_UNUSED, 1, surffin);
     return status;
 }
