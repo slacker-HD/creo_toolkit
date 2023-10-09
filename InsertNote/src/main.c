@@ -64,7 +64,7 @@ ProError ProUsrSetDtlText(ProMdl mdl, ProDtlnotetext *text, double height, doubl
 {
     ProError status;
     // 设定一行的字体等
-    status = ProUsrGetTextDefaultHeight(mdl, &height);
+    status = gaodu(*text, height);
     status = ProDtlnotetextWidthSet(*text, width);
     status = ProDtlnotetextSlantSet(*text, slant);
     status = ProDtlnotetextThicknessSet(*text, thickness);
@@ -81,7 +81,7 @@ ProError ProUsrSetFreeAttatchment(ProDtlnotedata *notedata, ProDtlattach *attach
     ProError status;
     ProMouseButton mouse_button;
     ProPoint3d pos;
-   	status = ProMessageDisplay(MSGFILE, "IMI_PickmouseHint");
+    status = ProMessageDisplay(MSGFILE, "IMI_PickmouseHint");
     status = ProMousePickGet(PRO_LEFT_BUTTON, &mouse_button, pos);
     if (status != PRO_TK_NO_ERROR)
         return status;
