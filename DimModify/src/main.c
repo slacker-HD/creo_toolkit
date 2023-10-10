@@ -83,14 +83,14 @@ ProError ProAddDimSuffix(ProLine prefix)
     return status;
 }
 
-ProError ProSetDimText(ProLine text, int line)
+ProError ProSetDimText(wchar_t *text, int line)
 {
     ProError status;
     ProSelection *SelBuffer = NULL;
     int i, size, textarraysize;
     ProModelitem Modelitem;
     wchar_t **p_text;
-
+    wchar_t *nulText = L"";
     status = ProMessageDisplay(MSGFILE, "IMI_MESSAGE_SelectDimension");
     status = ProSelect((char *)"dimension,ref_dim", 1, NULL, NULL, NULL, NULL, &SelBuffer, &size);
     if (status != PRO_TK_NO_ERROR || size < 1)
@@ -102,27 +102,21 @@ ProError ProSetDimText(ProLine text, int line)
 
     if (Modelitem.type == PRO_DIMENSION)
     {
-        // !NOT IMPLEMENT
-        // status = ProDimensionTextWstringsGet(&Modelitem, &p_text);
-        // status = ProArraySizeGet(p_text, &textarraysize);
+        status = ProDimensionTextWstringsGet(&Modelitem, &p_text);
+        status = ProArraySizeGet(p_text, &textarraysize);
 
-        // if (textarraysize < line)
-        // {
-        //     for (i = 0; i < line; i++)
-        //     {
-        //         status = ProArrayObjectAdd((ProArray *)&p_text, 1, 1, &p);
-        //     }
-        //     status = ProWstringFree(p_text[1]);
-        //     status = ProArrayObjectRemove((ProArray *)&p_text, 0, 1);
-        // }
-        // else
-        // {
-        //     status = ProArrayObjectAdd((ProArray *)&p_text, 1, 1, &p);
-        //     if (textarraysize > 1)
-        //         status = ProArrayObjectRemove((ProArray *)&p_text, 2, 1);
-        // }
-        // status = ProDimensionTextWstringsSet(&Modelitem, p_text);
-        // status = ProArrayFree((ProArray *)&p_text);
+        if (textarraysize < line)
+        {
+            for (i = 0; i < line - textarraysize; i++)
+            {
+                status = ProArrayObjectAdd((ProArray *)&p_text, 1, 1, &nulText);
+            }
+        }
+        status = ProArrayObjectAdd((ProArray *)&p_text, line - 1, 1, &text);
+        status = ProArrayObjectRemove((ProArray *)&p_text, line, 1);
+
+        status = ProDimensionTextWstringsSet(&Modelitem, p_text);
+        status = ProArrayFree((ProArray *)&p_text);
     }
     return status;
 }
@@ -142,7 +136,6 @@ void AddDimSuffix()
 void SetDimText()
 {
     ProError status;
-    status = ProSetDimText(L"测试文字", 1);
     status = ProSetDimText(L"测试第二行文字", 2);
 }
 
@@ -153,7 +146,8 @@ int user_initialize()
 
     status = ProMenubarMenuAdd("IMI_DimModifymenu", "IMI_DimModifymenu", "About", PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_AddDimPrefix_Act", (uiCmdCmdActFn)AddDimPrefix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimPrefixmenuID);
+    status = ProCmdActionAdd("IMI_AddD
+    imPrefix_Act", (uiCmdCmdActFn)AddDimPrefix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimPrefixmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DimModifymenu", "IMI_AddDimPrefixMenu", "IMI_AddDimPrefixMenu", "IMI_AddDimPrefixMenutips", NULL, PRO_B_TRUE, IMI_AddDimPrefixmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_AddDimSuffix_Act", (uiCmdCmdActFn)AddDimSuffix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimSuffixmenuID);
