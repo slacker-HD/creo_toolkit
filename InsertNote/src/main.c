@@ -64,7 +64,7 @@ ProError ProUsrSetDtlText(ProMdl mdl, ProDtlnotetext *text, double height, doubl
 {
     ProError status;
     // 设定一行的字体等
-    status = gaodu(*text, height);
+    status = ProDtlnotetextHeightSet(*text, height);
     status = ProDtlnotetextWidthSet(*text, width);
     status = ProDtlnotetextSlantSet(*text, slant);
     status = ProDtlnotetextThicknessSet(*text, thickness);
