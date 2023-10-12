@@ -146,8 +146,7 @@ int user_initialize()
 
     status = ProMenubarMenuAdd("IMI_DimModifymenu", "IMI_DimModifymenu", "About", PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_AddD
-    imPrefix_Act", (uiCmdCmdActFn)AddDimPrefix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimPrefixmenuID);
+    status = ProCmdActionAdd("IMI_AddDimPrefix_Act", (uiCmdCmdActFn)AddDimPrefix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimPrefixmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DimModifymenu", "IMI_AddDimPrefixMenu", "IMI_AddDimPrefixMenu", "IMI_AddDimPrefixMenutips", NULL, PRO_B_TRUE, IMI_AddDimPrefixmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_AddDimSuffix_Act", (uiCmdCmdActFn)AddDimSuffix, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_AddDimSuffixmenuID);
