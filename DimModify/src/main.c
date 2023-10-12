@@ -51,7 +51,7 @@ ProError ProAddDimPrefix(ProLine prefix)
     if (status != PRO_TK_NO_ERROR)
         return status;
 
-    if (Modelitem.type == PRO_DIMENSION)
+    if (Modelitem.type == PRO_DIMENSION || Modelitem.type == PRO_REF_DIMENSION)
     {
         status = ProDimensionPrefixSet(&Modelitem, prefix);
         status = ProUserRefreshAll();
@@ -75,7 +75,7 @@ ProError ProAddDimSuffix(ProLine prefix)
     if (status != PRO_TK_NO_ERROR)
         return status;
 
-    if (Modelitem.type == PRO_DIMENSION)
+    if (Modelitem.type == PRO_DIMENSION || Modelitem.type == PRO_REF_DIMENSION)
     {
         status = ProDimensionSuffixSet(&Modelitem, prefix);
         status = ProUserRefreshAll();
@@ -100,7 +100,7 @@ ProError ProSetDimText(wchar_t *text, int line)
     if (status != PRO_TK_NO_ERROR)
         return status;
 
-    if (Modelitem.type == PRO_DIMENSION)
+    if (Modelitem.type == PRO_DIMENSION || Modelitem.type == PRO_REF_DIMENSION)
     {
         status = ProDimensionTextWstringsGet(&Modelitem, &p_text);
         status = ProArraySizeGet(p_text, &textarraysize);
@@ -130,13 +130,13 @@ void AddDimPrefix()
 void AddDimSuffix()
 {
     ProError status;
-    status = ProAddDimSuffix(L"ºó×º");
+    status = ProAddDimSuffix(L"ï¿½ï¿½×º");
 }
 
 void SetDimText()
 {
     ProError status;
-    status = ProSetDimText(L"²âÊÔµÚ¶þÐÐÎÄ×Ö", 2);
+    status = ProSetDimText(L"ï¿½ï¿½ï¿½ÔµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 2);
 }
 
 int user_initialize()
