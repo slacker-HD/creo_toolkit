@@ -1,0 +1,7 @@
+name ConfigOptSet
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ConfigOptSet\ConfigOptSet.dll
+text_dir D:\mydoc\creo_toolkit\ConfigOptSet\text
+revision   18.0
+end
