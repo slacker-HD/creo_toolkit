@@ -7,6 +7,7 @@
         "prouimessage.h": "c",
         "promdl.h": "c",
         "prodrawing.h": "c",
-        "promessage.h": "c"
+        "promessage.h": "c",
+        "promenubar.h": "c"
     }
 }

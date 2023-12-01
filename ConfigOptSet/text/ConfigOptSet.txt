@@ -37,3 +37,13 @@ IMI_OptionFinPrompt
 主页已设置
 主页已设置
 #
+
+IMI_GetConfigArrayMenu
+读取自动加载程序列表
+读取自动加载程序列表
+#
+
+IMI_GetConfigArrayMenutips
+读取自动加载程序列表
+读取自动加载程序列表
+#

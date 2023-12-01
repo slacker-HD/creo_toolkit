@@ -15,5 +15,6 @@
 #include <ProToolkitDll.h>
 #include <ProMenubar.h>
 #include <ProMessage.h>
+#include <ProArray.h>
 
 #endif
