@@ -31,6 +31,10 @@ void FormatText()
     ProNote srcItem, destItem;
     ProTextStyle textStyle;
     ProMdl drawing;
+    ProDwgtable table;
+    int table_segment, row, column;
+    ProDtlnote note;
+
     status = ProMdlCurrentGet(&drawing);
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectSource");
     status = ProSelect((char *)"dimension,ref_dim,any_note,table_cell", 1, NULL, NULL, NULL, NULL, &itemSels, &size);
@@ -50,6 +54,12 @@ void FormatText()
         break;
     case PRO_NOTE:
         status = ProNoteTextStyleGet(&srcItem, &textStyle);
+        break;
+    case PRO_DRAW_TABLE_CELL:
+        status = ProSelectionDwgtblcellGet(itemSels[0], &table_segment, &row, &column);
+        status = ProSelectionDwgtableGet(itemSels[0], &table);
+        status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
+        status = ProNoteTextStyleGet(&note, &textStyle);
         break;
     default:
         status = ProTextStyleFree(&textStyle);
@@ -71,11 +81,18 @@ void FormatText()
         case PRO_NOTE:
             status = ProNoteTextStyleSet(&destItem, textStyle);
             break;
+        case PRO_DRAW_TABLE_CELL:
+            status = ProSelectionDwgtblcellGet(itemSels[0], &table_segment, &row, &column);
+            status = ProSelectionDwgtableGet(itemSels[0], &table);
+            status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
+            status = ProNoteTextStyleSet(&note, textStyle);
+            break;
         default:
             break;
         }
     }
     status = ProTextStyleFree(&textStyle);
+    status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
 }
 
 int user_initialize()

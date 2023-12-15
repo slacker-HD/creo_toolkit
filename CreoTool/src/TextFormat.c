@@ -10,7 +10,9 @@ void FormatText()
     ProMdl drawing;
     ProModelitem item;
     ProSelection *SelBuffer = NULL;
-
+    ProDwgtable table;
+    int table_segment, row, column;
+    ProDtlnote note;
     if (CurrentMdlType() != PRO_DRAWING)
     {
         return;
@@ -47,6 +49,12 @@ void FormatText()
     case PRO_NOTE:
         status = ProNoteTextStyleGet(&srcItem, &textStyle);
         break;
+    case PRO_DRAW_TABLE_CELL:
+        status = ProSelectionDwgtblcellGet(itemSels[0], &table_segment, &row, &column);
+        status = ProSelectionDwgtableGet(itemSels[0], &table);
+        status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
+        status = ProNoteTextStyleGet(&note, &textStyle);
+        break;
     default:
         status = ProTextStyleFree(&textStyle);
         status = ProSelectionarrayFree(SelBuffer);
@@ -67,6 +75,12 @@ void FormatText()
             case PRO_GTOL:
                 status = ProAnnotationTextstyleSet(&destItem, drawing, NULL, NULL, textStyle);
                 break;
+            case PRO_DRAW_TABLE_CELL:
+                status = ProSelectionDwgtblcellGet(itemSels[i], &table_segment, &row, &column);
+                status = ProSelectionDwgtableGet(itemSels[i], &table);
+                status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
+                status = ProNoteTextStyleSet(&note, textStyle);
+                break;
             case PRO_NOTE:
                 status = ProNoteTextStyleSet(&destItem, textStyle);
                 break;
@@ -77,4 +91,5 @@ void FormatText()
     }
     status = ProTextStyleFree(&textStyle);
     status = ProSelectionarrayFree(SelBuffer);
+    status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
 }
