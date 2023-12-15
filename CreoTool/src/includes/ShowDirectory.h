@@ -5,4 +5,5 @@
 
 void ShowDirectory();
 void ShowWorkDirectory();
+ProError AsmTreeComponentDirectoryOpenPopupmenusSetup();
 #endif

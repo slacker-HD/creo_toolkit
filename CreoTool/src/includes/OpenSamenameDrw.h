@@ -4,4 +4,5 @@
 #include "CommonFuns.h"
 
 void OpenSamenameDrw();
+ProError AsmTreeDrwOpenPopupmenusSetup();
 #endif

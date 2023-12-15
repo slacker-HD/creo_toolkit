@@ -49,12 +49,12 @@ Drawing shortcuts
 #
 
 IMI_OpenSamenameDrwmenu
-Open the drawing with same name
+Open Drw with same name
 打开同名工程图
 #
 
 IMI_OpenSamenameDrwmenutips
-Open the drawing with same name
+Open Drw with same name
 打开同名工程图
 #
 
@@ -421,4 +421,24 @@ Set surface transparent
 IMI_MESSAGE_SelectSurface
 Choose the surface to be transparent
 选择要设置透明的表面
+#
+
+IMI_OpenDrwinAsm
+Open Drw with same name
+打开同名工程图
+#
+
+IMI_OpenDrwinAsmtips
+Open Drw with same name
+打开同名工程图
+#
+
+IMI_OpenComponentDirectory
+Open Component directory
+打开组件所在目录
+#
+
+IMI_OpenComponentDirectorytips
+Open Component directory
+打开组件所在目录
 #

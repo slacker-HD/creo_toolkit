@@ -293,6 +293,8 @@ int user_initialize()
 
     status = AsmTreePrtinAsmRenamePopupmenusSetup();
     status = AsmTreePrtinAsmShowOrHidePopupmenusSetup();
+    status = AsmTreeDrwOpenPopupmenusSetup();
+    status = AsmTreeComponentDirectoryOpenPopupmenusSetup();
 
     status = ProNotificationSet(PRO_RIBBON_TAB_SWITCH, (ProFunction)ProRibbonTabSwitchNotification);
     status = ProNotificationSet(PRO_DIRECTORY_CHANGE_POST, (ProFunction)ProDirectoryChangeNotification);
