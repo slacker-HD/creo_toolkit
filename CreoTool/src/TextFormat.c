@@ -2,7 +2,7 @@
 
 void FormatText()
 {
-    ProError status, err;
+    ProError status;
     ProSelection *itemSels = NULL;
     int i, size;
     ProNote srcItem, destItem;
@@ -18,7 +18,7 @@ void FormatText()
 
     status = ProMdlCurrentGet(&drawing);
     status = ProSelbufferSelectionsGet(&SelBuffer);
-    err = ProArraySizeGet(SelBuffer, &size);
+    status = ProArraySizeGet(SelBuffer, &size);
 
     if (status == PRO_TK_NO_ERROR && size == 1)
     {
