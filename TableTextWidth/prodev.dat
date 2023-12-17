@@ -1,0 +1,7 @@
+name TableTextWidth
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\TableTextWidth\TableTextWidth.dll
+text_dir D:\mydoc\creo_toolkit\TableTextWidth\text
+revision   18.0
+end
