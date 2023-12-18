@@ -3,14 +3,34 @@
 表格文字宽度适配
 #
 
-IMI_FormatTextmenu
-表格文字宽度适配
-表格文字宽度适配
+IMI_TextWrapmenu
+表格文字自动换行
+表格文字自动换行
 #
 
-IMI_FormatTextmenutips
-表格文字宽度适配
-表格文字宽度适配
+IMI_TextWrapmenutips
+表格文字自动换行
+表格文字自动换行
+#
+
+IMI_TextWidthIncmenu
+增加字宽5%%
+增加字宽5%%
+#
+
+IMI_TextWidthIncmenutips
+增加字宽5%%
+增加字宽5%%
+#
+
+IMI_TextWidthDecmenu
+减少字宽5%%
+减少字宽5%%
+#
+
+IMI_TextWidthDecmenutips
+减少字宽5%%
+减少字宽5%%
 #
 
 IMI_PrompSelectTableCell
