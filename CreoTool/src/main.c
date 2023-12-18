@@ -26,6 +26,7 @@
 #include "./includes/BatConvertUnit.h"
 #include "./includes/CopyInfos.h"
 #include "./includes/TextFormat.h"
+#include "./includes/TableCellWidth.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -132,6 +133,8 @@ int user_initialize()
     uiCmdCmdId IMI_PrtPaintColormenuID;
     uiCmdCmdId IMI_PrtSettransSurfacemenuID;
 
+    uiCmdCmdId IMI_TextWrapmenuID;
+
     ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
@@ -166,31 +169,34 @@ int user_initialize()
     status = ProCmdOptionAdd("IMI_AutoWorkDirSettingChkMenu_Act", (uiCmdCmdActFn)AutoWorkDirSettingFn, PRO_B_TRUE, (uiCmdCmdValFn)AutoWorkDirSettingValueFn, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &(check_but[1].command));
     status = ProMenubarmenuChkbuttonAdd("IMI_DirToolsubmenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSettingChkMenu", "IMI_AutoWorkDirSetting_Act", PRO_B_TRUE, check_but[1].command, MSGFILE);
 
-    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DirDRWsubmenu", "IMI_DirDRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_DRWsubmenu", "IMI_DRWsubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_OpenSamenameDrw_Act", (uiCmdCmdActFn)OpenSamenameDrw, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_OpenSamenameDrwmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenu", "IMI_OpenSamenameDrwmenutips", NULL, PRO_B_TRUE, IMI_OpenSamenameDrwmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_OpenSamenameDrwmenuID, "IMI_OpenSamenameDrwmenuID.png");
 
     status = ProCmdActionAdd("IMI_VerticalAlign_Act", (uiCmdCmdActFn)VerticalAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalAlignmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenutips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenu", "IMI_VerticalAlignmenutips", NULL, PRO_B_TRUE, IMI_VerticalAlignmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_VerticalAlignmenuID, "IMI_VerticalAlignmenuID.png");
 
     status = ProCmdActionAdd("IMI_HorizonAlign_Act", (uiCmdCmdActFn)HorizonAlign, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizonAlignmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenutips", NULL, PRO_B_TRUE, IMI_HorizonAlignmenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenu", "IMI_HorizonAlignmenutips", NULL, PRO_B_TRUE, IMI_HorizonAlignmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_HorizonAlignmenuID, "IMI_HorizonAlignmenuID.png");
 
     status = ProCmdActionAdd("IMI_LayerSet_Act", (uiCmdCmdActFn)CreateLayers, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_LayerSetmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenutips", NULL, PRO_B_TRUE, IMI_LayerSetmenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenu", "IMI_LayerSetmenutips", NULL, PRO_B_TRUE, IMI_LayerSetmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_LayerSetmenuID, "IMI_LayerSetmenuID.png");
 
     status = ProCmdActionAdd("IMI_InsertQRCode_Act", (uiCmdCmdActFn)ShowQRCodeDialog, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_InsertQRCodemenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodemenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenu", "IMI_InsertQRCodemenutips", NULL, PRO_B_TRUE, IMI_InsertQRCodemenuID, MSGFILE);
     status = ProCmdIconSet(IMI_InsertQRCodemenuID, "IMI_InsertQRCodemenuID.png");
 
     status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DirDRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_FormatTextmenuID, "IMI_FormatTextmenuID.png");
+
+    status = ProCmdActionAdd("IMI_TextWrap_Act", (uiCmdCmdActFn)WrapText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWrapmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenutips", NULL, PRO_B_TRUE, IMI_TextWrapmenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

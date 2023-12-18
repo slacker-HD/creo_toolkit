@@ -28,6 +28,7 @@
         "prouiprogressbar.h": "c",
         "copyinfos.h": "c",
         "textformat.h": "c",
-        "autodirsetting.h": "c"
+        "autodirsetting.h": "c",
+        "tablecellwidth.h": "c"
     }
 }

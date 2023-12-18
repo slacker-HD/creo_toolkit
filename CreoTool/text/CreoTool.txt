@@ -43,7 +43,7 @@ Automatically set current model to working directory
 自动设置工作目录为当前模型路径
 #
 
-IMI_DirDRWsubmenu
+IMI_DRWsubmenu
 Drawing shortcuts
 工程图快捷操作
 #
@@ -441,4 +441,14 @@ Open Component directory
 IMI_OpenComponentDirectorytips
 Open Component directory
 打开组件所在目录
+#
+
+IMI_TextWrapmenu
+表格文字自动换行
+表格文字自动换行
+#
+
+IMI_TextWrapmenutips
+表格文字自动换行
+表格文字自动换行
 #
