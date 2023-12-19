@@ -26,7 +26,7 @@
 #include "./includes/BatConvertUnit.h"
 #include "./includes/CopyInfos.h"
 #include "./includes/TextFormat.h"
-#include "./includes/TableCellWidth.h"
+#include "./includes/TableCellFormat.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -134,6 +134,15 @@ int user_initialize()
     uiCmdCmdId IMI_PrtSettransSurfacemenuID;
 
     uiCmdCmdId IMI_TextWrapmenuID;
+    uiCmdCmdId IMI_NoteAlignTopLeftmenuID;
+    uiCmdCmdId IMI_NoteAlignTopCentermenuID;
+    uiCmdCmdId IMI_NoteAlignTopRightmenuID;
+    uiCmdCmdId IMI_NoteAlignMiddleLeftmenuID;
+    uiCmdCmdId IMI_NoteAlignMiddleCentermenuID;
+    uiCmdCmdId IMI_NoteAlignMiddleRightmenuID;
+    uiCmdCmdId IMI_NoteAlignBottomLeftmenuID;
+    uiCmdCmdId IMI_NoteAlignBottomCentermenuID;
+    uiCmdCmdId IMI_NoteAlignBottomRightmenuID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -194,9 +203,6 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_FormatTextmenuID, "IMI_FormatTextmenuID.png");
-
-    status = ProCmdActionAdd("IMI_TextWrap_Act", (uiCmdCmdActFn)WrapText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWrapmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenutips", NULL, PRO_B_TRUE, IMI_TextWrapmenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 
@@ -292,6 +298,38 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_PrtSettransSurface_Act", (uiCmdCmdActFn)PrtSettransSurface, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_PrtSettransSurfacemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_PrtOrpsubmenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenu", "IMI_PrtSettransSurfacemenutips", NULL, PRO_B_TRUE, IMI_PrtSettransSurfacemenuID, MSGFILE);
     status = ProCmdIconSet(IMI_PrtSettransSurfacemenuID, "IMI_PrtSettransSurfacemenuID.png");
+
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_TableCellsubmenu", "IMI_TableCellsubmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_TextWrap_Act", (uiCmdCmdActFn)WrapText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWrapmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenutips", NULL, PRO_B_TRUE, IMI_TextWrapmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignTopLeft_Act", (uiCmdCmdActFn)AlignTopLeft, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignTopLeftmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignTopLeftmenu", "IMI_NoteAlignTopLeftmenu", "IMI_NoteAlignTopLeftmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignTopLeftmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignTopCenter_Act", (uiCmdCmdActFn)AlignTopCenter, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignTopCentermenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignTopCentermenu", "IMI_NoteAlignTopCentermenu", "IMI_NoteAlignTopCentermenutips", NULL, PRO_B_TRUE, IMI_NoteAlignTopCentermenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignTopRight_Act", (uiCmdCmdActFn)AlignTopRight, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignTopRightmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignTopRightmenu", "IMI_NoteAlignTopRightmenu", "IMI_NoteAlignTopRightmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignTopRightmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignMiddleLeft_Act", (uiCmdCmdActFn)AlignMiddleLeft, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignMiddleLeftmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignMiddleLeftmenu", "IMI_NoteAlignMiddleLeftmenu", "IMI_NoteAlignMiddleLeftmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignMiddleLeftmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignMiddleCenter_Act", (uiCmdCmdActFn)AlignMiddleCenter, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignMiddleCentermenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignMiddleCentermenu", "IMI_NoteAlignMiddleCentermenu", "IMI_NoteAlignMiddleCentermenutips", NULL, PRO_B_TRUE, IMI_NoteAlignMiddleCentermenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignMiddleRight_Act", (uiCmdCmdActFn)AlignMiddleRight, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignMiddleRightmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignMiddleRightmenu", "IMI_NoteAlignMiddleRightmenu", "IMI_NoteAlignMiddleRightmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignMiddleRightmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignBottomLeft_Act", (uiCmdCmdActFn)AlignBottomLeft, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignBottomLeftmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignBottomLeftmenu", "IMI_NoteAlignBottomLeftmenu", "IMI_NoteAlignBottomLeftmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignBottomLeftmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignBottomCenter_Act", (uiCmdCmdActFn)AlignBottomCenter, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignBottomCentermenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignBottomCentermenu", "IMI_NoteAlignBottomCentermenu", "IMI_NoteAlignBottomCentermenutips", NULL, PRO_B_TRUE, IMI_NoteAlignBottomCentermenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_NoteAlignBottomRight_Act", (uiCmdCmdActFn)AlignBottomRight, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignBottomRightmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignBottomRightmenu", "IMI_NoteAlignBottomRightmenu", "IMI_NoteAlignBottomRightmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignBottomRightmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_AboutmenuID, MSGFILE);

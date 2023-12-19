@@ -434,21 +434,116 @@ Open Drw with same name
 #
 
 IMI_OpenComponentDirectory
-Open Component directory
+Open component directory
 打开组件所在目录
 #
 
 IMI_OpenComponentDirectorytips
-Open Component directory
+Open component directory
 打开组件所在目录
 #
 
 IMI_TextWrapmenu
-表格文字自动换行
+Wrap texts in table cell
 表格文字自动换行
 #
 
 IMI_TextWrapmenutips
+Wrap texts in table cell
 表格文字自动换行
-表格文字自动换行
+#
+
+IMI_TableCellsubmenu
+Table text processing
+表格文字处理
+#
+
+IMI_NoteAlignTopLeftmenu
+Align top left
+靠上左对齐
+#
+
+IMI_NoteAlignTopLeftmenutips
+Align top left
+靠上左对齐
+#
+
+IMI_NoteAlignTopCentermenu
+Align top center
+靠上居中对齐
+#
+
+IMI_NoteAlignTopCentermenutips
+Align top center
+靠上居中对齐
+#
+
+IMI_NoteAlignTopRightmenu
+Align top right
+靠上右对齐
+#
+
+IMI_NoteAlignTopRightmenutips
+Align top right
+靠上右对齐
+#
+
+IMI_NoteAlignMiddleLeftmenu
+Align middle left
+中部左对齐
+#
+
+IMI_NoteAlignMiddleLeftmenutips
+Align middle left
+中部左对齐
+#
+
+IMI_NoteAlignMiddleCentermenu
+Align middle center
+水平居中
+#
+
+IMI_NoteAlignMiddleCentermenutips
+Align middle center
+水平居中
+#
+
+IMI_NoteAlignMiddleRightmenu
+Align middle right
+中部右对齐
+#
+
+IMI_NoteAlignMiddleRightmenutips
+Align middle right
+中部右对齐
+#
+
+IMI_NoteAlignBottomLeftmenu
+Align bottom left
+靠下左对齐
+#
+
+IMI_NoteAlignBottomLeftmenutips
+Align bottom left
+靠下左对齐
+#
+
+IMI_NoteAlignBottomCentermenu
+Align bottom center
+靠下居中对齐
+#
+
+IMI_NoteAlignBottomCentermenutips
+Align bottom center
+靠下居中对齐
+#
+
+IMI_NoteAlignBottomRightmenu
+Align bottom right
+靠下右对齐
+#
+
+IMI_NoteAlignBottomRightmenutips
+Align bottom right
+靠下右对齐
 #

@@ -29,6 +29,6 @@
         "copyinfos.h": "c",
         "textformat.h": "c",
         "autodirsetting.h": "c",
-        "tablecellwidth.h": "c"
+        "TableCellFormat.h": "c"
     }
 }
