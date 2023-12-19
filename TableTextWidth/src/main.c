@@ -1,13 +1,5 @@
 #include "./includes/main.h"
 
-#define NOTE_FONT 0
-#define NOTE_ULINE 1
-#define NOTE_THICKNESS 2
-#define NOTE_SLANT 3
-#define NOTE_WIDTH 4
-#define NOTE_HEIGHT 5
-#define NOTE_STRING 6
-
 int CurrentMdlType()
 {
     ProMdl mdl;
