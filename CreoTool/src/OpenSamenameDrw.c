@@ -62,7 +62,6 @@ void openDrwinAsm()
         status = ProDirectoryChange(currentPath);
         status = ProSelectionarrayFree(sels);
     }
-    return PRO_TK_NO_ERROR;
 }
 
 ProError AsmTreeDrwOpenPopupmenusSetup()

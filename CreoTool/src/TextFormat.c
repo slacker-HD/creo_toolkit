@@ -91,5 +91,5 @@ void FormatText()
     }
     status = ProTextStyleFree(&textStyle);
     status = ProSelectionarrayFree(SelBuffer);
-    status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
+    status = ProUserRefreshCurrentSheet();
 }

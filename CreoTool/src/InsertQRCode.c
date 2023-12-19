@@ -131,7 +131,7 @@ void _placeQrCodeSymbol(char *Message, ProVector Position)
 		return;
 	status = ProMdlCurrentGet((ProMdl *)&drawing);
 	QRcodeSymdefCreate(drawing, QRCODESYMNAME, Message, Position);
-	status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ; ~Command `ProCmdWinActivate`;");
+    status = ProUserRefreshCurrentSheet();
 }
 
 void _placeQrCode(char *Message, ProVector MousePosition)

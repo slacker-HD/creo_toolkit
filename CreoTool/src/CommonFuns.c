@@ -125,7 +125,7 @@ uiCmdAccessState ComponentInASMTreeAccess(uiCmdAccessMode mode)
     return access_result;
 }
 
-void ChangeDirToMdlPath()
+ProError ProUserChangeDirToMdlPath()
 {
     ProError status;
     ProMdl mdl;
@@ -133,31 +133,35 @@ void ChangeDirToMdlPath()
     ProPath mdlpath;
     status = ProMdlCurrentGet(&mdl);
     if (status != PRO_TK_NO_ERROR)
-        return;
+        return PRO_TK_BAD_CONTEXT;
     status = ProMdlDataGet(mdl, &mdldata);
     if (status != PRO_TK_NO_ERROR)
-        return;
+        return PRO_TK_BAD_CONTEXT;
 
     status = ProMdlPathGet(mdldata, mdlpath);
     status = ProDirectoryChange(mdlpath);
+    return PRO_TK_NO_ERROR;
 }
 
 ProError ProUserWindowChangePost()
 {
-    ChangeDirToMdlPath();
-    return PRO_TK_NO_ERROR;
+    ProError status;
+    status = ProUserChangeDirToMdlPath();
+    return status;
 }
 
 ProError ProUserMdlSavePost(ProMdldata *p_mdldata)
 {
-    ChangeDirToMdlPath();
-    return PRO_TK_NO_ERROR;
+    ProError status;
+    status = ProUserChangeDirToMdlPath();
+    return status;
 }
 
 ProError ProUserMdlRetrievePost(ProModel *p_mdldata)
 {
-    ChangeDirToMdlPath();
-    return PRO_TK_NO_ERROR;
+    ProError status;
+    status = ProUserChangeDirToMdlPath();
+    return status;
 }
 
 ProError ProUserRefreshAll()
@@ -168,6 +172,20 @@ ProError ProUserRefreshAll()
     status = ProMdlCurrentGet(&mdl);
     solid = ProMdlToSolid(mdl);
     status = ProSolidRegenerate(solid, PRO_REGEN_NO_FLAGS);
+    status = ProWindowRepaint(PRO_VALUE_UNUSED);
+    return PRO_TK_NO_ERROR;
+}
+
+ProError ProUserRefreshCurrentSheet()
+{
+    ProError status;
+    ProDrawing drawing;
+    int sheet;
+    if (CurrentMdlType() != PRO_DRAWING)
+        return PRO_TK_BAD_CONTEXT;
+    status = ProMdlCurrentGet(&drawing);
+    status = ProDrawingCurrentSheetGet(drawing, &sheet);
+    status = ProDwgSheetRegenerate(drawing, sheet);
     status = ProWindowRepaint(PRO_VALUE_UNUSED);
     return PRO_TK_NO_ERROR;
 }
