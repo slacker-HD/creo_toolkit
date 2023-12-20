@@ -3,9 +3,7 @@
 void ClearColor()
 {
 	ProError status;
-	wchar_t macro[450];
-	status = ProWstringCopy(L"aa ~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;", macro, PRO_VALUE_UNUSED);
-	status = ProMacroLoad(macro);
+	status = ProMacroLoad(L"~ Activate `main_dlg_cur` `page_View_control_btn` 1; ~ Select `main_dlg_cur` `View:ProCmdViewGallery`; ~ Select `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Close `main_dlg_cur`  `ProCmdViewGallery_layoutph.palette_holder.clearAppearance`; ~ Activate `main_dlg_cur` `clearAllAppearance`; ~ FocusIn `UI Message Dialog` `yes`;~ Activate `UI Message Dialog` `yes`;");
 }
 
 double _myand()
@@ -72,19 +70,15 @@ void AsmPaintColor_AfterMacro()
 void PaintColorAsm()
 {
 	ProError status;
-	wchar_t macro[100];
-	status = ProWstringCopy(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;", macro, PRO_VALUE_UNUSED);
 	hint = AsmPaintColor;
-	status = ProMacroLoad(macro);
+	status = ProMacroLoad(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;");
 }
 
 void PaintColorPrt()
 {
 	ProError status;
-	wchar_t macro[100];
-	status = ProWstringCopy(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;", macro, PRO_VALUE_UNUSED);
 	hint = PrtPaintColor;
-	status = ProMacroLoad(macro);
+	status = ProMacroLoad(L"~ Command `IMI_ClearColor_Act`;~ Command `IMI_About_Act`;");
 }
 
 void PrtPaintColor_AfterMacro()
