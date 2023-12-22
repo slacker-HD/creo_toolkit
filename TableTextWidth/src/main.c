@@ -28,7 +28,7 @@ void WrapText()
     ProError status;
     ProSelection *tableSels = NULL;
     int size;
-    int table_segment, row, column;
+    int tableSegment, row, column;
     ProDwgtable table;
 
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectTableCell");
@@ -43,7 +43,7 @@ void WrapText()
     {
         return;
     }
-    status = ProSelectionDwgtblcellGet(tableSels[0], &table_segment, &row, &column);
+    status = ProSelectionDwgtblcellGet(tableSels[0], &tableSegment, &row, &column);
     if (status != PRO_TK_NO_ERROR)
     {
         return;
@@ -61,15 +61,19 @@ void SetAutoTextWidth()
 {
     ProError status;
     ProSelection *tableSels = NULL;
-    int size;
-    int table_segment, row, column;
+    int i, size;
+    int tableSegment, row, column;
     double width;
     ProDwgtable table;
     ProDtlnote note;
+    ProDtlnotedata notedata;
+    ProDtlnoteline *lines;
+    int lineSize;
     ProTextStyle textStyle;
     double textwidth = 0.85;
     ProVector envel[4];
-    double cell_size;
+    double cellSize;
+    double sizeFactor = 1;
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectTableCell");
     status = ProSelect((char *)"table_cell", 1, NULL, NULL, NULL, NULL, &tableSels, &size);
     if (status != PRO_TK_NO_ERROR || size < 1)
@@ -82,7 +86,7 @@ void SetAutoTextWidth()
     {
         return;
     }
-    status = ProSelectionDwgtblcellGet(tableSels[0], &table_segment, &row, &column);
+    status = ProSelectionDwgtblcellGet(tableSels[0], &tableSegment, &row, &column);
     if (status != PRO_TK_NO_ERROR)
     {
         return;
@@ -94,16 +98,31 @@ void SetAutoTextWidth()
     }
 
     status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
+
     status = ProNoteTextStyleGet(&note, &textStyle);
-
-    status = ProDwgtableColumnSizeGet(&table, table_segment, column, &cell_size);
-    status = ProDtlnoteLineEnvelopeGet(&note, 0, envel);
-
     status = ProTextStyleWidthGet(textStyle, &width);
-    status = ProTextStyleWidthSet(textStyle, width * cell_size / (envel[1][0] - envel[0][0]) * 0.92);//给个系数0.92再缩短点
 
+    status = ProDwgtableColumnSizeGet(&table, tableSegment, column, &cellSize);
+
+    status = ProDtlnoteDataGet(&note, NULL, PRODISPMODE_NUMERIC, &notedata);
+    status = ProDtlnotedataLinesCollect(notedata, &lines);
+    status = ProArraySizeGet(lines, &lineSize);
+
+    // 遍历每个line找到最长的
+    for (i = 0; i < lineSize; i++)
+    {
+        status = ProDtlnoteLineEnvelopeGet(&note, i, envel);
+        if ((envel[1][0] - envel[0][0]) > cellSize && cellSize / (envel[1][0] - envel[0][0]) * 0.92 < sizeFactor)
+        {
+            sizeFactor = cellSize / (envel[1][0] - envel[0][0]) * 0.92; // 给个系数0.92再缩短点
+        }
+    }
+    status = ProTextStyleWidthSet(textStyle, width * sizeFactor);
     status = ProNoteTextStyleSet(&note, textStyle);
     status = ProTextStyleFree(&textStyle);
+    status = ProDtlnotedataFree(notedata);
+    status = ProArrayFree(lines);
+
     status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
 }
 
