@@ -13,24 +13,14 @@ IMI_TextWrapmenutips
 表格文字自动换行
 #
 
-IMI_TextWidthIncmenu
-增加字宽5%%
-增加字宽5%%
+IMI_TextAutoWidthmenu
+字宽自适应
+字宽自适应
 #
 
-IMI_TextWidthIncmenutips
-增加字宽5%%
-增加字宽5%%
-#
-
-IMI_TextWidthDecmenu
-减少字宽5%%
-减少字宽5%%
-#
-
-IMI_TextWidthDecmenutips
-减少字宽5%%
-减少字宽5%%
+IMI_TextAutoWidthmenutips
+字宽自适应
+字宽自适应
 #
 
 IMI_PrompSelectTableCell

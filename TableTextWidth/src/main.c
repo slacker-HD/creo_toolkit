@@ -57,7 +57,7 @@ void WrapText()
     status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
 }
 
-void setTextWidth(double scale)
+void SetAutoTextWidth()
 {
     ProError status;
     ProSelection *tableSels = NULL;
@@ -67,8 +67,9 @@ void setTextWidth(double scale)
     ProDwgtable table;
     ProDtlnote note;
     ProTextStyle textStyle;
-    double textwidth;
-
+    double textwidth = 0.85;
+    ProVector envel[4];
+    double cell_size;
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectTableCell");
     status = ProSelect((char *)"table_cell", 1, NULL, NULL, NULL, NULL, &tableSels, &size);
     if (status != PRO_TK_NO_ERROR || size < 1)
@@ -95,37 +96,29 @@ void setTextWidth(double scale)
     status = ProDwgtableCellNoteGet(&table, column + 1, row + 1, &note);
     status = ProNoteTextStyleGet(&note, &textStyle);
 
+    status = ProDwgtableColumnSizeGet(&table, table_segment, column, &cell_size);
+    status = ProDtlnoteLineEnvelopeGet(&note, 0, envel);
+
     status = ProTextStyleWidthGet(textStyle, &width);
-    status = ProTextStyleWidthSet(textStyle, width + scale);
+    status = ProTextStyleWidthSet(textStyle, width * cell_size / (envel[1][0] - envel[0][0]) * 0.92);//给个系数0.92再缩短点
+
     status = ProNoteTextStyleSet(&note, textStyle);
     status = ProTextStyleFree(&textStyle);
     status = ProMacroLoad(L"~ Command `ProCmdDwgRegenModel` ;~ Command `ProCmdWinActivate`;");
 }
 
-void IncreaseWidth()
-{
-    setTextWidth(0.05);
-}
-void DecreaseWidth()
-{
-    setTextWidth(-0.05);
-}
 int user_initialize()
 {
     ProError status;
-    uiCmdCmdId IMI_TextWrapmenuID, IMI_TextWidthIncmenuID, IMI_TextWidthDecmenuID;
+    uiCmdCmdId IMI_TextWrapmenuID, IMI_TextAutoWidthmenuID;
 
     status = ProMenubarMenuAdd("IMI_TableTextWidthmenu", "IMI_TableTextWidthmenu", "About", PRO_B_TRUE, MSGFILE);
 
     status = ProCmdActionAdd("IMI_TextWrap_Act", (uiCmdCmdActFn)WrapText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWrapmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_TableTextWidthmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenutips", NULL, PRO_B_TRUE, IMI_TextWrapmenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_TextWidthInc_Act", (uiCmdCmdActFn)IncreaseWidth, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWidthIncmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_TableTextWidthmenu", "IMI_TextWidthIncmenu", "IMI_TextWidthIncmenu", "IMI_TextWidthIncmenutips", NULL, PRO_B_TRUE, IMI_TextWidthIncmenuID, MSGFILE);
-
-    status = ProCmdActionAdd("IMI_TextWidthDec_Act", (uiCmdCmdActFn)DecreaseWidth, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWidthDecmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_TableTextWidthmenu", "IMI_TextWidthDecmenu", "IMI_TextWidthDecmenu", "IMI_TextWidthDecmenutips", NULL, PRO_B_TRUE, IMI_TextWidthDecmenuID, MSGFILE);
-
+    status = ProCmdActionAdd("IMI_TextAutoWidth_Act", (uiCmdCmdActFn)SetAutoTextWidth, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextAutoWidthmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableTextWidthmenu", "IMI_TextAutoWidthmenu", "IMI_TextAutoWidthmenu", "IMI_TextAutoWidthmenutips", NULL, PRO_B_TRUE, IMI_TextAutoWidthmenuID, MSGFILE);
     return PRO_TK_NO_ERROR;
 }
 
