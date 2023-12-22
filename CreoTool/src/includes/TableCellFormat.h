@@ -3,6 +3,7 @@
 #include "CommonFuns.h"
 
 void WrapText();
+void SetAutoTextWidth();
 void AlignTopLeft();
 void AlignTopCenter();
 void AlignTopRight();
@@ -12,4 +13,5 @@ void AlignMiddleRight();
 void AlignBottomLeft();
 void AlignBottomCenter();
 void AlignBottomRight();
+
 #endif

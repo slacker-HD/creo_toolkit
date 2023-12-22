@@ -63,14 +63,13 @@ void SetAutoTextWidth()
     ProSelection *tableSels = NULL;
     int i, size;
     int tableSegment, row, column;
-    double width;
     ProDwgtable table;
     ProDtlnote note;
     ProDtlnotedata notedata;
     ProDtlnoteline *lines;
     int lineSize;
     ProTextStyle textStyle;
-    double textwidth = 0.85;
+    double width = 0.85;
     ProVector envel[4];
     double cellSize;
     double sizeFactor = 1;
@@ -101,7 +100,10 @@ void SetAutoTextWidth()
 
     status = ProNoteTextStyleGet(&note, &textStyle);
     status = ProTextStyleWidthGet(textStyle, &width);
-
+    if (status != PRO_TK_NO_ERROR)
+    {
+        width = 0.85;
+    }
     status = ProDwgtableColumnSizeGet(&table, tableSegment, column, &cellSize);
 
     status = ProDtlnoteDataGet(&note, NULL, PRODISPMODE_NUMERIC, &notedata);

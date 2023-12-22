@@ -143,8 +143,9 @@ int user_initialize()
     uiCmdCmdId IMI_NoteAlignBottomLeftmenuID;
     uiCmdCmdId IMI_NoteAlignBottomCentermenuID;
     uiCmdCmdId IMI_NoteAlignBottomRightmenuID;
+    uiCmdCmdId IMI_TextAutoWidthmenuID;
 
-    ProPath currentPath;
+        ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
     int n_size;
@@ -303,6 +304,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_TextWrap_Act", (uiCmdCmdActFn)WrapText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextWrapmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenu", "IMI_TextWrapmenutips", NULL, PRO_B_TRUE, IMI_TextWrapmenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_TextAutoWidth_Act", (uiCmdCmdActFn)SetAutoTextWidth, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_TextAutoWidthmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_TextAutoWidthmenu", "IMI_TextAutoWidthmenu", "IMI_TextAutoWidthmenutips", NULL, PRO_B_TRUE, IMI_TextAutoWidthmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_NoteAlignTopLeft_Act", (uiCmdCmdActFn)AlignTopLeft, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignTopLeftmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignTopLeftmenu", "IMI_NoteAlignTopLeftmenu", "IMI_NoteAlignTopLeftmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignTopLeftmenuID, MSGFILE);

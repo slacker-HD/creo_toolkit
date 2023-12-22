@@ -547,3 +547,13 @@ IMI_NoteAlignBottomRightmenutips
 Align bottom right
 靠下右对齐
 #
+
+IMI_TextAutoWidthmenu
+字宽自适应
+字宽自适应
+#
+
+IMI_TextAutoWidthmenutips
+字宽自适应
+字宽自适应
+#
