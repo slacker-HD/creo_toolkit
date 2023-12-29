@@ -1,0 +1,39 @@
+﻿IMI_BOMBalloonmenu
+球标操作
+球标操作
+#
+
+IMI_BOMBalloonCreateAllmenu
+创建球标 - 主视图
+创建球标 - 主视图
+#
+
+IMI_BOMBalloonCreateAllmenutips
+创建球标 - 主视图
+创建球标 - 主视图
+#
+
+IMI_BOMBalloonCreatemenu
+创建球标 | 按视图
+创建球标 | 按视图
+#
+
+IMI_BOMBalloonCreatemenutips
+创建球标 | 按视图
+创建球标 | 按视图
+#
+
+IMI_PrompSelectView
+选择视图
+选择视图
+#
+
+IMI_BOMBalloonCleanupmenu
+清理球标
+清理球标
+#
+
+IMI_BOMBalloonCleanupmenutips
+清理球标
+清理球标
+#

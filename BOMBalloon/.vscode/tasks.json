@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "process",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmd",
+            "args": [
+                "/d",
+                "/c",
+                "C:\\Program Files (x86)\\Microsoft Visual Studio 10.0\\VC\\vcvarsall.bat",
+                "amd64",
+                "&&",
+                "nmake"
+            ],
+            "group": "build",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "Cleanup",
+            "type": "process",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmd",
+            "args": [
+                "/d",
+                "/c",
+                "C:\\Program Files (x86)\\Microsoft Visual Studio 10.0\\VC\\vcvarsall.bat",
+                "amd64",
+                "&&",
+                "nmake",
+                "Cleanup"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [],
+            "problemMatcher": []
+        }
+    ]
+}
