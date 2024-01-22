@@ -37,3 +37,18 @@ IMI_BOMBalloonCleanupmenutips
 清理球标
 清理球标
 #
+
+IMI_BOMBalloonCreateByComponentmenu
+创建球标 | 按元件
+创建球标 | 按元件
+#
+
+IMI_BOMBalloonCreateByComponentmenutips
+创建球标 | 按元件
+创建球标 | 按元件
+#
+
+IMI_PrompSelectComponents
+选择元件
+选择元件
+#

@@ -46,6 +46,7 @@ void CreateAllBallon()
         {
             ProDwgtable table;
             table = ((ProDwgtable *)tables)[i];
+            // 如果知道工程图的表格实际情况，利用ProDwgtableCellRegionGet根据行、列查找表格，通用的只能强制遍历使用默认值-1尝试了
             status = ProBomballoonAllCreate(drawing, &table, -1);
             if (status == PRO_TK_NO_ERROR)
                 break;
@@ -61,16 +62,16 @@ void CreateBallon()
     ProArray tables;
     int i, n_size;
     ProView view;
-    ProSelection *SelBuffer = NULL;
+    ProSelection *selBuffer = NULL;
 
     status = ProMdlCurrentGet(&drawing);
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectView");
-    status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &SelBuffer, &n_size);
+    status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &selBuffer, &n_size);
     if (status != PRO_TK_NO_ERROR || n_size < 1)
     {
         return;
     }
-    status = ProSelectionViewGet(SelBuffer[0], &view);
+    status = ProSelectionViewGet(selBuffer[0], &view);
 
     status = ProArrayAlloc(0, sizeof(ProDwgtable), 1, &tables);
     status = ProDrawingTableVisit((ProDrawing)drawing, (ProDwgtableVisitAction)UserTableVisitAct, NULL, (ProAppData)&tables);
@@ -89,27 +90,79 @@ void CreateBallon()
     status = ProArrayFree(&tables);
 }
 
+void CreateBallonByComponent()
+{
+    ProError status;
+    ProMdl drawing;
+    ProArray tables;
+    int i, n_size;
+    ProView view;
+    ProSelection *selBuffer = NULL;
+    int *componentMembIDTabs;
+    ProAsmcomppath asmCompPath;
+    status = ProMdlCurrentGet(&drawing);
+    status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectView");
+    status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &selBuffer, &n_size);
+    if (status != PRO_TK_NO_ERROR || n_size < 1)
+    {
+        return;
+    }
+    status = ProSelectionViewGet(selBuffer[0], &view);
+
+    status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectComponents");
+    status = ProSelect((char *)"component", -1, NULL, NULL, NULL, NULL, &selBuffer, &n_size);
+    if (status != PRO_TK_NO_ERROR || n_size < 1)
+    {
+        return;
+    }
+    // componentMembIDTabs = (int *)malloc(n_size * sizeof(int));
+    // for (i = 0; i < n_size; i++)
+    // {
+    //     status = ProSelectionAsmcomppathGet(selBuffer[i], &asmCompPath);
+    //     componentMembIDTabs[i] = 1;
+    // }
+    componentMembIDTabs = (int *)malloc(1 * sizeof(int));
+    componentMembIDTabs[0] = 40;
+    status = ProArrayAlloc(0, sizeof(ProDwgtable), 1, &tables);
+    status = ProDrawingTableVisit((ProDrawing)drawing, (ProDwgtableVisitAction)UserTableVisitAct, NULL, (ProAppData)&tables);
+    ProArraySizeGet(tables, &n_size);
+    if (n_size > 0)
+    {
+        for (i = 0; i < n_size; i++)
+        {
+            ProDwgtable table;
+            table = ((ProDwgtable *)tables)[i];
+            status = ProBomballoonByComponentCreate(drawing, &table, -1, NULL, componentMembIDTabs);
+            if (status == PRO_TK_NO_ERROR)
+                break;
+        }
+    }
+    status = ProArrayFree(&tables);
+    free(componentMembIDTabs);
+}
+
 void CleanupBallon()
 {
     ProError status;
     ProMdl drawing;
     ProView view;
-    ProSelection *SelBuffer = NULL;
+    ProSelection *selBuffer = NULL;
     int n_size;
     status = ProMdlCurrentGet(&drawing);
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectView");
-    status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &SelBuffer, &n_size);
+    status = ProSelect((char *)"dwg_view", 1, NULL, NULL, NULL, NULL, &selBuffer, &n_size);
     if (status != PRO_TK_NO_ERROR || n_size < 1)
     {
         return;
     }
-    status = ProSelectionViewGet(SelBuffer[0], &view);
+    status = ProSelectionViewGet(selBuffer[0], &view);
     status = ProBomballoonClean(drawing, view, PRO_B_TRUE, PRO_B_TRUE, 0, PRO_B_TRUE, 0, PRO_B_TRUE, 0, PRO_B_TRUE);
 }
+
 int user_initialize()
 {
     ProError status;
-    uiCmdCmdId IMI_BOMBalloonCreateAllmenuID, IMI_BOMBalloonCreatemenuID, IMI_BOMBalloonCleanupmenuID;
+    uiCmdCmdId IMI_BOMBalloonCreateAllmenuID, IMI_BOMBalloonCreatemenuID, IMI_BOMBalloonCreateByComponentmenuID, IMI_BOMBalloonCleanupmenuID;
 
     status = ProMenubarMenuAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonmenu", "About", PRO_B_TRUE, MSGFILE);
 
@@ -118,6 +171,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_BOMBalloonCreate_Act", (uiCmdCmdActFn)CreateBallon, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCreatemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCreatemenu", "IMI_BOMBalloonCreatemenu", "IMI_BOMBalloonCreatemenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCreatemenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BOMBalloonCreateByComponent_Act", (uiCmdCmdActFn)CreateBallonByComponent, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCreateByComponentmenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCreateByComponentmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_BOMBalloonCleanup_Act", (uiCmdCmdActFn)CleanupBallon, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCleanupmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCleanupmenu", "IMI_BOMBalloonCleanupmenu", "IMI_BOMBalloonCleanupmenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCleanupmenuID, MSGFILE);
