@@ -95,10 +95,12 @@ void CreateBallonByComponent()
     ProError status;
     ProMdl drawing;
     ProArray tables;
-    int i, j, n_size, regionid;
+    int i, j, k, n_size,tab_size;
     ProView view;
     ProSelection *selBuffer = NULL;
     ProAsmcomppath asmCompPath;
+    int row = 0, column = 0;
+    int *compIDTabs;
     status = ProMdlCurrentGet(&drawing);
 
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectView");
@@ -119,22 +121,26 @@ void CreateBallonByComponent()
 
     status = ProArrayAlloc(0, sizeof(ProDwgtable), 1, &tables);
     status = ProDrawingTableVisit((ProDrawing)drawing, (ProDwgtableVisitAction)UserTableVisitAct, NULL, (ProAppData)&tables);
-    ProArraySizeGet(tables, &n_size);
-    if (n_size > 0)
+    ProArraySizeGet(tables, &tab_size);
+    if (tab_size > 0)
     {
-        for (i = 0; i < n_size; i++)
+        for (i = 0; i < tab_size; i++)
         {
             ProDwgtable table;
             table = ((ProDwgtable *)tables)[i];
             for (j = 0; j < n_size; j++)
             {
                 status = ProSelectionAsmcomppathGet(selBuffer[j], &asmCompPath);
-                status = ProBomballoonByComponentCreate(drawing, &table, 1, view, asmCompPath.comp_id_table);
+                // compIDTabs = (int *)malloc(sizeof(int) * asmCompPath.table_num);
+                // for (k = 0; k < asmCompPath.table_num; k++)
+                // {
+                //     compIDTabs[k] = asmCompPath.comp_id_table[k];
+                // }
+                status = ProBomballoonByComponentCreate(drawing, &table, -1, view, asmCompPath.comp_id_table);
+                // free(compIDTabs);
                 if (status != PRO_TK_NO_ERROR)
                     break;
             }
-            if (status == PRO_TK_NO_ERROR)
-                break;
         }
     }
     status = ProArrayFree(&tables);
