@@ -130,6 +130,7 @@ void CreateBallonByComponent()
             table = ((ProDwgtable *)tables)[i];
             for (j = 0; j < n_size; j++)
             {
+                //! 未完成，手动和程序设定运行均无错误，但无法生成
                 status = ProSelectionAsmcomppathGet(selBuffer[j], &asmCompPath);
                 status = ProArrayAlloc(0, sizeof(int), asmCompPath.table_num, &compIDTabs);
                 // compIDTabs = (int *)malloc(sizeof(int) * asmCompPath.table_num);
@@ -178,9 +179,9 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_BOMBalloonCreate_Act", (uiCmdCmdActFn)CreateBallon, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCreatemenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCreatemenu", "IMI_BOMBalloonCreatemenu", "IMI_BOMBalloonCreatemenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCreatemenuID, MSGFILE);
-
-    status = ProCmdActionAdd("IMI_BOMBalloonCreateByComponent_Act", (uiCmdCmdActFn)CreateBallonByComponent, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCreateByComponentmenuID);
-    status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCreateByComponentmenuID, MSGFILE);
+    //! 未完成，函数运行无错误，但无法生成
+    // status = ProCmdActionAdd("IMI_BOMBalloonCreateByComponent_Act", (uiCmdCmdActFn)CreateBallonByComponent, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCreateByComponentmenuID);
+    // status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenu", "IMI_BOMBalloonCreateByComponentmenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCreateByComponentmenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_BOMBalloonCleanup_Act", (uiCmdCmdActFn)CleanupBallon, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BOMBalloonCleanupmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_BOMBalloonmenu", "IMI_BOMBalloonCleanupmenu", "IMI_BOMBalloonCleanupmenu", "IMI_BOMBalloonCleanupmenutips", NULL, PRO_B_TRUE, IMI_BOMBalloonCleanupmenuID, MSGFILE);
