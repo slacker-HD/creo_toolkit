@@ -29,6 +29,7 @@
         "copyinfos.h": "c",
         "textformat.h": "c",
         "autodirsetting.h": "c",
-        "TableCellFormat.h": "c"
+        "TableCellFormat.h": "c",
+        "changedrwtomdlname.h": "c"
     }
 }

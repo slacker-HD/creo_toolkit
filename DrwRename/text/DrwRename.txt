@@ -1,0 +1,14 @@
+﻿IMI_DrwRenamemenu
+重命名
+重命名
+#
+
+IMI_ChangeDrwtoMdlNamemenu
+重命名绘图名为模型名
+重命名绘图名为模型名
+#
+
+IMI_ChangeDrwtoMdlNamemenutips
+重命名绘图名为模型名
+重命名绘图名为模型名
+#

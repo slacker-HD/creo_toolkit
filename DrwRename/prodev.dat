@@ -1,0 +1,7 @@
+name DrwRename
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\DrwRename\DrwRename.dll
+text_dir D:\mydoc\creo_toolkit\DrwRename\text
+revision   18.0
+end

@@ -27,6 +27,7 @@
 #include "./includes/CopyInfos.h"
 #include "./includes/TextFormat.h"
 #include "./includes/TableCellFormat.h"
+#include "./includes/ChangeDrwtoMdlName.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -144,8 +145,9 @@ int user_initialize()
     uiCmdCmdId IMI_NoteAlignBottomCentermenuID;
     uiCmdCmdId IMI_NoteAlignBottomRightmenuID;
     uiCmdCmdId IMI_TextAutoWidthmenuID;
+    uiCmdCmdId IMI_ChangeDrwtoMdlNamemenuID;
 
-        ProPath currentPath;
+    ProPath currentPath;
     ProPath exePath;
     ProPath cfgPath;
     int n_size;
@@ -204,6 +206,9 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_FormatText_Act", (uiCmdCmdActFn)FormatText, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_FormatTextmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenu", "IMI_FormatTextmenutips", NULL, PRO_B_TRUE, IMI_FormatTextmenuID, MSGFILE);
     status = ProCmdIconSet(IMI_FormatTextmenuID, "IMI_FormatTextmenuID.png");
+
+    status = ProCmdActionAdd("IMI_ChangeDrwtoMdlName_Act", (uiCmdCmdActFn)ChangeDrwtoMdlName, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_ChangeDrwtoMdlNamemenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_DRWsubmenu", "IMI_ChangeDrwtoMdlNamemenu", "IMI_ChangeDrwtoMdlNamemenu", "IMI_ChangeDrwtoMdlNamemenutips", NULL, PRO_B_TRUE, IMI_ChangeDrwtoMdlNamemenuID, MSGFILE);
 
     status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_Filesubmenu", "IMI_Filesubmenu", NULL, PRO_B_TRUE, MSGFILE);
 

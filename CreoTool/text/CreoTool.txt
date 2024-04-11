@@ -78,6 +78,16 @@ Align all selected dimensions horizontally
 水平对齐所有选中尺寸标注
 #
 
+IMI_ChangeDrwtoMdlNamemenu
+Rename to model name
+重命名为模型名
+#
+
+IMI_ChangeDrwtoMdlNamemenutips
+Rename to model name
+重命名为模型名
+#
+
 IMI_Filesubmenu
 File shortcuts
 文件快捷操作

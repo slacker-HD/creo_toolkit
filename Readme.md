@@ -290,3 +290,7 @@
 ## FeatImport
 
 + 零件导入stp
+
+## DrwRename
+
++ 重命名绘图名为模型名
