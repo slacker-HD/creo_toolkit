@@ -23,10 +23,11 @@ static uiCmdAccessState AccessPRT(uiCmdAccessMode access_mode)
         return ACCESS_INVISIBLE;
 }
 
-static uiCmdAccessState AccessPRTorASM(uiCmdAccessMode access_mode)
+static uiCmdAccessState AccessASM(uiCmdAccessMode access_mode)
 {
-    if (CurrentMdlType() == PRO_ASSEMBLY || CurrentMdlType() == PRO_PART)
+    if (CurrentMdlType() == PRO_ASSEMBLY)
         return ACCESS_AVAILABLE;
+        
     else
         return ACCESS_INVISIBLE;
 }
@@ -177,7 +178,7 @@ int user_initialize()
     status = ProCmdActionAdd("IMI_SelCoord_Act", (uiCmdCmdActFn)SelCoord, uiProeImmediate, AccessPRT, PRO_B_TRUE, PRO_B_TRUE, &IMI_SelCoordmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_SelbufferTestmenu", "IMI_SelCoordMenu", "IMI_SelCoordMenu", "IMI_SelCoordMenutips", NULL, PRO_B_TRUE, IMI_SelCoordmenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_SelComp_Act", (uiCmdCmdActFn)SelComp, uiProeImmediate, AccessPRTorASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_SelCompmenuID);
+    status = ProCmdActionAdd("IMI_SelComp_Act", (uiCmdCmdActFn)SelComp, uiProeImmediate, AccessASM, PRO_B_TRUE, PRO_B_TRUE, &IMI_SelCompmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_SelbufferTestmenu", "IMI_SelCompMenu", "IMI_SelCompMenu", "IMI_SelCompMenutips", NULL, PRO_B_TRUE, IMI_SelCompmenuID, MSGFILE);
 
     return PRO_TK_NO_ERROR;
