@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "prouicmd.h": "c",
+        "prouilist.h": "c",
+        "protoolkitdll.h": "c",
+        "prouimessage.h": "c",
+        "promdl.h": "c",
+        "prodrawing.h": "c",
+        "promessage.h": "c",
+        "proselbuffer.h": "c",
+        "proselection.h": "c"
+    }
+}
