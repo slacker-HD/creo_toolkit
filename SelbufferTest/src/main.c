@@ -154,7 +154,7 @@ void SelComp()
     // ProSelectionAlloc第一个参数是其父节点的ProAsmcomppath，所以p_comppaths的根节点很重要不能删除
     // ProSelectionAlloc前两个参数如果不对应会返回PRO_TK_BAD_INPUTS，如果此时执行ProSelbufferSelectionAdd会导致Creo异常退出。
     // 这里没有记录p_comppaths比p_comps的对应关系，故使用双循环遍历后判断添加，效率很低，仅做演示，作为全选的功能够用了
-    // 真实情况建议定义一个记录装配体树形结构数据结构同时保存节点位置和其对应的p_comppaths比p_comps以便完成选取对应的组件功能
+    // 建议定义一个记录装配体树形结构数据结构同时保存节点位置和其对应的p_comppaths和p_comps以便完成选取对应的组件功能
     for (j = 0; j < n_pathsize; j++)
     {
         for (i = 0; i < n_compsize; i++)
