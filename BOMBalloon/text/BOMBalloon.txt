@@ -48,7 +48,47 @@ IMI_BOMBalloonCreateByComponentmenutips
 创建球标 | 按元件
 #
 
+IMI_BOMBalloonCreateByRecordmenu1
+创建球标 | 按记录(无引线)
+创建球标 | 按记录(无引线)
+#
+
+IMI_BOMBalloonCreateByRecordmenu1tips
+创建球标 | 按记录(无引线)
+创建球标 | 按记录(无引线)
+#
+
+IMI_BOMBalloonCreateByRecordmenu2
+创建球标 | 按记录(有引线)
+创建球标 | 按记录(有引线)
+#
+
+IMI_BOMBalloonCreateByRecordmenu2tips
+创建球标 | 按记录(有引线)
+创建球标 | 按记录(有引线)
+#
+
 IMI_PrompSelectComponents
 选择元件
 选择元件
+#
+
+IMI_PrompSelectBulks
+选择主体项
+选择主体项
+#
+
+IMI_PrompSelectCells
+选择包含主体项的单元格
+选择包含主体项的单元格
+#
+
+IMI_PrompSelectEntity
+选择一个边 一个图元 尺寸界线 一个基准点 一坐标系 一个坐标系矢量 一个轴心 一个轴线 曲线 一个模型轴、一顶点或a section entity。
+选择一个边 一个图元 尺寸界线 一个基准点 一坐标系 一个坐标系矢量 一个轴心 一个轴线 曲线 一个模型轴、一顶点或a section entity。
+#
+
+IMI_MousePick
+选择球标摆放点
+选择球标摆放点
 #
