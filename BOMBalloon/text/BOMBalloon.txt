@@ -4,13 +4,13 @@
 #
 
 IMI_BOMBalloonCreateAllmenu
-创建球标 - 主视图
-创建球标 - 主视图
+创建球标 | 主视图
+创建球标 | 主视图
 #
 
 IMI_BOMBalloonCreateAllmenutips
-创建球标 - 主视图
-创建球标 - 主视图
+创建球标 | 主视图
+创建球标 | 主视图
 #
 
 IMI_BOMBalloonCreatemenu
