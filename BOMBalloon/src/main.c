@@ -39,7 +39,7 @@ void CreateAllBallon()
     status = ProMdlCurrentGet(&drawing);
     status = ProArrayAlloc(0, sizeof(ProDwgtable), 1, &tables);
     status = ProDrawingTableVisit((ProDrawing)drawing, (ProDwgtableVisitAction)UserTableVisitAct, NULL, (ProAppData)&tables);
-    ProArraySizeGet(tables, &n_size);
+    status = ProArraySizeGet(tables, &n_size);
     if (n_size > 0)
     {
         for (i = 0; i < n_size; i++)
@@ -75,7 +75,7 @@ void CreateBallon()
 
     status = ProArrayAlloc(0, sizeof(ProDwgtable), 1, &tables);
     status = ProDrawingTableVisit((ProDrawing)drawing, (ProDwgtableVisitAction)UserTableVisitAct, NULL, (ProAppData)&tables);
-    ProArraySizeGet(tables, &n_size);
+    status = ProArraySizeGet(tables, &n_size);
     if (n_size > 0)
     {
         for (i = 0; i < n_size; i++)
