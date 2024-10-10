@@ -39,13 +39,13 @@ IMI_BOMBalloonCleanupmenutips
 #
 
 IMI_BOMBalloonCreateByComponentmenu
-创建球标 | 按元件
-创建球标 | 按元件
+创建球标 | 按元件和视图
+创建球标 | 按元件和视图
 #
 
 IMI_BOMBalloonCreateByComponentmenutips
-创建球标 | 按元件
-创建球标 | 按元件
+创建球标 | 按元件和视图
+创建球标 | 按元件和视图
 #
 
 IMI_BOMBalloonCreateByRecordmenu1
