@@ -149,7 +149,7 @@ void CreateBallonByRecordWithoutLeader()
     ProMdl drawing;
     ProDwgtable table;
     int i, n_size, cell_size;
-    int table_segment, row, column;
+    int table_segment, row, column, cell_region_id;
     ProView view;
     ProSelection *selView = NULL, *selCells = NULL;
     ProMouseButton btn;
@@ -182,7 +182,8 @@ void CreateBallonByRecordWithoutLeader()
         {
             status = ProSelectionDwgtableGet(selCells[i], &table);
             status = ProSelectionDwgtblcellGet(selCells[i], &table_segment, &row, &column);
-            status = ProBomballoonByRecordCreate(drawing, &table, 0, view, row - 1, 0, PRO_VALUE_UNUSED, PRO_EDGE, sel_pnt);
+            status = ProDwgtableCellRegionGet(drawing, &table, column, row, &cell_region_id);
+            status = ProBomballoonByRecordCreate(drawing, &table, 0, view, row - 1, cell_region_id, PRO_VALUE_UNUSED, PRO_EDGE, sel_pnt);
         }
     }
 }
