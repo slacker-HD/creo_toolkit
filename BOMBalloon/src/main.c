@@ -167,7 +167,7 @@ void CreateBallonByRecordWithoutLeader()
 
     status = ProMessageDisplay(MSGFILE, "IMI_PrompSelectCells");
     // table_row是未公开的选择项，这样选择表的行更好，但是没有找到对应的对象
-    status = ProSelect((char *)"table_cell", -1, NULL, NULL, NULL, NULL, &selCells, &cell_size);
+    status = ProSelect((char *)"table_cell", 1, NULL, NULL, NULL, NULL, &selCells, &cell_size);
     if (status != PRO_TK_NO_ERROR || cell_size < 1)
     {
         return;
@@ -183,7 +183,7 @@ void CreateBallonByRecordWithoutLeader()
             status = ProSelectionDwgtableGet(selCells[i], &table);
             status = ProSelectionDwgtblcellGet(selCells[i], &table_segment, &row, &column);
             status = ProDwgtableCellRegionGet(drawing, &table, column, row, &cell_region_id);
-            status = ProBomballoonByRecordCreate(drawing, &table, 0, view, row - 1, cell_region_id, PRO_VALUE_UNUSED, PRO_EDGE, sel_pnt);
+            status = ProBomballoonByRecordCreate(drawing, &table, cell_region_id, view, row - 1, NULL, PRO_VALUE_UNUSED, PRO_EDGE, sel_pnt);
         }
     }
 }
