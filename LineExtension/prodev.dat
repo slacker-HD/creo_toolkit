@@ -1,0 +1,7 @@
+name LineExtension
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\LineExtension\LineExtension.dll
+text_dir D:\mydoc\creo_toolkit\LineExtension\text
+revision   18.0
+end
