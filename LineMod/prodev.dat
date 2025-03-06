@@ -1,0 +1,7 @@
+name LineMod
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\LineMod\LineMod.dll
+text_dir D:\mydoc\creo_toolkit\LineMod\text
+revision   18.0
+end

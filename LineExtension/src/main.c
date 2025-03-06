@@ -58,7 +58,7 @@ void calculate_projection_y(ProPoint3d start, ProPoint3d end, ProPoint3d third, 
     }
 }
 
-// 主计算函数
+// 计算并更新线段起点和终点
 void calculate_and_update(ProPoint3d start, ProPoint3d end, ProPoint3d third, int bidirectional)
 {
     ProPoint3d point_on_x;
@@ -81,14 +81,12 @@ void calculate_and_update(ProPoint3d start, ProPoint3d end, ProPoint3d third, in
 
     if (dist_x < dist_y)
     {
-        printf("沿 x 轴方向距离更短，距离为 %.2f\n", dist_x);
         closest_point[0] = point_on_x[0];
         closest_point[1] = point_on_x[1];
         closest_point[2] = 0.0; // 保留 z 坐标
     }
     else
     {
-        printf("沿 y 轴方向距离更短，距离为 %.2f\n", dist_y);
         closest_point[0] = point_on_y[0];
         closest_point[1] = point_on_y[1];
         closest_point[2] = 0.0; // 保留 z 坐标
@@ -99,68 +97,32 @@ void calculate_and_update(ProPoint3d start, ProPoint3d end, ProPoint3d third, in
     dist_to_end = distance(closest_point, end);
     midpoint(start, end, mid);
 
-    if (moved_point == 0)
+    if (dist_to_start < dist_to_end)
     {
-        if (dist_to_start < dist_to_end)
+        moved_point = 1;
+        start[0] = closest_point[0];
+        start[1] = closest_point[1];
+        start[2] = 0.0; // 保留 z 坐标
+        if (bidirectional)
         {
-            printf("更短的点距离起点更近，起点移动\n");
-            moved_point = 1;
-            start[0] = closest_point[0];
-            start[1] = closest_point[1];
-            start[2] = 0.0; // 保留 z 坐标
-            if (bidirectional)
-            {
-                mirror_point(closest_point, mid, mirror);
-                end[0] = mirror[0];
-                end[1] = mirror[1];
-                end[2] = 0.0; // 保留 z 坐标
-            }
-        }
-        else
-        {
-            printf("更短的点距离终点更近，终点移动\n");
-            moved_point = 2;
-            end[0] = closest_point[0];
-            end[1] = closest_point[1];
+            mirror_point(closest_point, mid, mirror);
+            end[0] = mirror[0];
+            end[1] = mirror[1];
             end[2] = 0.0; // 保留 z 坐标
-            if (bidirectional)
-            {
-                mirror_point(closest_point, mid, mirror);
-                start[0] = mirror[0];
-                start[1] = mirror[1];
-                start[2] = 0.0; // 保留 z 坐标
-            }
         }
     }
     else
     {
-        if (moved_point == 1)
+        moved_point = 2;
+        end[0] = closest_point[0];
+        end[1] = closest_point[1];
+        end[2] = 0.0; // 保留 z 坐标
+        if (bidirectional)
         {
-            start[0] = closest_point[0];
-            start[1] = closest_point[1];
+            mirror_point(closest_point, mid, mirror);
+            start[0] = mirror[0];
+            start[1] = mirror[1];
             start[2] = 0.0; // 保留 z 坐标
-            if (bidirectional)
-            {
-                midpoint(start, end, mid);
-                mirror_point(closest_point, mid, mirror);
-                end[0] = mirror[0];
-                end[1] = mirror[1];
-                end[2] = 0.0; // 保留 z 坐标
-            }
-        }
-        else
-        {
-            end[0] = closest_point[0];
-            end[1] = closest_point[1];
-            end[2] = 0.0; // 保留 z 坐标
-            if (bidirectional)
-            {
-                midpoint(start, end, mid);
-                mirror_point(closest_point, mid, mirror);
-                start[0] = mirror[0];
-                start[1] = mirror[1];
-                start[2] = 0.0; // 保留 z 坐标
-            }
         }
     }
 }
@@ -187,6 +149,17 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
     else
         return ACCESS_INVISIBLE;
 }
+
+ProError ProDrawResizeBar(ProCurvedata CurveData)
+{
+    ProError status;
+    ProGraphicsPenPosition(CurveData.line.end1);
+    ProGraphicsCircleDraw(CurveData.line.end1, 5);
+    ProGraphicsPenPosition(CurveData.line.end2);
+    ProGraphicsCircleDraw(CurveData.line.end2, 5);
+    return PRO_TK_NO_ERROR;
+}
+
 void ExtendLine(int bidirectional)
 {
     ProError status;
@@ -199,8 +172,6 @@ void ExtendLine(int bidirectional)
     ProModelitem modelitem;
     ProDtlentitydata entdata;
     ProCurvedata curvedata;
-    ProEnttype curvetype;
-    ProDtlentity *entity;
     ProPoint3d positionmouse;
 
     status = ProMdlCurrentGet(&mdl);
@@ -242,23 +213,14 @@ void ExtendLine(int bidirectional)
     status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }
 
-void ExtendLineSingle()
+void UnidirectionalExtend()
 {
     ExtendLine(0);
 }
 
-void ExtendLineDouble()
+void BidirectionalExtend()
 {
     ExtendLine(1);
-}
-ProError ProDrawResizeBar(ProCurvedata CurveData)
-{
-    ProError status;
-    ProGraphicsPenPosition(CurveData.line.end1);
-    ProGraphicsCircleDraw(CurveData.line.end1, 5);
-    ProGraphicsPenPosition(CurveData.line.end2);
-    ProGraphicsCircleDraw(CurveData.line.end2, 5);
-    return PRO_TK_NO_ERROR;
 }
 
 int user_initialize()
@@ -268,10 +230,10 @@ int user_initialize()
 
     status = ProMenubarMenuAdd("IMI_LineExtensionmenu", "IMI_LineExtensionmenu", "About", PRO_B_TRUE, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_BidirectionalExtendLine_Act", (uiCmdCmdActFn)ExtendLineDouble, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BidirectionalExtendLineMenuID);
+    status = ProCmdActionAdd("IMI_BidirectionalExtendLine_Act", (uiCmdCmdActFn)BidirectionalExtend, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BidirectionalExtendLineMenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_LineExtensionmenu", "IMI_BidirectionalExtendLineMenu", "IMI_BidirectionalExtendLineMenu", "IMI_BidirectionalExtendLineMenutips", NULL, PRO_B_TRUE, IMI_BidirectionalExtendLineMenuID, MSGFILE);
 
-    status = ProCmdActionAdd("IMI_UnidirectionalExtendLine_Act", (uiCmdCmdActFn)ExtendLineSingle, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_UnidirectionalExtendLineMenuID);
+    status = ProCmdActionAdd("IMI_UnidirectionalExtendLine_Act", (uiCmdCmdActFn)UnidirectionalExtend, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_UnidirectionalExtendLineMenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_LineExtensionmenu", "IMI_UniirectionalExtendLineMenu", "IMI_UnidirectionalExtendLineMenu", "IMI_UnidirectionalExtendLineMenutips", NULL, PRO_B_TRUE, IMI_UnidirectionalExtendLineMenuID, MSGFILE);
 
     return PRO_TK_NO_ERROR;
