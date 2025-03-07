@@ -9,6 +9,7 @@
         "prodrawing.h": "c",
         "promessage.h": "c",
         "prodtlentity.h": "c",
-        "prodrawingview.h": "c"
+        "prodrawingview.h": "c",
+        "math.h": "c"
     }
 }
