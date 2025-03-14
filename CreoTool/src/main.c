@@ -28,6 +28,7 @@
 #include "./includes/TextFormat.h"
 #include "./includes/TableCellFormat.h"
 #include "./includes/ChangeDrwtoMdlName.h"
+#include "./includes/LineMod.h"
 
 char *LastRibbonTab = NULL;
 ProPath *CurrentWorkDirectoryList;
@@ -146,6 +147,16 @@ int user_initialize()
     uiCmdCmdId IMI_NoteAlignBottomRightmenuID;
     uiCmdCmdId IMI_TextAutoWidthmenuID;
     uiCmdCmdId IMI_ChangeDrwtoMdlNamemenuID;
+
+    uiCmdCmdId IMI_HorizontalLineFromTopMenuID;
+    uiCmdCmdId IMI_HorizontalLineFromMidMenuID;
+    uiCmdCmdId IMI_HorizontalLineFromBottomMenuID;
+    uiCmdCmdId IMI_VerticalLineFromLeftMenuID;
+    uiCmdCmdId IMI_VerticalLineFromMidMenuID;
+    uiCmdCmdId IMI_VerticalLineFromRightMenuID;
+
+    uiCmdCmdId IMI_BidirectionalExtendLineMenuID;
+    uiCmdCmdId IMI_UnidirectionalExtendLineMenuID;
 
     ProPath currentPath;
     ProPath exePath;
@@ -339,6 +350,32 @@ int user_initialize()
 
     status = ProCmdActionAdd("IMI_NoteAlignBottomRight_Act", (uiCmdCmdActFn)AlignBottomRight, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_NoteAlignBottomRightmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_TableCellsubmenu", "IMI_NoteAlignBottomRightmenu", "IMI_NoteAlignBottomRightmenu", "IMI_NoteAlignBottomRightmenutips", NULL, PRO_B_TRUE, IMI_NoteAlignBottomRightmenuID, MSGFILE);
+
+    status = ProMenubarmenuMenuAdd("IMI_Mainmenu", "IMI_SketchEditsubmenu", "IMI_SketchEditsubmenu", NULL, PRO_B_TRUE, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HorizontalLineFromTop_Act", (uiCmdCmdActFn)HorizontalLineFromTop, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizontalLineFromTopMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_HorizontalLineFromTopMenu", "IMI_HorizontalLineFromTopMenu", "IMI_HorizontalLineFromTopMenutips", NULL, PRO_B_TRUE, IMI_HorizontalLineFromTopMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HorizontalLineFromMid_Act", (uiCmdCmdActFn)HorizontalLineFromMid, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizontalLineFromMidMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_HorizontalLineFromMidMenu", "IMI_HorizontalLineFromMidMenu", "IMI_HorizontalLineFromMidMenutips", NULL, PRO_B_TRUE, IMI_HorizontalLineFromMidMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_HorizontalLineFromBottom_Act", (uiCmdCmdActFn)HorizontalLineFromBottom, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_HorizontalLineFromBottomMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_HorizontalLineFromBottomMenu", "IMI_HorizontalLineFromBottomMenu", "IMI_HorizontalLineFromBottomMenutips", NULL, PRO_B_TRUE, IMI_HorizontalLineFromBottomMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_VerticalLineFromLeft_Act", (uiCmdCmdActFn)VerticalLineFromLeft, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalLineFromLeftMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_VerticalLineFromLeftMenu", "IMI_VerticalLineFromLeftMenu", "IMI_VerticalLineFromLeftMenutips", NULL, PRO_B_TRUE, IMI_VerticalLineFromLeftMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_VerticalLineFromMid_Act", (uiCmdCmdActFn)VerticalLineFromMid, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalLineFromMidMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_VerticalLineFromMidMenu", "IMI_VerticalLineFromMidMenu", "IMI_VerticalLineFromMidMenutips", NULL, PRO_B_TRUE, IMI_VerticalLineFromMidMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_VerticalLineFromRight_Act", (uiCmdCmdActFn)VerticalLineFromRight, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_VerticalLineFromRightMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_VerticalLineFromRightMenu", "IMI_VerticalLineFromRightMenu", "IMI_VerticalLineFromRightMenutips", NULL, PRO_B_TRUE, IMI_VerticalLineFromRightMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_BidirectionalExtendLine_Act", (uiCmdCmdActFn)BidirectionalExtend, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_BidirectionalExtendLineMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_BidirectionalExtendLineMenu", "IMI_BidirectionalExtendLineMenu", "IMI_BidirectionalExtendLineMenutips", NULL, PRO_B_TRUE, IMI_BidirectionalExtendLineMenuID, MSGFILE);
+
+    status = ProCmdActionAdd("IMI_UnidirectionalExtendLine_Act", (uiCmdCmdActFn)UnidirectionalExtend, uiProeImmediate, AccessDRW, PRO_B_TRUE, PRO_B_TRUE, &IMI_UnidirectionalExtendLineMenuID);
+    status = ProMenubarmenuPushbuttonAdd("IMI_SketchEditsubmenu", "IMI_UniirectionalExtendLineMenu", "IMI_UnidirectionalExtendLineMenu", "IMI_UnidirectionalExtendLineMenutips", NULL, PRO_B_TRUE, IMI_UnidirectionalExtendLineMenuID, MSGFILE);
 
     status = ProCmdActionAdd("IMI_About_Act", (uiCmdCmdActFn)ShowAboutDialog, uiProeImmediate, AccessDefault, PRO_B_TRUE, PRO_B_TRUE, &IMI_AboutmenuID);
     status = ProMenubarmenuPushbuttonAdd("IMI_Mainmenu", "IMI_Aboutmenu", "IMI_Aboutmenu", "IMI_Aboutmenutips", NULL, PRO_B_TRUE, IMI_AboutmenuID, MSGFILE);

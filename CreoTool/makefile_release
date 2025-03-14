@@ -27,7 +27,7 @@ PTCLIBS_DLL = "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/x86e_win64/obj/protk
 LIBS = libcmt.lib kernel32.lib user32.lib wsock32.lib advapi32.lib mpr.lib winspool.lib netapi32.lib psapi.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib ws2_32.lib
 
 # Object files
-OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDirectory.obj TimeSave.obj PaintColor.obj AlignSymDim.obj RenameMdl.obj ChangeWorkDirectory.obj PrtinAsmRename.obj BatOpenFiles.obj BatSnapshot.obj BattoPdf.obj BattoDwg.obj AutoDirSetting.obj Cfg.obj FamInstExport.obj PartShow.obj AutoWorkDirSetting.obj LayerSetting.obj qrcodegen.obj InsertQRCode.obj RelFunctions.obj OpenSamenameFile.obj BatConvertUnit.obj CopyInfos.obj TextFormat.obj TableCellFormat.obj ChangeDrwtoMdlName.obj
+OBJS = main.obj CommonFuns.obj ShowDirectory.obj OpenSamenameDrw.obj CleanWorkDirectory.obj TimeSave.obj PaintColor.obj AlignSymDim.obj RenameMdl.obj ChangeWorkDirectory.obj PrtinAsmRename.obj BatOpenFiles.obj BatSnapshot.obj BattoPdf.obj BattoDwg.obj AutoDirSetting.obj Cfg.obj FamInstExport.obj PartShow.obj AutoWorkDirSetting.obj LayerSetting.obj qrcodegen.obj InsertQRCode.obj RelFunctions.obj OpenSamenameFile.obj BatConvertUnit.obj CopyInfos.obj TextFormat.obj TableCellFormat.obj ChangeDrwtoMdlName.obj LineMod.obj
 
 # Linker
 LINK = link
@@ -128,6 +128,9 @@ TableCellFormat.obj:  $(PROTOOL_SRC)/TableCellFormat.c
 
 ChangeDrwtoMdlName.obj:  $(PROTOOL_SRC)/ChangeDrwtoMdlName.c
 	$(CC) $(CFLAGS) $(PROTOOL_SRC)/ChangeDrwtoMdlName.c
+
+LineMod.obj:  $(PROTOOL_SRC)/LineMod.c
+	$(CC) $(CFLAGS) $(PROTOOL_SRC)/LineMod.c
 
 clean :
 	del $(OBJS)
