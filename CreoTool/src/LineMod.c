@@ -252,7 +252,6 @@ void ModLine(AlignType align_type)
     ProModelitem modelitem;
     ProDtlentitydata entdata;
     ProCurvedata curvedata;
-    ProEnttype curvetype;
     ProPoint3d positionmouse;
 
     status = ProMdlCurrentGet(&mdl);
@@ -268,8 +267,7 @@ void ModLine(AlignType align_type)
     status = ProDtlentityDataGet(&modelitem, NULL, &entdata);
     status = ProDtlentitydataCurveGet(entdata, &curvedata);
 
-    status = ProCurveTypeGet(&curvedata, &curvetype);
-    if (status != PRO_TK_NO_ERROR || curvetype != PRO_ENT_LINE)
+    if (status != PRO_TK_NO_ERROR || curvedata.line.type != 2)
         return;
 
     while (1)
@@ -364,7 +362,6 @@ void ExtendLine(int bidirectional)
     ProModelitem modelitem;
     ProDtlentitydata entdata;
     ProCurvedata curvedata;
-    ProEnttype curvetype;
     ProPoint3d positionmouse;
 
     status = ProMdlCurrentGet(&mdl);
@@ -383,8 +380,7 @@ void ExtendLine(int bidirectional)
     status = ProDtlentityDataGet(&modelitem, NULL, &entdata);
     status = ProDtlentitydataCurveGet(entdata, &curvedata);
 
-    status = ProCurveTypeGet(&curvedata, &curvetype);
-    if (status != PRO_TK_NO_ERROR || curvetype != PRO_ENT_LINE)
+    if (status != PRO_TK_NO_ERROR || curvedata.line.type != 2)
         return;
 
     while (1)

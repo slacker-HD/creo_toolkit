@@ -143,7 +143,6 @@ static uiCmdAccessState AccessDRW(uiCmdAccessMode access_mode)
 void ModLine(AlignType align_type)
 {
     ProError status;
-    ProMouseButton button_pressed;
     ProMdl mdl;
     ProDrawing drawing;
     int size, options = 0, wid = 0;
@@ -151,8 +150,6 @@ void ModLine(AlignType align_type)
     ProModelitem modelitem;
     ProDtlentitydata entdata;
     ProCurvedata curvedata;
-    ProEnttype  curvetype;
-    ProPoint3d positionmouse;
 
     status = ProMdlCurrentGet(&mdl);
     drawing = (ProDrawing)mdl;
@@ -167,46 +164,36 @@ void ModLine(AlignType align_type)
     status = ProDtlentityDataGet(&modelitem, NULL, &entdata);
     status = ProDtlentitydataCurveGet(entdata, &curvedata);
 
-    status = ProCurveTypeGet(&curvedata, &curvetype);
-    if(status != PRO_TK_NO_ERROR || curvetype != PRO_ENT_LINE)
+    if (status != PRO_TK_NO_ERROR || curvedata.line.type != 2)
         return;
 
-    while (1)
+    switch (align_type)
     {
-        status = ProMouseTrack(options, &button_pressed, positionmouse);
-        if (button_pressed == PRO_LEFT_BUTTON || button_pressed == PRO_RIGHT_BUTTON || button_pressed == PRO_MIDDLE_BUTTON)
-        {
-            status = ProWindowRepaint(PRO_VALUE_UNUSED);
-            break;
-        }
-
-        switch (align_type)
-        {
-        case ALIGN_HORIZONTAL_FROM_TOP:
-            align_horizontal_from_top(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        case ALIGN_HORIZONTAL_FROM_MID:
-            align_horizontal_from_mid(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        case ALIGN_HORIZONTAL_FROM_BOTTOM:
-            align_horizontal_from_bottom(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        case ALIGN_VERTICAL_FROM_LEFT:
-            align_vertical_from_left(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        case ALIGN_VERTICAL_FROM_MID:
-            align_vertical_from_mid(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        case ALIGN_VERTICAL_FROM_RIGHT:
-            align_vertical_from_right(&curvedata.line.end1, &curvedata.line.end2);
-            break;
-        }
-
-        status = ProDtlentitydataCurveSet(entdata, &curvedata);
-        status = ProDtlentityModify(&modelitem, NULL, entdata);
-        status = ProWindowCurrentGet(&wid);
-        status = ProWindowRefresh(wid);
+    case ALIGN_HORIZONTAL_FROM_TOP:
+        align_horizontal_from_top(&curvedata.line.end1, &curvedata.line.end2);
+        break;
+    case ALIGN_HORIZONTAL_FROM_MID:
+        align_horizontal_from_mid(&curvedata.line.end1, &curvedata.line.end2);
+        break;
+    case ALIGN_HORIZONTAL_FROM_BOTTOM:
+        align_horizontal_from_bottom(&curvedata.line.end1, &curvedata.line.end2);
+        break;
+    case ALIGN_VERTICAL_FROM_LEFT:
+        align_vertical_from_left(&curvedata.line.end1, &curvedata.line.end2);
+        break;
+    case ALIGN_VERTICAL_FROM_MID:
+        align_vertical_from_mid(&curvedata.line.end1, &curvedata.line.end2);
+        break;
+    case ALIGN_VERTICAL_FROM_RIGHT:
+        align_vertical_from_right(&curvedata.line.end1, &curvedata.line.end2);
+        break;
     }
+
+    status = ProDtlentitydataCurveSet(entdata, &curvedata);
+    status = ProDtlentityModify(&modelitem, NULL, entdata);
+    status = ProWindowCurrentGet(&wid);
+    status = ProWindowRefresh(wid);
+
     status = ProDtlentitydataFree(entdata);
     status = ProWindowRepaint(PRO_VALUE_UNUSED);
 }
