@@ -152,7 +152,7 @@
 + 视图坐标变换为屏幕坐标
 + 组件坐标转换为装配体坐标再转换为屏幕坐标
 + 利用转换的坐标在绘图绘制预览直线以验证坐标转换的正确性
- 
+
 ## DrawingAndView
 
 + 一键新建或打开同名绘图文件
@@ -203,9 +203,11 @@
 + 批量打开工作目录下所有Drw
 
 ## FamInstExport
+
 + 导出族表文件到实例
 
 ## PartShow
+
 + 快速显示隐藏组件
 
 ## IMEHook
@@ -250,7 +252,7 @@
 
 ## AsyncProjectWithPdcurses
 
-+  使用makefile异步工程调用PDcurses库
++ 使用makefile异步工程调用PDcurses库
 
 ## SurfaceTransparent
 
