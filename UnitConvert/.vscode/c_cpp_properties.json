@@ -3,9 +3,10 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes",
-                "${workspaceFolder}/src/includes"
-            ]
+                "${workspaceFolder}/**",
+                "C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include"
+            ],
+            "defines": []
         }
     ],
     "version": 4
