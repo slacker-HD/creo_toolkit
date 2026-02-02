@@ -1,0 +1,19 @@
+﻿IMI_Mainmenu
+Show or hide Parts
+显示信息
+#
+
+IMI_StockInfomenu
+Hide selected parts
+显示信息
+#
+
+IMI_StockInfomenutips
+Hide selected parts
+显示信息
+#
+
+IMI_PrompInfo
+%0w
+%0w
+#

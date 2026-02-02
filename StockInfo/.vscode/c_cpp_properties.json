@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:/PTC/Creo 2.0/Common Files/M060/protoolkit/includes",
+                "${workspaceFolder}/src/includes",
+                "C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include",
+                "C:/Program Files (x86)/Microsoft SDKs/Windows/v7.0A/Include"
+            ]
+        }
+    ],
+    "version": 4
+}
