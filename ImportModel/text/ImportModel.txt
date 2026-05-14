@@ -1,0 +1,14 @@
+﻿IMI_Mainmenu
+Import External 3D File
+导入外部3D文件
+#
+
+IMI_ImportSTPModelmenu
+Open STP File
+打开STP文件
+#
+
+IMI_ImportSTPModelSTPmenutips
+Open STP File
+打开STP文件
+#

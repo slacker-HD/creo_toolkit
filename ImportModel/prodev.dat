@@ -1,0 +1,7 @@
+name ImportModel
+startup dll 
+allow_stop TRUE 
+exec_file D:\mydoc\creo_toolkit\ImportModel\ImportModel.dll
+text_dir D:\mydoc\creo_toolkit\ImportModel\text
+revision   18.0
+end
